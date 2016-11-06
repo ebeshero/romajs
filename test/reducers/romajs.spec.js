@@ -50,16 +50,18 @@ describe('Input ODD reducers', () => {
     })
   });
 
-  // it('should handle PARSE_COMPILED_ODD', () => {
-  //   let state = romajsApp({
-  //      compiledOdd: {},
-  //      receivedOdd: { isFetching: true } ,
-  //      selectedOdd: './static/data/bare.odd'
-  //   }, {
-  //     type: 'SET_COMPILED_ODD',
-  //     odd: '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
-  //   })
-  //   expect(state.compiledOdd.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
-  // });
+  it('should handle SET_COMPILED_ODD', () => {
+    let state = romajsApp({
+       compiledOdd: {},
+       receivedOdd: {} ,
+       selectedOdd: ''
+    }, {
+      type: 'SET_COMPILED_ODD',
+      odd: '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
+    })
+    x2jParser.parseString(state.compiledOdd.data, (err, result) => {
+      expect(result.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+    })
+  });
 
 })

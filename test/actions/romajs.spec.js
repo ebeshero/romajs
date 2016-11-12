@@ -61,23 +61,22 @@ describe('Input ODD actions', () => {
       if (err) {
         throw "Unable to read file";
       }
-      return store.dispatch(actions.postToOxGarage(data, compileodd)).then((action) => {
-        var doc = new window.DOMParser().parseFromString(action.result, 'text/xml');
-        expect(doc.getElementsByTagName("schemaSpec").length).toBeMoreThan(0);
-        done();
+
+      var unsubscribe = store.subscribe(() => {
+        let receiveAct = store.getActions().find((act)=>{
+          return act.type == "RECEIVE_FROM_OXGARAGE"
+        })
+        if (receiveAct) {
+          expect(traverse(receiveAct.json).reduce(function (acc, x) {
+              if (this.key == "schemaSpec") acc.push(x);
+              return acc;
+          }, []).length).toBeGreaterThan(0);
+          done();
+          srv.close();
+        }
       });
+      store.dispatch(actions.postToOxGarage(data, compileodd));
     })
   }).timeout(30000); // giving a long time for slower connections
-
-  it('parseCompiledOdd should parse a compiled ODD into json', (done) => {
-    const store = mockStore({ receivedOdd: {}, selectedOdd: '', compiledOdd: {} })
-    let odd = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
-    var unsubscribe = store.subscribe(() => {
-      expect(store.getActions()[0].odd.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
-      done();
-    });
-    store.dispatch(actions.parseCompiledOdd(odd));
-  }).timeout(10000);
-
 
 });

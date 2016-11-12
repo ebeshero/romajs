@@ -28,7 +28,7 @@ function receiveOdd(string, json) {
   return {
     type: RECEIVE_ODD,
     xml: string,
-    json: json,
+    json,
     receivedAt: Date.now()
   }
 }
@@ -41,12 +41,13 @@ function requestOxGarageTransform(input, endpoint) {
   }
 }
 
-function receiveFromOxGarage(input, endpoint, xml) {
+function receiveFromOxGarage(input, endpoint, string, json) {
   return {
     type: RECEIVE_FROM_OXGARAGE,
     input,
     endpoint,
-    result: xml,
+    xml: string,
+    json,
     receivedAt: Date.now()
   }
 }
@@ -64,14 +65,16 @@ export function setCompiledOdd(odd) {
 export function fetchOdd(odd) {
   return dispatch => {
     dispatch(requestOdd(odd))
-    return fetch(odd)
-      .then(response => response.text())
-      .then((xml) => {
-        // parse into JSON as well
-        return x2jParser.parseString(xml, (err, result) => {
-            dispatch(receiveOdd(xml, result))
+    return new Promise((res, rej)=>{
+      fetch(odd)
+        .then(response => response.text())
+        .then((xml) => {
+          // parse into JSON as well
+          x2jParser.parseString(xml, (err, result) => {
+              res(dispatch(receiveOdd(xml, result)))
+          })
         })
-      })
+    })
   }
 }
 
@@ -80,20 +83,18 @@ export function postToOxGarage(input, endpoint) {
     dispatch(requestOxGarageTransform(input, endpoint));
     let fd = new FormData();
     fd.append("fileToConvert", new Blob([input], {"type":"application\/octet-stream"}), 'file.odd');
-    return fetch(endpoint, {
-        mode: 'cors',
-        method: 'post',
-        body: fd
-      })
-      .then(response => {return response.text()})
-      .then(xml => dispatch(receiveFromOxGarage(input, endpoint, xml)))
-  }
-}
-
-export function parseCompiledOdd(xml) {
-  return dispatch => {
-    return x2jParser.parseString(xml, (err, result) => {
-        dispatch(setCompiledOdd(result))
+    return new Promise((res, rej)=>{
+      fetch(endpoint, {
+          mode: 'cors',
+          method: 'post',
+          body: fd
+        })
+        .then(response => {return response.text()})
+        .then((xml) => {
+          return x2jParser.parseString(xml, (err, result) => {
+            res(dispatch(receiveFromOxGarage(input, endpoint, xml, result)))
+          })
+        })
     })
   }
 }

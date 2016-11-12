@@ -24,11 +24,11 @@ function requestOdd(odd) {
   }
 }
 
-function receiveOdd(odd, xml) {
+function receiveOdd(string, json) {
   return {
     type: RECEIVE_ODD,
-    xml,
-    json: xml,
+    xml: string,
+    json: json,
     receivedAt: Date.now()
   }
 }

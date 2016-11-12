@@ -27,8 +27,8 @@ function requestOdd(odd) {
 function receiveOdd(odd, xml) {
   return {
     type: RECEIVE_ODD,
-    odd,
-    content: xml,
+    xml,
+    json: xml,
     receivedAt: Date.now()
   }
 }
@@ -66,7 +66,12 @@ export function fetchOdd(odd) {
     dispatch(requestOdd(odd))
     return fetch(odd)
       .then(response => response.text())
-      .then(xml => dispatch(receiveOdd(odd, xml)))
+      .then((xml) => {
+        // parse into JSON as well
+        return x2jParser.parseString(xml, (err, result) => {
+            dispatch(receiveOdd(xml, result))
+        })
+      })
   }
 }
 
@@ -92,12 +97,3 @@ export function parseCompiledOdd(xml) {
     })
   }
 }
-
-// let nextElementId = 0
-// export const addElement = (name) => {
-//   return {
-//     type: 'ADD_ELEMENT',
-//     id: nextElementId++,
-//     name
-//   }
-// }

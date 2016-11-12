@@ -36,15 +36,22 @@ describe('Input ODD actions', () => {
     const store = mockStore({ receivedOdd: {}, selectedOdd: './static/data/bare.odd' })
     // spin up the server temporarily
     let srv = startTestServer();
-    return store.dispatch(actions.fetchOdd('http://localhost:3000/static/data/bare.odd')).then((action) => {
-      var doc = x2jParser.parseString(action.content, (err, result) => {
-        expect(traverse(result).reduce(function (acc, x) {
+
+    var unsubscribe = store.subscribe(() => {
+      let receiveAct = store.getActions().find((act)=>{
+        return act.type == "RECEIVE_ODD"
+      })
+      if (receiveAct) {
+        expect(traverse(receiveAct.json).reduce(function (acc, x) {
             if (this.key == "schemaSpec") acc.push(x);
             return acc;
         }, []).length).toBeGreaterThan(0);
-      })
-      srv.close();
+        srv.close();
+        done();
+      }
     });
+    store.dispatch(actions.fetchOdd('http://localhost:3000/static/data/bare.odd'));
+
   });
 
   it('postToOxGarage should obtain a compiled version of the ODD', (done) => {
@@ -69,14 +76,8 @@ describe('Input ODD actions', () => {
       expect(store.getActions()[0].odd.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
       done();
     });
-
-    // Some async dispatch
     store.dispatch(actions.parseCompiledOdd(odd));
-    // return store.dispatch(actions.parseCompiledOdd(odd)).then((action) => {
-    //   expect(action.odd.data.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
-    //   done();
-    // }, (problem) => {console.log(problem)});
-  }).timeout(10000); // giving a long time for slower connections
+  }).timeout(10000);
 
 
 });

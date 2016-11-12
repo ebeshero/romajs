@@ -24,7 +24,8 @@ function odd(state = {
     case RECEIVE_ODD:
       return Object.assign({}, state, {
         isFetching: false,
-        data: action.odd,
+        xml: action.xml,
+        json: action.json,
         lastUpdated: action.receivedAt
       })
     default:

@@ -37,16 +37,18 @@ describe('Input ODD reducers', () => {
   });
 
   it('should handle RECEIVE_ODD', () => {
-    let state = romajsApp({
-       compiledOdd: {},
-       receivedOdd: { isFetching: true } ,
-       selectedOdd: './static/data/bare.odd'
-    }, {
-      type: 'RECEIVE_ODD',
-      odd: '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
-    })
-    x2jParser.parseString(state.receivedOdd.data, (err, result) => {
-      expect(result.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+    let xml = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
+    x2jParser.parseString(xml, (err, result) => {
+      let state = romajsApp({
+         compiledOdd: {},
+         receivedOdd: { isFetching: true } ,
+         selectedOdd: './static/data/bare.odd'
+      }, {
+        type: 'RECEIVE_ODD',
+        xml: xml,
+        json: result
+      })
+      expect(state.receivedOdd.json.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
     })
   });
 

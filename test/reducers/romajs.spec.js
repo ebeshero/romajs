@@ -8,7 +8,7 @@ describe('Input ODD reducers', () => {
   it('should handle initial state', () => {
     expect(
       romajsApp(undefined, {})
-    ).toEqual({ compiledOdd: {}, receivedOdd: {}, selectedOdd: '' })
+    ).toEqual({ receivedOdd: {}, selectedOdd: '', localsource: {} })
   })
 
   it('should handle SELECT_ODD', () => {
@@ -18,29 +18,30 @@ describe('Input ODD reducers', () => {
         odd_url: './static/data/bare.odd'
       })
     ).toEqual({
-        compiledOdd: {},
         receivedOdd: {},
-        selectedOdd: './static/data/bare.odd'
+        selectedOdd: './static/data/bare.odd',
+        localsource: {}
       })
   });
 
   it('should handle REQUEST_ODD', () => {
     expect(
-      romajsApp({ compiledOdd: {}, receivedOdd: {}, selectedOdd: './static/data/bare.odd' }, {
+      romajsApp({ receivedOdd: {}, selectedOdd: './static/data/bare.odd' }, {
         type: 'REQUEST_ODD',
         odd: './static/data/bare.odd'
       })
     ).toEqual({
-       compiledOdd: {},
        receivedOdd: { isFetching: true } ,
-       selectedOdd: './static/data/bare.odd' })
+       selectedOdd: './static/data/bare.odd',
+       localsource: {}
+     })
   });
 
   it('should handle RECEIVE_ODD', () => {
     let xml = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
     x2jParser.parseString(xml, (err, result) => {
       let state = romajsApp({
-         compiledOdd: {},
+         localsource: {},
          receivedOdd: { isFetching: true } ,
          selectedOdd: './static/data/bare.odd'
       }, {
@@ -52,18 +53,47 @@ describe('Input ODD reducers', () => {
     })
   });
 
-  it('should handle SET_COMPILED_ODD', () => {
-    let state = romajsApp({
-       compiledOdd: {},
-       receivedOdd: {} ,
-       selectedOdd: ''
-    }, {
-      type: 'SET_COMPILED_ODD',
-      odd: '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
-    })
-    x2jParser.parseString(state.compiledOdd.data, (err, result) => {
-      expect(result.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+  it('should handle REQUEST_P5', () => {
+    expect(
+      romajsApp({ receivedOdd: {}, selectedOdd: '', localsource: {} }, {
+        type: 'REQUEST_P5',
+        url: 'http://localhost:3000/static/data/p5subset.json'
+      })
+    ).toEqual({
+       receivedOdd: {},
+       selectedOdd: '',
+       localsource: { isFetching: true }
     })
   });
+
+  // it('should handle SET_COMPILED_ODD', () => {
+  //   let state = romajsApp({
+  //      compiledOdd: {},
+  //      receivedOdd: {},
+  //      selectedOdd: ''
+  //   }, {
+  //     type: 'SET_COMPILED_ODD',
+  //     odd: '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
+  //   })
+  //   x2jParser.parseString(state.compiledOdd.data, (err, result) => {
+  //     expect(result.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+  //   })
+  // });
+
+  // it('should handle INCLUDE_MODULES', () => {
+  //   let state = romajsApp({
+  //     receivedOdd: {},
+  //     selectedOdd: '',
+  //      compiledOdd: {
+  //        data: {
+  //
+  //        }
+  //      }
+  //   }, {
+  //     type: 'INCLUDE_MODULES',
+  //     modules: ['textcrit', 'transcr']
+  //   })
+  //
+  // });
 
 })

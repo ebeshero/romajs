@@ -4,9 +4,11 @@ import xml2js from 'xml2js';
 export const REQUEST_ODD = 'REQUEST_ODD';
 export const RECEIVE_ODD = 'RECEIVE_ODD';
 export const SELECT_ODD = 'SELECT_ODD';
-export const REQUEST_OXGARAGE_TRANSFORM = 'REQUEST_OXGARAGE_TRANSFORM';
-export const RECEIVE_FROM_OXGARAGE = 'RECEIVE_FROM_OXGARAGE';
-export const SET_COMPILED_ODD = 'SET_COMPILED_ODD';
+export const REQUEST_P5 = 'REQUEST_P5';
+export const RECEIVE_P5 = 'RECEIVE_P5';
+// export const REQUEST_OXGARAGE_TRANSFORM = 'REQUEST_OXGARAGE_TRANSFORM';
+// export const RECEIVE_FROM_OXGARAGE = 'RECEIVE_FROM_OXGARAGE';
+// export const SET_COMPILED_ODD = 'SET_COMPILED_ODD';
 
 const x2jParser = new xml2js.Parser()
 
@@ -33,31 +35,46 @@ function receiveOdd(string, json) {
   }
 }
 
-function requestOxGarageTransform(input, endpoint) {
+function requestP5(url) {
   return {
-    type: REQUEST_OXGARAGE_TRANSFORM,
-    input,
-    endpoint
+    type: REQUEST_P5,
+    url
   }
 }
 
-function receiveFromOxGarage(input, endpoint, string, json) {
+function receiveP5(json){
   return {
-    type: RECEIVE_FROM_OXGARAGE,
-    input,
-    endpoint,
-    xml: string,
+    type: RECEIVE_P5,
     json,
     receivedAt: Date.now()
   }
 }
 
-export function setCompiledOdd(odd) {
-  return {
-    type: SET_COMPILED_ODD,
-    odd
-  }
-}
+// function requestOxGarageTransform(input, endpoint) {
+//   return {
+//     type: REQUEST_OXGARAGE_TRANSFORM,
+//     input,
+//     endpoint
+//   }
+// }
+
+// function receiveFromOxGarage(input, endpoint, string, json) {
+//   return {
+//     type: RECEIVE_FROM_OXGARAGE,
+//     input,
+//     endpoint,
+//     xml: string,
+//     json,
+//     receivedAt: Date.now()
+//   }
+// }
+
+// export function setCompiledOdd(odd) {
+//   return {
+//     type: SET_COMPILED_ODD,
+//     odd
+//   }
+// }
 
 /**********
  * thunks *
@@ -78,23 +95,32 @@ export function fetchOdd(odd) {
   }
 }
 
-export function postToOxGarage(input, endpoint) {
+export function fetchP5(url) {
   return dispatch => {
-    dispatch(requestOxGarageTransform(input, endpoint));
-    let fd = new FormData();
-    fd.append("fileToConvert", new Blob([input], {"type":"application\/octet-stream"}), 'file.odd');
-    return new Promise((res, rej)=>{
-      fetch(endpoint, {
-          mode: 'cors',
-          method: 'post',
-          body: fd
-        })
-        .then(response => {return response.text()})
-        .then((xml) => {
-          return x2jParser.parseString(xml, (err, result) => {
-            res(dispatch(receiveFromOxGarage(input, endpoint, xml, result)))
-          })
-        })
-    })
+    dispatch(requestP5(url))
+    return fetch(url)
+      .then(response => response.json())
+      .then(json => dispatch(receiveP5(json)))
   }
 }
+
+// export function postToOxGarage(input, endpoint) {
+//   return dispatch => {
+//     dispatch(requestOxGarageTransform(input, endpoint));
+//     let fd = new FormData();
+//     fd.append("fileToConvert", new Blob([input], {"type":"application\/octet-stream"}), 'file.odd');
+//     return new Promise((res, rej)=>{
+//       fetch(endpoint, {
+//           mode: 'cors',
+//           method: 'post',
+//           body: fd
+//         })
+//         .then(response => {return response.text()})
+//         .then((xml) => {
+//           return x2jParser.parseString(xml, (err, result) => {
+//             res(dispatch(receiveFromOxGarage(input, endpoint, xml, result)))
+//           })
+//         })
+//     })
+//   }
+// }

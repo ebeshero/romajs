@@ -10,6 +10,9 @@ export const RECEIVE_P5 = 'RECEIVE_P5';
 // export const RECEIVE_FROM_OXGARAGE = 'RECEIVE_FROM_OXGARAGE';
 // export const SET_COMPILED_ODD = 'SET_COMPILED_ODD';
 
+// Modules operations
+export const INCLUDE_MODULES = 'INCLUDE_MODULES';
+
 const x2jParser = new xml2js.Parser()
 
 export function selectOdd(odd_url) {
@@ -47,6 +50,13 @@ function receiveP5(json){
     type: RECEIVE_P5,
     json,
     receivedAt: Date.now()
+  }
+}
+
+export function includeModules(modules) {
+  return {
+    type: INCLUDE_MODULES,
+    modules
   }
 }
 

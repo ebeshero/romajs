@@ -8,7 +8,7 @@ describe('Input ODD reducers', () => {
   it('should handle initial state', () => {
     expect(
       romajsApp(undefined, {})
-    ).toEqual({ receivedOdd: {}, selectedOdd: '', localsource: {} })
+    ).toEqual({ selectedOdd: '', odd: {} })
   })
 
   it('should handle SELECT_ODD', () => {
@@ -18,22 +18,20 @@ describe('Input ODD reducers', () => {
         odd_url: './static/data/bare.odd'
       })
     ).toEqual({
-        receivedOdd: {},
         selectedOdd: './static/data/bare.odd',
-        localsource: {}
+        odd: {}
       })
   });
 
   it('should handle REQUEST_ODD', () => {
     expect(
-      romajsApp({ receivedOdd: {}, selectedOdd: './static/data/bare.odd' }, {
+      romajsApp({ odd: {}, selectedOdd: './static/data/bare.odd' }, {
         type: 'REQUEST_ODD',
         odd: './static/data/bare.odd'
       })
     ).toEqual({
-       receivedOdd: { isFetching: true } ,
-       selectedOdd: './static/data/bare.odd',
-       localsource: {}
+       odd: { customization: { isFetching: true } },
+       selectedOdd: './static/data/bare.odd'
      })
   });
 
@@ -41,29 +39,40 @@ describe('Input ODD reducers', () => {
     let xml = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
     x2jParser.parseString(xml, (err, result) => {
       let state = romajsApp({
-         localsource: {},
-         receivedOdd: { isFetching: true } ,
+         odd: {customization: { isFetching: true } },
          selectedOdd: './static/data/bare.odd'
       }, {
         type: 'RECEIVE_ODD',
         xml: xml,
         json: result
       })
-      expect(state.receivedOdd.json.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+      expect(state.odd.customization.json.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
     })
   });
 
   it('should handle REQUEST_P5', () => {
     expect(
-      romajsApp({ receivedOdd: {}, selectedOdd: '', localsource: {} }, {
+      romajsApp({ odd: {}, selectedOdd: ''}, {
         type: 'REQUEST_P5',
         url: 'http://localhost:3000/static/data/p5subset.json'
       })
     ).toEqual({
-       receivedOdd: {},
        selectedOdd: '',
-       localsource: { isFetching: true }
+       odd: { localsource: { isFetching: true } }
     })
+  });
+
+  it('should handle RECEIVE_P5', () => {
+    let json = {"title": "The TEI Guidelines","edition": "","generator": "odd2json",
+        "modules": [{"ident":"analysis","id":"AI","desc":"Simple analytic mechanisms"}]}
+    let state = romajsApp({
+       odd: {customization: { isFetching: true } },
+       selectedOdd: './static/data/bare.odd'
+    }, {
+      type: 'RECEIVE_ODD',
+      json
+    })
+    expect(state.odd.customization.json).toIncludeKey('modules')
   });
 
   // it('should handle SET_COMPILED_ODD', () => {

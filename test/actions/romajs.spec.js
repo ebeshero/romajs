@@ -98,3 +98,65 @@ describe('Input ODD actions', () => {
   // }).timeout(30000); // giving a long time for slower connections
 
 });
+
+describe('Module actions', () => {
+  it('includeModules should pass a list of modules to include in the customization', () =>{
+    expect(actions.includeModules(['analysis'])).toEqual({
+      type: 'INCLUDE_MODULES',
+      modules: ['analysis']
+    })
+  });
+  it('excludeModules should pass a list of modules to exclude from the customization', () =>{
+    expect(actions.excludeModules(['header'])).toEqual({
+      type: 'EXCLUDE_MODULES',
+      modules: ['header']
+    })
+  });
+  it('includeElements should pass a list of elements to include in a module', () =>{
+    expect(actions.includeElements(['p'], "core")).toEqual({
+      type: 'INCLUDE_ELEMENTS',
+      elements: ['p'],
+      module: "core"
+    })
+  });
+  it('excludeElements should pass a list of elements to exclude from a module', () =>{
+    expect(actions.excludeElements(['p'], "core")).toEqual({
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['p'],
+      module: "core"
+    })
+  });
+
+});
+
+describe('Element actions', () => {
+  it('changeElement should pass changes to an element', () =>{
+    expect(actions.changeElement(
+      "p",
+      {
+        namespace: "",
+        alias: "",
+        desc: "",
+        classes: [],
+        examples: [],
+        content: [],
+        constraints: [],
+        content: {},
+        attributes: []
+      }
+    )).toEqual({
+      type: 'SAVE_ELEMENT_CHANGES',
+      changes: {
+        namespace: "",
+        alias: "",
+        desc: "",
+        classes: [],
+        examples: [],
+        content: [],
+        constraints: [],
+        content: {},
+        attributes: []
+      }
+    })
+  });
+});

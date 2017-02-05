@@ -1,13 +1,13 @@
 import 'babel-polyfill'
-// import React from 'react'
-// import { render } from 'react-dom'
-// import { Provider } from 'react-redux'
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { selectOdd, fetchOdd, fetchP5, includeModules } from './actions'
 import romajsApp from './reducers'
-// import App from './components/App'
+import App from './components/App'
 
 const loggerMiddleware = createLogger();
 
@@ -31,9 +31,9 @@ store.dispatch(fetchOdd(testoddURL)).then((action) => {
   }
 );
 
-// render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>,
-//   document.getElementById('root')
-// )
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)

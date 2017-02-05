@@ -12,6 +12,28 @@ export const RECEIVE_P5 = 'RECEIVE_P5';
 
 // Modules operations
 export const INCLUDE_MODULES = 'INCLUDE_MODULES';
+export const EXCLUDE_MODULES = 'EXCLUDE_MODULES';
+export const INCLUDE_ELEMENTS = 'INCLUDE_ELEMENTS';
+export const EXCLUDE_ELEMENTS = 'EXCLUDE_ELEMENTS';
+
+// Element operations
+export const SAVE_ELEMENT_CHANGES = 'SAVE_ELEMENT_CHANGES';
+export const CREATE_ELEMENT = 'CREATE_ELEMENT';
+
+// Attribute class operations
+export const CHANGE_ATT_CLASS = 'CHANGE_ATT_CLASS';
+export const CREATE_ATT_CLASS = 'CREATE_ATT_CLASS';
+export const DELETE_ATT_CLASS = 'DELETE_ATT_CLASS';
+
+// Model class operations
+export const CHANGE_MODEL_CLASS = 'CHANGE_MODEL_CLASS';
+export const CREATE_MODEL_CLASS = 'CREATE_MODEL_CLASS';
+export const DELETE_MODEL_CLASS = 'DELETE_MODEL_CLASS';
+
+// Dataypes operations
+export const CHANGE_DATATYPE = 'CHANGE_DATATYPE';
+export const CREATE_DATATYPE = 'CREATE_DATATYPE';
+export const DELETE_DATATYPE = 'DELETE_DATATYPE';
 
 const x2jParser = new xml2js.Parser()
 
@@ -53,10 +75,91 @@ function receiveP5(json){
   }
 }
 
+/* MODULE OPERATIONS */
+
 export function includeModules(modules) {
   return {
     type: INCLUDE_MODULES,
     modules
+  }
+}
+
+export function excludeModules(modules) {
+  return {
+    type: EXCLUDE_MODULES,
+    modules
+  }
+}
+
+export function includeElements(elements, module) {
+  return {
+    type: INCLUDE_ELEMENTS,
+    elements, module
+  }
+}
+
+export function excludeElements(elements, module) {
+  return {
+    type: EXCLUDE_ELEMENTS,
+    elements, module
+  }
+}
+
+/* ELEMENTS OPERATIONS */
+
+export function changeElement(element, changes) {
+  return {
+    type: SAVE_ELEMENT_CHANGES,
+    changes
+  }
+}
+
+export function createElement(element, properties) {
+  return {
+    type: CREATE_ELEMENT,
+    properties
+  }
+}
+
+export function createAttribute(element, attribute_properties) {
+  return {
+    type: CREATE_ATTRIBUTE,
+    attribute_properties
+  }
+}
+
+export function changeAttribute(element, attribute_properties) {
+  return {
+    type: CHANGE_ATTRIBUTE,
+    attribute_properties
+  }
+}
+
+export function deleteAttribute(element, attribute) {
+  return {
+    type: DELETE_ATTRIBUTE,
+    attribute
+  }
+}
+
+export function createConstrain(element, constrain) {
+  return {
+    type: CREATE_CONSTRAIN,
+    constrain
+  }
+}
+
+export function changeConstrain(element, constrain) {
+  return {
+    type: CHANGE_CONSTRAIN,
+    constrain
+  }
+}
+
+export function deleteConstrain(element, constrain) {
+  return {
+    type: DELETE_CONSTRAIN,
+    constrain
   }
 }
 

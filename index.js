@@ -26,14 +26,13 @@ let testoddURL = 'http://localhost:3000/static/data/bare.odd';
 store.dispatch(selectOdd(testoddURL));
 store.dispatch(fetchOdd(testoddURL)).then((action) => {
     store.dispatch(fetchP5('http://localhost:3000/static/data/p5subset.json')).then((action)=>{
-      store.dispatch(includeModules(['header', 'core']))
+      // store.dispatch(includeModules(['header', 'core']))
+      render(
+        <Provider store={store}>
+          <App />
+        </Provider>,
+        document.getElementById('root')
+      )
     })
   }
 );
-
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-)

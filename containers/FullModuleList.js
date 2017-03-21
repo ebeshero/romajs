@@ -4,6 +4,7 @@ import ModuleList from '../components/ModuleList'
 import traverse from 'traverse'
 
 const mapStateToProps = (state) => {
+  // console.log(state)
   let selectedModules = traverse(state.odd.customization.json)
     .reduce(function (acc, x) {
       if (this.key == "moduleRef") acc = x
@@ -14,14 +15,14 @@ const mapStateToProps = (state) => {
       acc.push(x.$.key)
       return acc
     }, [])
-  let modules = state.odd.localsource.json.modules.map((module) => {
+  let modules = state.odd.localsource.json.modules.map(module => {
+    let selected = false
     if (selectedModules.indexOf(module.ident) > -1) {
-      module.selected = true
+      selected = true
     }
-    else {
-      module.selected = false
-    }
-    return module
+    return Object.assign({}, module,
+      {selected: selected}
+    )
   })
   return {
     modules: modules

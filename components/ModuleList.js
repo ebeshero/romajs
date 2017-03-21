@@ -15,7 +15,7 @@ const ModuleList = ({ modules, onModuleClick }) => (
 
 ModuleList.propTypes = {
   modules: PropTypes.arrayOf(PropTypes.shape({
-    selected: PropTypes.bool,
+    selected: PropTypes.bool.isRequired,
     ident: PropTypes.string.isRequired
   }).isRequired).isRequired,
   onModuleClick: PropTypes.func.isRequired

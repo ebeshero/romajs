@@ -57,9 +57,14 @@ function odd(state = {}, action) {
         })
       }
       // Update state
-      return Object.assign({}, state,
-        updateOdd(state[customization], updatedOdd)
-      )
+      if (modulesToInclude.length > 0) {
+        return Object.assign({}, state,
+          updateOdd(state[customization], updatedOdd)
+        )
+      }
+      else {
+        return state
+      }
     case EXCLUDE_MODULES:
       // Remove elements
       for (module of action.modules) {
@@ -80,19 +85,63 @@ function odd(state = {}, action) {
         .map(function (x) {
           if (this.key == "moduleRef") {
             let updatedRefs = []
+            let no_match = true
             for (let mr of x) {
               if (mr.$.key == action.module) {
-                // @include and @exclude are mutually exclusive
-                if (mr.$.exclude) {
-                  delete mr.$.exclude
+                no_match = false
+                // try to remove from @except
+                if (mr.$.except) {
+                  for (let el of action.elements) {
+                    let excludes = mr.$.except.split(" ")
+                    let el_pos = excludes.indexOf(el)
+                    if (el_pos > -1) {
+                      excludes.splice(el_pos, 1)
+                      if (excludes.length > 0) {
+                        mr.$.except = excludes.join(" ")
+                      }
+                      else {
+                        // remove @except last element in @except was removed.
+                        delete mr.$.except
+                      }
+                    }
+                  }
                 }
-                let includes = new Set((mr.$.include || "").split(" "))
-                includes.add(action.elements)
-                mr.$.include = Array.from(includes).join(" ")
+                else if (mr.$.include) {
+                  // if there's @include, add the element to the list
+                  let includes = new Set((mr.$.include || "").split(" "))
+                  includes.add(action.elements)
+                  mr.$.include = Array.from(includes).join(" ")
+                }
+                else {
+                  // noop
+                }
               }
               updatedRefs.push(mr)
             }
+            // If there are no <moduleRef>s at all
+            // Or if there is no matching moduleRef, create one
+            if (updatedRefs.length == 0 || no_match) {
+                updatedRefs.push({
+                  $ : {
+                    key : action.module,
+                    include : action.elements.join(" ")
+                  }
+                })
+            }
             this.update(updatedRefs)
+          }
+          // finally remove matching elementSpec[@mode='delete']
+          else if (this.key == "elementSpec") {
+            let updatedSpecs = []
+            for (let el of action.elements) {
+              for (let es of x) {
+                if (es.$.ident == el && es.$.mode == "delete") {
+                  delete es.$.mode
+                }
+                updatedSpecs.push(es)
+              }
+            }
+            this.update(updatedSpecs)
           }
         })
 
@@ -108,17 +157,58 @@ function odd(state = {}, action) {
               let updatedRefs = []
               for (let mr of x) {
                 if (mr.$.key == action.module) {
-                  // @include and @exclude are mutually exclusive
+                  // try to remove from @include
                   if (mr.$.include) {
-                    delete mr.$.include
+                    for (let el of action.elements) {
+                      let includes = mr.$.include.split(" ")
+                      let el_pos = includes.indexOf(el)
+                      if (el_pos > -1) {
+                        includes.splice(el_pos, 1)
+                        if (includes.length > 0) {
+                          mr.$.include = includes.join(" ")
+                        }
+                        else {
+                          // remove module if the last element in @include was excluded.
+                          mr.$.toRemove = true
+                        }
+                      }
+                    }
                   }
-                  let excludes = new Set((mr.$.exclude || "").split(" "))
-                  excludes.add(action.elements)
-                  mr.$.exclude = Array.from(excludes).join(" ")
+                  else {
+                    // otherwise add to @except
+                    let excludes = new Set((mr.$.except || "").split(" "))
+                    let except = new Set([...excludes, ...new Set(action.elements)])
+                    mr.$.except = Array.from(except).join(" ")
+                  }
+
                 }
-                updatedRefs.push(mr)
+                if (!mr.$.toRemove) {
+                  updatedRefs.push(mr)
+                }
               }
               this.update(updatedRefs)
+            }
+            // remove matching elementRefs is present
+            else if (this.key == "elementRef") {
+              let updatedRefs = []
+              for (let er of x) {
+                if (action.elements.indexOf(er.$.key) == -1) {
+                  updatedRefs.push(er)
+                }
+              }
+              this.update(updatedRefs)
+            }
+            // finally look for a matching elementSpec
+            // and switch it to @mode='delete'
+            else if (this.key == "elementSpec") {
+              let updatedSpecs = []
+              for (let es of x) {
+                if (action.elements.indexOf(es.$.ident) > -1) {
+                  es.$.mode = "delete"
+                }
+                updatedSpecs.push(es)
+              }
+              this.update(updatedSpecs)
             }
           })
 

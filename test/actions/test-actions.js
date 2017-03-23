@@ -26,14 +26,14 @@ let startTestServer = function(){
 
 describe('Input ODD actions', () => {
   it('selectOdd should store the URL of an input ODD', () =>{
-    expect(actions.selectOdd('./static/data/bare.odd')).toEqual({
+    expect(actions.selectOdd('./static/fakeData/bare.odd')).toEqual({
       type: 'SELECT_ODD',
-      odd_url: './static/data/bare.odd'
+      odd_url: './static/fakeData/bare.odd'
     })
   });
 
   it('fetchOdd should retrieve an input ODD', (done) =>{
-    const store = mockStore({ receivedOdd: {}, selectedOdd: './static/data/bare.odd' })
+    const store = mockStore({ receivedOdd: {}, selectedOdd: './static/fakeData/bare.odd' })
     // spin up the server temporarily
     let srv = startTestServer();
 
@@ -50,7 +50,7 @@ describe('Input ODD actions', () => {
         done();
       }
     });
-    store.dispatch(actions.fetchOdd('http://localhost:3000/static/data/bare.odd'));
+    store.dispatch(actions.fetchOdd('http://localhost:3000/static/fakeData/bare.odd'));
 
   });
 
@@ -69,13 +69,13 @@ describe('Input ODD actions', () => {
         done();
       }
     });
-    store.dispatch(actions.fetchP5('http://localhost:3000/static/data/p5subset.json'));
+    store.dispatch(actions.fetchP5('http://localhost:3000/static/fakeData/p5subset.json'));
   })
 
   // it('postToOxGarage should obtain a compiled version of the ODD', (done) => {
   //   const store = mockStore({})
   //   let compileodd = 'http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml';
-  //   return fs.readFile('test/data/bare.odd', 'utf-8', function(err, data){
+  //   return fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
   //     if (err) {
   //       throw "Unable to read file";
   //     }

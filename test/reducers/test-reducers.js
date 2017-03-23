@@ -16,23 +16,23 @@ describe('Input ODD reducers', () => {
     expect(
       romajsApp({}, {
         type: 'SELECT_ODD',
-        odd_url: './static/data/bare.odd'
+        odd_url: './static/fakeData/bare.odd'
       })
     ).toEqual({
-        selectedOdd: './static/data/bare.odd',
+        selectedOdd: './static/fakeData/bare.odd',
         odd: {}
       })
   });
 
   it('should handle REQUEST_ODD', () => {
     expect(
-      romajsApp({ odd: {}, selectedOdd: './static/data/bare.odd' }, {
+      romajsApp({ odd: {}, selectedOdd: './static/fakeData/bare.odd' }, {
         type: 'REQUEST_ODD',
-        odd: './static/data/bare.odd'
+        odd: './static/fakeData/bare.odd'
       })
     ).toEqual({
        odd: { customization: { isFetching: true } },
-       selectedOdd: './static/data/bare.odd'
+       selectedOdd: './static/fakeData/bare.odd'
      })
   });
 
@@ -41,7 +41,7 @@ describe('Input ODD reducers', () => {
     x2jParser.parseString(xml, (err, result) => {
       let state = romajsApp({
          odd: {customization: { isFetching: true } },
-         selectedOdd: './static/data/bare.odd'
+         selectedOdd: './static/fakeData/bare.odd'
       }, {
         type: 'RECEIVE_ODD',
         xml: xml,
@@ -55,7 +55,7 @@ describe('Input ODD reducers', () => {
     expect(
       romajsApp({ odd: {}, selectedOdd: ''}, {
         type: 'REQUEST_P5',
-        url: 'http://localhost:3000/static/data/p5subset.json'
+        url: 'http://localhost:3000/static/fakeData/p5subset.json'
       })
     ).toEqual({
        selectedOdd: '',
@@ -68,7 +68,7 @@ describe('Input ODD reducers', () => {
         "modules": [{"ident":"analysis","id":"AI","desc":"Simple analytic mechanisms"}]}
     let state = romajsApp({
        odd: {customization: { isFetching: true } },
-       selectedOdd: './static/data/bare.odd'
+       selectedOdd: './static/fakeData/bare.odd'
     }, {
       type: 'RECEIVE_P5',
       json
@@ -81,7 +81,7 @@ describe('Input ODD reducers', () => {
 describe('ODD modules operation reducers', () => {
 
   it('should handle INCLUDE_MODULES', (done) => {
-    fs.readFile('test/data/bare.odd', 'utf-8', function(err, data){
+    fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
       if (err) {
         throw "Unable to read file";
       }
@@ -93,7 +93,6 @@ describe('ODD modules operation reducers', () => {
           type: 'INCLUDE_MODULES',
           modules: ['analysis', 'core']
         })
-        console.log( state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef)
         var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef.filter(function (x){
           if (x.$.key == 'analysis' || x.$.key == 'core') return x
         })
@@ -104,7 +103,7 @@ describe('ODD modules operation reducers', () => {
   })
 
   it('should handle EXCLUDE_MODULES', (done) => {
-    fs.readFile('test/data/bare.odd', 'utf-8', function(err, data){
+    fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
       if (err) {
         throw "Unable to read file";
       }
@@ -159,7 +158,7 @@ describe('ODD modules operation reducers', () => {
 
 
   it('should handle INCLUDE_ELEMENTS (@include)', (done) => {
-    fs.readFile('test/data/bare.odd', 'utf-8', function(err, data){
+    fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
       if (err) {
         throw "Unable to read file";
       }
@@ -235,7 +234,7 @@ describe('ODD modules operation reducers', () => {
   })
 
   it('should handle EXCLUDE_ELEMENTS (@include)', (done) => {
-    fs.readFile('test/data/bare.odd', 'utf-8', function(err, data){
+    fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
       if (err) {
         throw "Unable to read file";
       }

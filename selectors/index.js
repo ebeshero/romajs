@@ -1,57 +1,39 @@
 import { createSelector } from 'reselect'
-import traverse from 'traverse'
+import {flattenXML, hydrateXML} from 'squash-xml-json';
 
 const getCustomization = (state) => state.odd.customization.json
 const getLocalSourceElements = (state) => state.odd.localsource.json.members
 
 export const getElementsForModule = (state, params) => {
-  let poo = createSelector([getCustomization, getLocalSourceElements],
+  let sel = createSelector([getCustomization, getLocalSourceElements],
                   (customization, localSourceElements) => {
     let includedElements = []
     let excludedElements = []
 
     // Populate from moduleRef
-    traverse(customization)
-      .map(function (x) {
-        if (this.key == "moduleRef") {
-          for (let mr of x) {
-            if (mr.$.key == params.module) {
-              if (mr.$.except) {
-                 excludedElements = excludedElements.concat((mr.$.except).split(" "))
-              }
-              else if (mr.$.include) {
-                 includedElements = includedElements.concat((mr.$.include).split(" "))
-              }
-              // when neither attributes are present, all elements are included
-              else {
-                includedElements = "all"
-              }
-            }
-          }
+    for (let node_id of Object.keys(customization)) {
+      let node = customization[node_id]
+      if (node.name == "moduleRef" && node["@"].key == params.module) {
+        if (node["@"].except) {
+          excludedElements = excludedElements.concat((node["@"].except).split(" "))
         }
-      })
-
-    // Populate from elementRef
-    traverse(customization)
-      .map(function (x) {
-        if (this.key == "elementRef") {
-          for (let er of x) {
-            includedElements.push(er.$.key)
-          }
+        else if (node["@"].include) {
+          includedElements = includedElements.concat((node["@"].include).split(" "))
         }
-      })
-
-    // from elementSpec[@mode='delete']
-    traverse(customization)
-      .map(function (x) {
-        if (this.key == "elementSpec") {
-          for (let es of x) {
-            if (es.$.mode == "delete") {
-              excludedElements.push(es.$.ident)
-            }
-          }
+        // when neither attributes are present, all elements are included
+        else {
+          includedElements = "all"
         }
-      })
+      }
+      // Populate from elementRef
+      else if (node.name == "elementRef") {
+        includedElements.push(node["@"].key)
+      }
+      // from elementSpec[@mode='delete']
+      else if (node.name == "elementSpec" && node["@"].mode == "delete") {
+        excludedElements.push(node["@"].ident)
+      }
+    }
 
     // Go through all elements for this module and determine whether
     // they're selected or not.
@@ -80,7 +62,7 @@ export const getElementsForModule = (state, params) => {
     return elements
 
   })
-  return poo(state)
+  return sel(state)
 }
 
 export default getElementsForModule

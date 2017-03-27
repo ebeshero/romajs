@@ -1,11 +1,15 @@
 {
   "name": "romajs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Javascript implementation of Roma in React-Redux",
   "scripts": {
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raffazizzi/romajs"
   },
   "license": "MIT",
   "dependencies": {
@@ -37,6 +41,7 @@
     "react-addons-test-utils": "^0.14.7",
     "redux-mock-store": "^1.2.1",
     "reselect": "^2.5.4",
+    "squash-xml-json": "^0.1.0",
     "traverse": "^0.6.6",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",

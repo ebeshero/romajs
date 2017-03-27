@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
 import { includeModules, excludeModules } from '../actions'
 import ModuleList from '../components/ModuleList'
-import traverse from 'traverse'
 
 const mapStateToProps = (state) => {
-  let selectedModules = traverse(state.odd.customization.json)
-    .reduce(function (acc, x) {
-      if (this.key == "moduleRef") acc = x
-      return acc
-    })
-    .reduce(function (acc, x) {
-      // NB this key is a TEI attribute, not a traverse.js key.
-      acc.push(x.$.key)
-      return acc
-    }, [])
+
+  let odd = state.odd.customization.json
+
+  let selectedModules = Object.keys(odd).reduce((acc, node_id)=>{
+    if (odd[node_id].name == "moduleRef") {
+      acc.push(odd[node_id]["@"]["key"])
+    }
+    return acc
+  }, [])
+
   let modules = state.odd.localsource.json.modules.map(module => {
     let selected = false
     if (selectedModules.indexOf(module.ident) > -1) {

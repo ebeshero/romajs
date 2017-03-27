@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import xml2js from 'xml2js';
+import {flattenXML, hydrateXML} from 'squash-xml-json';
 
 export const REQUEST_ODD = 'REQUEST_ODD';
 export const RECEIVE_ODD = 'RECEIVE_ODD';
@@ -34,8 +34,6 @@ export const DELETE_MODEL_CLASS = 'DELETE_MODEL_CLASS';
 export const CHANGE_DATATYPE = 'CHANGE_DATATYPE';
 export const CREATE_DATATYPE = 'CREATE_DATATYPE';
 export const DELETE_DATATYPE = 'DELETE_DATATYPE';
-
-const x2jParser = new xml2js.Parser()
 
 export function selectOdd(odd_url) {
   return {
@@ -200,9 +198,10 @@ export function fetchOdd(odd) {
         .then(response => response.text())
         .then((xml) => {
           // parse into JSON as well
-          x2jParser.parseString(xml, (err, result) => {
-              res(dispatch(receiveOdd(xml, result)))
-          })
+          // x2jParser.parseString(xml, (err, result) => {
+          //     res(dispatch(receiveOdd(xml, result)))
+          // })
+          res(dispatch(receiveOdd(flattenXML(xml))))
         })
     })
   }

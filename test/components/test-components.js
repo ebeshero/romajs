@@ -4,12 +4,11 @@ import configureMockStore from 'redux-mock-store'
 import fs from 'fs'
 import { shallow, mount } from 'enzyme';
 import expect, { spyOn, createSpy } from 'expect'
-import xml2js from 'xml2js'
+import {flattenXML, hydrateXML} from 'squash-xml-json'
 
 import * as containers from '../../containers'
 import * as components from '../../components'
 
-const x2jParser = new xml2js.Parser()
 const mockStore = configureMockStore()
 
 describe('Component: <Module />', () => {
@@ -122,69 +121,64 @@ describe('Component: <ElementList />', () => {
 
 })
 
-describe('Container: <FullModuleList />', (done) => {
+describe('Container: <FullModuleList />', () => {
   let odd = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
-  x2jParser.parseString(odd, (err, result) => {
-    const store = mockStore({
-       odd: {
-         customization: { json : result },
-         localsource: { json : P5 }
-       },
-       selectedOdd: ''
-    })
+  let json = flattenXML(odd)
+  const store = mockStore({
+     odd: {
+       customization: { json : json },
+       localsource: { json : P5 }
+     },
+     selectedOdd: ''
+  })
 
-    let Component, ModuleListComponent;
+  let Component, ModuleListComponent;
 
-    beforeEach(() => {
-  		const wrapper = mount(
-  			<Provider store={store}>
-  				<containers.FullModuleList />
-  			</Provider>
-  		);
+  beforeEach(() => {
+  	const wrapper = mount(
+  		<Provider store={store}>
+  			<containers.FullModuleList />
+  		</Provider>
+  	);
 
-  		Component = wrapper.find(containers.FullModuleList);
-  		ModuleListComponent = Component.find(components.ModuleList);
-  	});
+  	Component = wrapper.find(containers.FullModuleList);
+  	ModuleListComponent = Component.find(components.ModuleList);
+  });
 
-    it('should render', () => {
-      expect(Component.length).toBeTruthy();
-		  expect(ModuleListComponent.length).toBeTruthy();
-    })
-
+  it('should render', () => {
+    expect(Component.length).toBeTruthy();
+    expect(ModuleListComponent.length).toBeTruthy();
   })
 
 })
 
 describe('Container: <FullElementList />', (done) => {
 
-  it('should render all elements from moduleRef', (done) => {
+  it('should render all elements from moduleRef', () => {
 
     const onElementClick = expect.createSpy();
 
     let odd = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
-      const store = mockStore({
-         odd: {
-           customization: { json : result },
-           localsource: { json : P5 }
-         },
-         selectedOdd: ''
-      })
-
-  		const wrapper = mount(
-  			<Provider store={store}>
-  				<containers.FullElementList />
-  			</Provider>
-  		);
-
-  		let Component = wrapper.find(containers.FullElementList);
-  		let ElementListComponent = Component.find(components.ElementList);
-      let elements = ElementListComponent.find(components.Element);
-
-      expect(Component.length).toBeTruthy();
-		  expect(ElementListComponent.length).toBeTruthy();
-
-      done()
+    let json = flattenXML(odd)
+    const store = mockStore({
+       odd: {
+         customization: { json : json },
+         localsource: { json : P5 }
+       },
+       selectedOdd: ''
     })
+
+		const wrapper = mount(
+			<Provider store={store}>
+				<containers.FullElementList />
+			</Provider>
+		);
+
+		let Component = wrapper.find(containers.FullElementList);
+		let ElementListComponent = Component.find(components.ElementList);
+    let elements = ElementListComponent.find(components.Element);
+
+    expect(Component.length).toBeTruthy();
+	  expect(ElementListComponent.length).toBeTruthy();
   })
 })

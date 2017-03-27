@@ -1,9 +1,7 @@
 import expect from 'expect'
-import xml2js from 'xml2js'
+import {flattenXML, hydrateXML} from 'squash-xml-json';
 import fs from 'fs'
 import romajsApp from '../../reducers'
-
-const x2jParser = new xml2js.Parser()
 
 describe('Input ODD reducers', () => {
   it('should handle initial state', () => {
@@ -38,17 +36,25 @@ describe('Input ODD reducers', () => {
 
   it('should handle RECEIVE_ODD', () => {
     let xml = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
-    x2jParser.parseString(xml, (err, result) => {
-      let state = romajsApp({
-         odd: {customization: { isFetching: true } },
-         selectedOdd: './static/fakeData/bare.odd'
-      }, {
-        type: 'RECEIVE_ODD',
-        xml: xml,
-        json: result
-      })
-      expect(state.odd.customization.json.TEI.text[0].body[0]).toIncludeKey('schemaSpec')
+    let json = flattenXML(xml)
+    let state = romajsApp({
+       odd: {customization: { isFetching: true } },
+       selectedOdd: './static/fakeData/bare.odd'
+    }, {
+      type: 'RECEIVE_ODD',
+      xml: xml,
+      json: json
     })
+
+    let odd = state.odd.customization.json
+    let schemaSpec = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "schemaSpec") {
+        acc.push(node_id)
+      }
+      return acc
+    }, [])
+
+    expect(schemaSpec.length).toEqual(1)
   });
 
   it('should handle REQUEST_P5', () => {
@@ -85,20 +91,30 @@ describe('ODD modules operation reducers', () => {
       if (err) {
         throw "Unable to read file";
       }
-      x2jParser.parseString(data, (err, result) => {
-        let state = romajsApp({
-           odd: {customization: { isFetching: false, json: result } },
-           selectedOdd: ''
-        }, {
-          type: 'INCLUDE_MODULES',
-          modules: ['analysis', 'core']
-        })
-        var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef.filter(function (x){
-          if (x.$.key == 'analysis' || x.$.key == 'core') return x
-        })
-        expect(expectedModule.length).toEqual(2)
-        done();
+
+      let json = flattenXML(data)
+
+      let state = romajsApp({
+         odd: {customization: { isFetching: false, json: json } },
+         selectedOdd: ''
+      }, {
+        type: 'INCLUDE_MODULES',
+        modules: ['analysis', 'core']
       })
+
+      let odd = state.odd.customization.json
+      let addedModules = Object.keys(odd).reduce((acc, node_id) => {
+        if (odd[node_id].name == "moduleRef") {
+          let key = odd[node_id]["@"].key
+          if (key == "analysis" || key == "core") {
+            acc.push(key)
+          }
+        }
+        return acc
+      }, [])
+
+        expect(addedModules).toEqual(["core", "analysis"])
+        done();
     });
   })
 
@@ -107,130 +123,168 @@ describe('ODD modules operation reducers', () => {
       if (err) {
         throw "Unable to read file";
       }
-      x2jParser.parseString(data, (err, result) => {
-        let state = romajsApp({
-           odd: {customization: { isFetching: false, json: result } },
-           selectedOdd: ''
-        }, {
-          type: 'EXCLUDE_MODULES',
-          modules: ['analysis', 'header']
-        })
-        var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef.filter(function (x){
-          if (x.$.key == 'header') return x
-        })
-        expect(expectedModule.length).toEqual(0)
-        done();
+      let json = flattenXML(data)
+
+      let state = romajsApp({
+         odd: {customization: { isFetching: false, json: json } },
+         selectedOdd: ''
+      }, {
+        type: 'EXCLUDE_MODULES',
+        modules: ['analysis', 'header']
       })
+
+      let odd = state.odd.customization.json
+      let expectedModules = Object.keys(odd).reduce((acc, node_id) => {
+        if (odd[node_id].name == "moduleRef") {
+          let key = odd[node_id]["@"].key
+          if (key == "analysis" || key == "header") {
+            acc.push(key)
+          }
+        }
+        return acc
+      }, [])
+
+      expect(expectedModules.length).toEqual(0)
+      done();
     });
   })
 
   it('should handle INCLUDE_ELEMENTS (@except)', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core" except="list item p"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
-      let state = romajsApp({
-         odd: { customization: { json : result } },
-         selectedOdd: ''
-      }, {
-        type: 'INCLUDE_ELEMENTS',
-        elements: ['item', 'p'],
-        module: "core"
-      })
-      expect(state.odd.customization.json.schemaSpec.moduleRef[0].$.except).toEqual("list")
-      done();
+    let data = `<schemaSpec><moduleRef key="core" except="list item p"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json : json } },
+       selectedOdd: ''
+    }, {
+      type: 'INCLUDE_ELEMENTS',
+      elements: ['item', 'p'],
+      module: "core"
     })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == "moduleRef"){
+        expect(odd[node_id]["@"].except).toEqual("list")
+        done();
+      }
+    }
   })
 
   it('should handle INCLUDE_ELEMENTS (@except with one item)', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core" except="item list"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
-      let state = romajsApp({
-         odd: { customization: { json : result } },
-         selectedOdd: ''
-      }, {
-        type: 'INCLUDE_ELEMENTS',
-        elements: ['item', 'list'],
-        module: "core"
-      })
-      expect(state.odd.customization.json.schemaSpec.moduleRef[0].$.except).toNotExist()
-      done();
+    let data = `<schemaSpec><moduleRef key="core" except="item list"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json : json } },
+       selectedOdd: ''
+    }, {
+      type: 'INCLUDE_ELEMENTS',
+      elements: ['item', 'list'],
+      module: "core"
     })
-  })
+    let odd = state.odd.customization.json
 
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == "moduleRef"){
+        expect(odd[node_id]["@"].except).toNotExist()
+        done();
+      }
+    }
+  })
 
   it('should handle INCLUDE_ELEMENTS (@include)', (done) => {
     fs.readFile('test/fakeData/bare.odd', 'utf-8', function(err, data){
       if (err) {
         throw "Unable to read file";
       }
-      x2jParser.parseString(data, (err, result) => {
-        let state = romajsApp({
-           odd: { customization: { json: result } },
-           selectedOdd: ''
-        }, {
-          type: 'INCLUDE_ELEMENTS',
-          elements: ['p', 'list'],
-          module: "core"
-        })
-        var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef.filter(function (x){
-          if (x.$.key == 'core' && x.$.include) {
-            if (x.$.include.split(" ").indexOf("p") > -1 && x.$.include.split(" ").indexOf("list") > -1) {
-              return x
-            }
-          }
-        })
-        expect(expectedModule.length).toBeGreaterThan(0)
-        done();
-      })
-    });
-  })
-
-  it('should handle INCLUDE_ELEMENTS (@include on new moduleRef)', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
+      let json = flattenXML(data)
       let state = romajsApp({
-         odd: { customization: { json : result } },
-         selectedOdd: ''
-      }, {
-        type: 'INCLUDE_ELEMENTS',
-        elements: ['teiHeader', 'fileDesc'],
-        module: "header"
-      })
-      expect(state.odd.customization.json.schemaSpec.moduleRef[1])
-        .toEqual({ '$': { key: 'header', include: 'teiHeader fileDesc' } })
-      done();
-    })
-  })
-
-  it('should handle INCLUDE_ELEMENTS (remove elementSpec[@mode="delete"])', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p" module="core" mode="delete"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
-      let state = romajsApp({
-         odd: { customization: { json : result } },
-         selectedOdd: ''
-      }, {
-        type: 'INCLUDE_ELEMENTS',
-        elements: ['p'],
-        module: "core"
-      })
-      expect(state.odd.customization.json.schemaSpec.elementSpec[0].mode).toNotExist()
-      done();
-    })
-  })
-
-  it('should handle INCLUDE_ELEMENTS (elements already included)', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
-      let state = romajsApp({
-         odd: { customization: { json : result } },
+         odd: { customization: { json: json } },
          selectedOdd: ''
       }, {
         type: 'INCLUDE_ELEMENTS',
         elements: ['p', 'list'],
         module: "core"
       })
-      expect(state.odd.customization.json.schemaSpec.moduleRef[0]).toEqual({ '$': { key: 'core' } })
-      done();
+
+      let odd = state.odd.customization.json
+
+      for (let node_id of Object.keys(odd)) {
+        if (odd[node_id].name == "moduleRef" && odd[node_id]["@"].key == "core"){
+          expect(
+            odd[node_id]["@"].include.split(" ").indexOf("p") > -1 &&
+            odd[node_id]["@"].include.split(" ").indexOf("list") > -1
+          ).toBeTruthy()
+          done();
+        }
+      }
+    });
+  })
+
+  it('should handle INCLUDE_ELEMENTS (@include on new moduleRef)', (done) => {
+    let data = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json : json } },
+       selectedOdd: ''
+    }, {
+      type: 'INCLUDE_ELEMENTS',
+      elements: ['teiHeader', 'fileDesc'],
+      module: "header"
     })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == "moduleRef" && odd[node_id]["@"].key == "header"){
+        expect(odd[node_id]["@"].include).toEqual("teiHeader fileDesc")
+        done();
+      }
+    }
+  })
+
+  it('should handle INCLUDE_ELEMENTS (remove elementSpec[@mode="delete"])', (done) => {
+    let data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p" module="core" mode="delete"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json : json } },
+       selectedOdd: ''
+    }, {
+      type: 'INCLUDE_ELEMENTS',
+      elements: ['p'],
+      module: "core"
+    })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == "elementSpec"){
+        expect(odd[node_id]["@"].mode).toNotExist()
+        done();
+      }
+    }
+  })
+
+  it('should handle INCLUDE_ELEMENTS (elements already included)', (done) => {
+    let data = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
+    let json = flattenXML(data)
+      let state = romajsApp({
+         odd: { customization: { json : json } },
+         selectedOdd: ''
+      }, {
+        type: 'INCLUDE_ELEMENTS',
+        elements: ['p', 'list'],
+        module: "core"
+      })
+
+      let odd = state.odd.customization.json
+
+      for (let node_id of Object.keys(odd)) {
+        if (odd[node_id].name == "moduleRef"){
+          expect(odd[node_id]["@"]).toEqual({key : 'core'})
+          done();
+        }
+      }
   })
 
   it('should handle EXCLUDE_ELEMENTS (@include)', (done) => {
@@ -238,128 +292,151 @@ describe('ODD modules operation reducers', () => {
       if (err) {
         throw "Unable to read file";
       }
-      x2jParser.parseString(data, (err, result) => {
-        let state = romajsApp({
-           odd: { customization: { json: result } },
-           selectedOdd: ''
-        }, {
-          type: 'EXCLUDE_ELEMENTS',
-          elements: ['p', 'list'],
-          module: "core"
-        })
-        var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[3].schemaSpec[0].moduleRef.filter(function (x){
-          if (x.$.key == 'core' && x.$.include) {
-            if (x.$.include.split(" ").indexOf("p") == -1 && x.$.include.split(" ").indexOf("list") == -1) {
-              return x
-            }
-          }
-        })
-        expect(expectedModule.length).toBeGreaterThan(0)
-        done();
-      })
-    });
-  })
-
-  it('should handle EXCLUDE_ELEMENTS (@include with one item)', (done) => {
-    let state = romajsApp({
-       odd: { customization: { json: {
-         TEI : { text : [{ body : [{ div : [{ schemaSpec : [{
-           moduleRef : [
-             {$ : {"key" : "core", "include" : "p list" }},
-             {$ : {"key" : "tei"}}]
-         }] }] }] }] }
-       } } },
-       selectedOdd: ''
-    }, {
-      type: 'EXCLUDE_ELEMENTS',
-      elements: ['p', 'list'],
-      module: "core"
-    })
-    var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[0].schemaSpec[0].moduleRef
-    expect(expectedModule.length).toEqual(1)
-    done();
-  })
-
-  it('should handle EXCLUDE_ELEMENTS (@except)', (done) => {
-    let state = romajsApp({
-      odd: { customization: { json: {
-        TEI : { text : [{ body : [{ div : [{ schemaSpec : [{
-          moduleRef : [
-            {$ : {"key" : "core", "except" : "p" }}]
-        }] }] }] }] }
-      } } },
-       selectedOdd: ''
-    }, {
-      type: 'EXCLUDE_ELEMENTS',
-      elements: ['abbr', 'list'],
-      module: "core"
-    })
-    var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[0].schemaSpec[0].moduleRef.filter(function (x){
-      if (x.$.key == 'core' && x.$.except) {
-        if (x.$.except.split(" ").indexOf("abbr") > -1 && x.$.except.split(" ").indexOf("list") > -1) {
-          return x
-        }
-      }
-    })
-    expect(expectedModule.length).toBeGreaterThan(0)
-    done();
-  })
-
-  it('should handle EXCLUDE_ELEMENTS (elementRef)', (done) => {
-    let state = romajsApp({
-      odd: { customization: { json: {
-        TEI : { text : [{ body : [{ div : [{ schemaSpec : [{
-          moduleRef : [
-            {$ : {"key" : "tei"}}],
-          elementRef: [{$ : {"key" : "abbr"}}, {$ : {"key" : "p"}}, {$ : {"key" : "list"}}]
-        }] }] }] }] }
-      } } },
-       selectedOdd: ''
-    }, {
-      type: 'EXCLUDE_ELEMENTS',
-      elements: ['abbr', 'p'],
-      module: "core"
-    })
-    var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[0].schemaSpec[0].elementRef
-    expect(expectedModule.length).toEqual(1)
-    done();
-  })
-
-  it('should handle EXCLUDE_ELEMENTS (elementSpec)', (done) => {
-    let state = romajsApp({
-      odd: { customization: { json: {
-        TEI : { text : [{ body : [{ div : [{ schemaSpec : [{
-          moduleRef : [
-            {$ : {"key" : "tei"}}],
-          elementSpec: [{$ : {"ident" : "abbr", "mode" : "change"}}, {$ : {"ident" : "p", "mode" : "change"}}]
-        }] }] }] }] }
-      } } },
-       selectedOdd: ''
-    }, {
-      type: 'EXCLUDE_ELEMENTS',
-      elements: ['abbr', 'p'],
-      module: "core"
-    })
-    var expectedModule = state.odd.customization.json.TEI.text[0].body[0].div[0].schemaSpec[0].elementSpec
-    expect(expectedModule).toEqual([ { '$': { ident: 'abbr', mode: 'delete' } },
-                                       { '$': { ident: 'p', mode: 'delete' } } ])
-    done();
-  })
-
-  it('should handle EXCLUDE_ELEMENTS (elements already excluded)', (done) => {
-    let odd = `<schemaSpec><moduleRef key="core" except="p list"/></schemaSpec>`
-    x2jParser.parseString(odd, (err, result) => {
+      let json = flattenXML(data)
       let state = romajsApp({
-         odd: { customization: { json : result } },
+         odd: { customization: { json: json } },
          selectedOdd: ''
       }, {
         type: 'EXCLUDE_ELEMENTS',
         elements: ['p', 'list'],
         module: "core"
       })
-      expect(state.odd.customization.json.schemaSpec.moduleRef[0]).toEqual({ '$': { key: 'core', except: 'p list' } })
-      done();
+
+      let odd = state.odd.customization.json
+
+      for (let node_id of Object.keys(odd)) {
+        if (odd[node_id].name == "moduleRef" && odd[node_id]["@"].key == "core"){
+          expect(odd[node_id]["@"].include.split(" ").indexOf("p") == -1)
+          expect(odd[node_id]["@"].include.split(" ").indexOf("list") == -1)
+          done();
+        }
+      }
+    });
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (@include with one item)', (done) => {
+    let data = `<schemaSpec><moduleRef key="core" include="p list"/>
+                <moduleRef key="tei"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json: json } },
+       selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['p', 'list'],
+      module: "core"
     })
+
+    let odd = state.odd.customization.json
+
+    let modules = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "moduleRef") {
+        acc.push(node_id)
+      }
+      return acc
+    }, [])
+
+    expect(modules.length).toEqual(1)
+    done()
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (@except)', (done) => {
+    let data = `<schemaSpec><moduleRef key="core" except="p"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: { customization: { json: json } },
+       selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['abbr', 'list'],
+      module: "core"
+    })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == "moduleRef" && odd[node_id]["@"].key == "core"){
+        expect(odd[node_id]["@"].except.split(" ").indexOf("abbr") > -1)
+        expect(odd[node_id]["@"].except.split(" ").indexOf("list") > -1)
+        done();
+      }
+    }
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (elementRef)', (done) => {
+    let data = `<schemaSpec><moduleRef key="tei"/><elementRef key="abbr"/>
+                <elementRef key="p"/><elementRef key="list"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: { customization: { json: json } },
+       selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['abbr', 'p'],
+      module: "core"
+    })
+
+    let odd = state.odd.customization.json
+
+    let elementRefs = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "elementRef") {
+        acc.push(node_id)
+      }
+      return acc
+    }, [])
+
+    expect(elementRefs.length).toEqual(1)
+    done();
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (elementSpec)', (done) => {
+    let data = `<schemaSpec><moduleRef key="tei"/><elementSpec ident="abbr" mode="change"/>
+                <elementSpec ident="p" mode="change"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: { customization: { json: json } },
+       selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['abbr', 'p'],
+      module: "core"
+    })
+
+    let odd = state.odd.customization.json
+
+    let elementSpecs = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "elementSpec") {
+        acc.push(odd[node_id])
+      }
+      return acc
+    }, [])
+
+    expect(elementSpecs[0]["@"]).toEqual({"ident" : "abbr", "mode" : "delete"})
+    expect(elementSpecs[1]["@"]).toEqual({"ident" : "p", "mode" : "delete"})
+    done();
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (elements already excluded)', () => {
+    let data = `<schemaSpec><moduleRef key="core" except="p list"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+       odd: { customization: { json : json } },
+       selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['p', 'list'],
+      module: "core"
+    })
+    let odd = state.odd.customization.json
+
+    let moduleRefs = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "moduleRef") {
+        acc.push(odd[node_id])
+      }
+      return acc
+    }, [])
+
+    expect(moduleRefs[0]["@"]).toEqual({ key: 'core', except: 'p list' })
   })
 
 })

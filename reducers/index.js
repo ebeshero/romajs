@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {
-  SELECT_ODD, REQUEST_ODD, RECEIVE_ODD, REQUEST_P5, RECEIVE_P5,
+  SELECT_ODD, REQUEST_ODD, RECEIVE_ODD, PARSE_ODD, REQUEST_P5, RECEIVE_P5,
   INCLUDE_MODULES, EXCLUDE_MODULES, INCLUDE_ELEMENTS, EXCLUDE_ELEMENTS
 } from '../actions'
 
@@ -42,6 +42,7 @@ function odd(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ODD:
     case REQUEST_ODD:
+    case PARSE_ODD:
       return Object.assign({}, state,
         customization(state[action.odd], action)
       )
@@ -74,7 +75,8 @@ function odd(state = {}, action) {
           "@" : {
             key : module
           },
-          parent: schemaSpec
+          parent: schemaSpec,
+          children: []
         }
         odd[id] = new_node
         odd[schemaSpec].children.unshift(id)
@@ -165,7 +167,8 @@ function odd(state = {}, action) {
             key : action.module,
             include : action.elements.join(" ")
           },
-          parent: schemaSpec
+          parent: schemaSpec,
+          children: []
         }
         odd[id] = new_node
         odd[schemaSpec].children.unshift(id)
@@ -247,6 +250,14 @@ function customization(state = {
   customization: { isFetching: false }
 }, action) {
   switch (action.type) {
+    case PARSE_ODD:
+      return Object.assign({}, state, {
+        customization: {
+          isFetching: false,
+          xml: action.xml,
+          json: action.json
+        }
+      })
     case REQUEST_ODD:
       return Object.assign({}, state, {
         customization: {isFetching: true }

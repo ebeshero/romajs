@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Roma - ODD customization</title>
+    <title>Roma - ODD customization - Prototype 1.</title>
+    <style>
+      span {
+        cursor: pointer;
+      }
+    </style>
   </head>
-  <body>
-    <div class="romajs" id="root">
+  <body style="padding: 10px">
+    <h1>Roma js - ODD customization - Prototype 1 (User Testing)</h1>
+    <div>
+      <div style="float:left">
+          Upload ODD <input type="file" id="files">
+          <button type="button" id="open">Open</button>
+      </div>
+
+      <div style="float:right">
+        <button type="button" id="export">Export</button>
+      </div>
+
+    </div>
+    <div class="romajs" id="root" style="margin-top: 4em">
     </div>
     <script src="/static/bundle.js"></script>
   </body>

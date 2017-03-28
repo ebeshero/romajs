@@ -3,6 +3,7 @@ import {flattenXML, hydrateXML} from 'squash-xml-json';
 
 export const REQUEST_ODD = 'REQUEST_ODD';
 export const RECEIVE_ODD = 'RECEIVE_ODD';
+export const PARSE_ODD = 'PARSE_ODD';
 export const SELECT_ODD = 'SELECT_ODD';
 export const REQUEST_P5 = 'REQUEST_P5';
 export const RECEIVE_P5 = 'RECEIVE_P5';
@@ -55,6 +56,14 @@ function receiveOdd(string, json) {
     xml: string,
     json,
     receivedAt: Date.now()
+  }
+}
+
+export function parseOdd(xmlstring) {
+  return {
+    type: PARSE_ODD,
+    xml: xmlstring,
+    json: flattenXML(xmlstring)
   }
 }
 
@@ -197,11 +206,7 @@ export function fetchOdd(odd) {
       fetch(odd)
         .then(response => response.text())
         .then((xml) => {
-          // parse into JSON as well
-          // x2jParser.parseString(xml, (err, result) => {
-          //     res(dispatch(receiveOdd(xml, result)))
-          // })
-          res(dispatch(receiveOdd(flattenXML(xml))))
+          res(dispatch(receiveOdd(xml, flattenXML(xml))))
         })
     })
   }

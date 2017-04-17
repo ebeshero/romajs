@@ -37,7 +37,7 @@ button.addEventListener("click",function(e){
 
       store.dispatch(parseOdd(e.target.result))
 
-      store.dispatch(fetchP5('http://localhost:3000/static/fakeData/p5subset.json')).then((action)=>{
+      store.dispatch(fetchP5('static/fakeData/p5subset.json')).then((action)=>{
         render(
           <Provider store={store}>
             <App />

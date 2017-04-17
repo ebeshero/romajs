@@ -11,7 +11,7 @@ const isProduction = nodeEnv === 'production';
 
 const jsSourcePath = path.join(__dirname, '.');
 const buildPath = path.join(__dirname, './build');
-const imgPath = path.join(__dirname, './assets/img');
+const imgPath = path.join(__dirname, './source/assets/img');
 const sourcePath = path.join(__dirname, '.');
 
 // Common plugins
@@ -162,7 +162,7 @@ module.exports = {
   },
   plugins,
   devServer: {
-    contentBase: isProduction ? './build' : './source',
+    contentBase: isProduction ? './build' : '.',
     historyApiFallback: true,
     port: 3000,
     compress: isProduction,

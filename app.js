@@ -18813,7 +18813,7 @@ var getElementsForModule = exports.getElementsForModule = function getElementsFo
             }
         }
         // Populate from elementRef
-        else if (node.name == "elementRef") {
+        else if (node.name == "elementRef" && includedElements != "all") {
             includedElements.push(node["@"].key);
           }
           // from elementSpec[@mode='delete']
@@ -18875,4 +18875,4 @@ exports.default = getElementsForModule;
 /***/ })
 
 },["./index.js"]);
-//# sourceMappingURL=app-c4a574c1bf41e067e9fd.js.map
+//# sourceMappingURL=app-14b7798caf24cdf5292e.js.map

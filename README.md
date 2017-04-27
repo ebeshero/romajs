@@ -18,10 +18,10 @@ $ npm test
 
 ## Serve locally (for development)
 ```
-$ node server.js
+$ npm start
 ```
 
-## Development progress
-
- * Setting up Redux actions and reducers
- * Tests being written progressively
+## Build static assets (for now)
+```
+$ webpack --define process.env.NODE_ENV=\"production\"
+```

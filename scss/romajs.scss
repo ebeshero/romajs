@@ -1,0 +1,113 @@
+// #romajs {
+//   .mdl-layout__header {
+//     z-index: 10;
+//   }
+// }
+
+@import "@material/animation/mdc-animation";
+@import "@material/button/mdc-button";
+@import "@material/card/mdc-card";
+@import "@material/checkbox/mdc-checkbox";
+@import "@material/dialog/mdc-dialog";
+@import "@material/drawer/mdc-drawer";
+@import "@material/elevation/mdc-elevation";
+@import "@material/fab/mdc-fab";
+@import "@material/form-field/mdc-form-field";
+@import "@material/grid-list/mdc-grid-list";
+@import "@material/icon-toggle/mdc-icon-toggle";
+@import "@material/layout-grid/mdc-layout-grid";
+@import "@material/list/mdc-list";
+@import "@material/menu/mdc-menu";
+@import "@material/radio/mdc-radio";
+@import "@material/ripple/mdc-ripple";
+@import "@material/select/mdc-select";
+@import "@material/snackbar/mdc-snackbar";
+@import "@material/switch/mdc-switch";
+@import "@material/textfield/mdc-textfield";
+@import "@material/theme/mdc-theme";
+@import "@material/toolbar/mdc-toolbar";
+@import "@material/typography/mdc-typography";
+
+/* Ensure layout covers the entire screen. */
+html {
+  height: 100%;
+}
+
+/* Place drawer and content side by side. */
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+#romajs > div {
+  display: flex;
+  flex-direction: row;
+}
+
+/* A simple menu button. */
+.romajs-menu {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  color: #FFF;
+  box-sizing: border-box;
+  outline-style: none;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0px 50px 0px 0px;
+}
+
+/* Stack toolbar and main on top of each other. */
+.romajs-content {
+  display: inline-flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 64px 0 0 0;
+}
+
+.romajs-main {
+  padding-left: 16px;
+}
+
+.romajs-toolbar {
+  .mdc-toolbar__section--align-end .material-icons {
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.romajs-card {
+  max-height: 300px;
+  min-height: 300px;
+  justify-content: flex-start;
+
+  .mdc-card__supporting-text {
+    overflow-y: auto;
+    margin-bottom: 24px;
+  }
+
+  .mdc-card__title--large {
+    padding-top: 3px;
+  }
+
+  h1 {
+    float:left;
+  }
+
+  .mdc-form-field {
+    float: right;
+  }
+
+  .romajs-elementIdent {
+    padding-top: 20px;
+  }
+
+}

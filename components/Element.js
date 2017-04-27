@@ -1,18 +1,25 @@
 import React, { PropTypes } from 'react'
 
-const Element = ({ onClick, selected, ident }) => (
-  <li>
-    <span
-      onClick={onClick}
-      style={{
-        color: selected ? 'blue' : 'black'
-      }}
-    >{ident}</span>
+const Element = ({ onChange, selected, ident }) => (
+  <li className="mdc-list-item">
+    <span className="romajs-elementIdent">{ident}</span>
+    <span className="mdc-list-item__end-detail ">
+      <span className="mdc-checkbox">
+        <input type="checkbox" id="basic-checkbox" className="mdc-checkbox__native-control"
+          checked={selected} onChange={onChange}/>
+        <span className="mdc-checkbox__background">
+          <svg className="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+            <path className="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          </svg>
+          <span className="mdc-checkbox__mixedmark"></span>
+        </span>
+      </span>
+    </span>
   </li>
 )
 
 Element.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   ident: PropTypes.string.isRequired
 }

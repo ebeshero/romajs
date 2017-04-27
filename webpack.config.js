@@ -1,10 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
+const glob = require('glob');
 
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+// const autoprefixer = require('autoprefixer');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
@@ -32,16 +33,16 @@ const plugins = [
     path: buildPath,
     filename: 'index.html',
   }),
-  new webpack.LoaderOptionsPlugin({
+  new webpack.LoaderOptionsPlugin ({
     options: {
-      postcss: [
-        autoprefixer({
-          browsers: [
-            'last 3 version',
-            'ie >= 10',
-          ],
-        }),
-      ],
+      // postcss: [
+      //   autoprefixer({
+      //     browsers: [
+      //       'last 3 version',
+      //       'ie >= 10',
+      //     ],
+      //   }),
+      // ],
       context: sourcePath,
     },
   }),
@@ -55,6 +56,34 @@ const rules = [
     use: [
       'babel-loader',
     ],
+  },{
+    test: /\.css$/,
+    use: ['style-loader', 'css-loader'],
+  },
+  {
+    test: /\.scss$/,
+    use: [
+      {
+        loader: 'style-loader'
+      },
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 2,
+          modules: true,
+          localIdentName: '[local]'
+        }
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          outputStyle: 'expanded',
+          sourceMap: true,
+          sourceMapContents: true,
+          includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d)),
+        }
+      }
+    ]
   },
   {
     test: /\.(png|gif|jpg|svg)$/,
@@ -91,15 +120,32 @@ if (isProduction) {
   );
 
   // Production rules
-  rules.push(
-    {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader!postcss-loader!sass-loader',
-      }),
-    }
-  );
+  // rules.push(
+  //   {
+  //     test: /\.scss$/,
+  //     use: [
+  //       {
+  //         loader: 'style-loader'
+  //       },
+  //       {
+  //         loader: 'css-loader',
+  //         options: {
+  //           importLoaders: 2,
+  //           modules: true,
+  //           localIdentName: '[name]__[local]'
+  //         }
+  //       },
+  //       {
+  //         loader: 'sass-loader',
+  //         options: {
+  //           outputStyle: 'expanded',
+  //           sourceMap: true,
+  //           sourceMapContents: true
+  //         }
+  //       }
+  //     ]
+  //   },
+  // );
 } else {
   // Development plugins
   plugins.push(
@@ -108,23 +154,32 @@ if (isProduction) {
   );
 
   // Development rules
-  rules.push(
-    {
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: [
-        'style-loader',
-        // Using source maps breaks urls in the CSS loader
-        // https://github.com/webpack/css-loader/issues/232
-        // This comment solves it, but breaks testing from a local network
-        // https://github.com/webpack/css-loader/issues/232#issuecomment-240449998
-        // 'css-loader?sourceMap',
-        'css-loader',
-        'postcss-loader',
-        'sass-loader?sourceMap',
-      ],
-    }
-  );
+  // rules.push(
+  //   {
+  //     test: /\.scss$/,
+  //     use: [
+  //       {
+  //         loader: 'style-loader'
+  //       },
+  //       {
+  //         loader: 'css-loader',
+  //         options: {
+  //           importLoaders: 2,
+  //           modules: true,
+  //           localIdentName: '[name]__[local]'
+  //         }
+  //       },
+  //       {
+  //         loader: 'sass-loader',
+  //         options: {
+  //           outputStyle: 'expanded',
+  //           sourceMap: true,
+  //           sourceMapContents: true
+  //         }
+  //       }
+  //     ]
+  //   }
+  // );
 }
 
 module.exports = {
@@ -154,7 +209,7 @@ module.exports = {
     rules,
   },
   resolve: {
-    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
+    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx', '.scss', '.css'],
     modules: [
       path.resolve(__dirname, 'node_modules'),
       jsSourcePath,

@@ -13,7 +13,7 @@ const mapStateToProps = (state, params) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onElementClick: (name, module, selected) => {
+    onElementChange: (name, module, selected) => {
       if (selected) {
         dispatch(excludeElements([name], module))
       }

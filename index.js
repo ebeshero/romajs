@@ -1,3 +1,5 @@
+import './scss/romajs.scss'
+
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
@@ -7,7 +9,7 @@ import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { selectOdd, fetchOdd, fetchP5, parseOdd, includeModules } from './actions'
 import romajsApp from './reducers'
-import App from './components/App'
+import App from './containers/App'
 import {hydrateXML} from 'squash-xml-json';
 import saveAs from 'save-as';
 
@@ -23,39 +25,39 @@ let store = createStore(
 
 // Simple upolad and download components for preliminary user testing
 // This code is not meant to last
-var button = document.getElementById("open");
-button.addEventListener("click",function(e){
-
-    button.disabled = "true";
-
-    let files = document.getElementById("files").files
-
-    let reader = new FileReader()
-    console.log(reader.readAsText(files[0]))
-
-    reader.onload = (e) => {
-
-      store.dispatch(parseOdd(e.target.result))
-
-      store.dispatch(fetchP5('static/fakeData/p5subset.json')).then((action)=>{
-        render(
-          <Provider store={store}>
-            <App />
-          </Provider>,
-          document.getElementById('root')
-        )
-      })
-  }
-
-},false);
-
-var exportBtn = document.getElementById("export");
-exportBtn.addEventListener("click",function(e){
-  let xml_string = hydrateXML(store.getState().odd.customization.json)
-  let bb = new Blob([xml_string], {"type":"text\/xml"});
-  saveAs(bb, 'new_odd.xml');
-
-},false);
+// var button = document.getElementById("open");
+// button.addEventListener("click",function(e){
+//
+//     button.disabled = "true";
+//
+//     let files = document.getElementById("files").files
+//
+//     let reader = new FileReader()
+//     console.log(reader.readAsText(files[0]))
+//
+//     reader.onload = (e) => {
+//
+//       store.dispatch(parseOdd(e.target.result))
+//
+//       store.dispatch(fetchP5('static/fakeData/p5subset.json')).then((action)=>{
+//         render(
+//           <Provider store={store}>
+//             <App />
+//           </Provider>,
+//           document.getElementById('romajs')
+//         )
+//       })
+//   }
+//
+// },false);
+//
+// var exportBtn = document.getElementById("export");
+// exportBtn.addEventListener("click",function(e){
+//   let xml_string = hydrateXML(store.getState().odd.customization.json)
+//   let bb = new Blob([xml_string], {"type":"text\/xml"});
+//   saveAs(bb, 'new_odd.xml');
+//
+// },false);
 
 
 
@@ -65,14 +67,21 @@ exportBtn.addEventListener("click",function(e){
 //
 // store.dispatch(selectOdd(testoddURL));
 // store.dispatch(fetchOdd(testoddURL)).then((action) => {
-  //   store.dispatch(fetchP5('http://localhost:3000/static/fakeData/p5subset.json')).then((action)=>{
-  //     // store.dispatch(includeModules(['header', 'core']))
-  //     render(
-  //       <Provider store={store}>
-  //         <App />
-  //       </Provider>,
-  //       document.getElementById('root')
-  //     )
-  //   })
-  // }
+//     store.dispatch(fetchP5('http://localhost:3000/static/fakeData/p5subset.json')).then((action)=>{
+//       // store.dispatch(includeModules(['header', 'core']))
+//       render(
+//         <Provider store={store}>
+//           <App />
+//         </Provider>,
+//         document.getElementById('romajs')
+//       )
+//     })
+//   }
 // );
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('romajs')
+)

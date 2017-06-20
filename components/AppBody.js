@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { Component } from 'react'
-import FullModuleList from '../containers/FullModuleList'
+import FullItemList from '../containers/FullItemList'
 
-import * as Drawer from '@material/drawer';
+// import * as Drawer from '@material/drawer';
 
 class AppBody extends Component {
 
@@ -12,31 +12,9 @@ class AppBody extends Component {
 
   render () {
     return <div>
-    <aside className="mdc-persistent-drawer">
-        <nav className="mdc-persistent-drawer__drawer">
-          <div className="mdc-persistent-drawer__toolbar-spacer"></div>
-          <div className="mdc-list-group">
-            <nav className="mdc-list">
-              <a className="mdc-list-item" href="#">
-                <i className="material-icons mdc-list-item__start-detail" aria-hidden="true">dashboard</i>Dashboard
-              </a>
-              <a className="mdc-list-item mdc-persistent-drawer--selected" href="#">
-                <i className="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Modules &amp; Elements
-              </a>
-              <a className="mdc-list-item" href="#">
-                <i className="material-icons mdc-list-item__start-detail" aria-hidden="true">bubble_chart</i>Classes
-              </a>
-              <a className="mdc-list-item" href="#">
-                <i className="material-icons mdc-list-item__start-detail" aria-hidden="true">vpn_key</i>Datatypes
-              </a>
-            </nav>
-          </div>
-        </nav>
-      </aside>
       <header className="mdc-toolbar mdc-elevation--z4 mdc-toolbar--fixed romajs-toolbar">
         <div className="mdc-toolbar__row">
           <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
-            <button className="romajs-menu material-icons">menu</button>
             <span className="mdc-toolbar__title">Roma js - ODD customization - Prototype 1</span>
           </section>
           <section className="mdc-toolbar__section mdc-toolbar__section--align-end">
@@ -45,25 +23,49 @@ class AppBody extends Component {
             <a className="material-icons" title="Download ODD" onClick={()=>{this.props.onDownloadClick(this.props.odd.customization.json)}}>file_download</a>
           </section>
         </div>
+        <div className="mdc-toolbar__row romajs-toolbar2">
+          <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
+            <span className="mdl-chip mdl-chip--deletable romajs-itemtype-selected">
+                <span className="mdl-chip__text">Elements</span>
+                <button type="button" className="mdl-chip__action"><i className="material-icons">cancel</i></button>
+            </span>
+            <span className="mdl-chip mdl-chip--deletable">
+                <span className="mdl-chip__text">Classes</span>
+                <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
+            </span>
+            <span className="mdl-chip mdl-chip--deletable">
+                <span className="mdl-chip__text">Datatypes</span>
+                <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
+            </span>
+          </section>
+          <section className="mdc-toolbar__section mdc-toolbar__section--align-end">
+            <span className="mdl-chip mdl-chip--deletable romajs-searchbar">
+                <span className="mdl-chip__text">
+                  <div className="mdc-textfield">
+                    <input type="text" className="mdc-textfield__input" id="search-textfield" placeholder="search"/>
+                  </div>
+                </span>
+                <button type="button" className="mdl-chip__action"><i className="material-icons">search</i></button>
+            </span>
+          </section>
+        </div>
       </header>
       <div className="romajs-content">
         <main className="romajs-main">
-          <FullModuleList/>
+          <FullItemList/>
         </main>
-    </div>
+      </div>
     </div>
   }
 
-  // <FullModuleList/>
-
   componentDidMount() {
     // Use Drawer.MDCFoundation for greater control
-    var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
-    drawr.open = true;
-    // This should be handled more natively:
-    document.querySelector('.romajs-menu').addEventListener('click', function() {
-      drawr.open = !drawr.open;
-    });
+    // var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
+    // drawr.open = true;
+    // // This should be handled more natively:
+    // document.querySelector('.romajs-menu').addEventListener('click', function() {
+    //   drawr.open = !drawr.open;
+    // });
    }
 
 }

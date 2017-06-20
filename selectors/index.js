@@ -26,7 +26,7 @@ export const getElementsForModule = (state, params) => {
         }
       }
       // Populate from elementRef
-      else if (node.name == "elementRef") {
+      else if (node.name == "elementRef" && includedElements != "all") {
         includedElements.push(node["@"].key)
       }
       // from elementSpec[@mode='delete']

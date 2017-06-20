@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Element from './Element'
 
 const ElementList = ({ elements, onElementChange }) => (
-  <ul className="mdc-list mdc-list--dense">
+  <ul className="mdc-list mdc-list--two-line">
     {elements.map(element =>
       <Element
         key={element.ident}

@@ -280,6 +280,29 @@ function fetchP5(url) {
 
 /***/ }),
 
+/***/ "./actions/interface.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setFilterTerm = setFilterTerm;
+/* Actions related to the user interface, not ODD */
+
+var SET_FILTER_TERM = exports.SET_FILTER_TERM = 'SET_FILTER_TERM';
+
+function setFilterTerm(term) {
+  return {
+    type: SET_FILTER_TERM,
+    term: term
+  };
+}
+
+/***/ }),
+
 /***/ "./components/AppBody.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -308,15 +331,13 @@ var _index6 = _interopRequireDefault(_index5);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _FullModuleList = __webpack_require__("./containers/FullModuleList.js");
+var _FullItemList = __webpack_require__("./containers/FullItemList.js");
 
-var _FullModuleList2 = _interopRequireDefault(_FullModuleList);
+var _FullItemList2 = _interopRequireDefault(_FullItemList);
 
-var _drawer = __webpack_require__("./node_modules/@material/drawer/index.js");
+var _FilterSearch = __webpack_require__("./containers/FilterSearch.js");
 
-var Drawer = _interopRequireWildcard(_drawer);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _FilterSearch2 = _interopRequireDefault(_FilterSearch);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -352,6 +373,8 @@ function _wrapComponent(id) {
   };
 }
 
+// import * as Drawer from '@material/drawer';
+
 var AppBody = _wrapComponent('AppBody')(function (_Component) {
   _inherits(AppBody, _Component);
 
@@ -370,63 +393,6 @@ var AppBody = _wrapComponent('AppBody')(function (_Component) {
         'div',
         null,
         _react3.default.createElement(
-          'aside',
-          { className: 'mdc-persistent-drawer' },
-          _react3.default.createElement(
-            'nav',
-            { className: 'mdc-persistent-drawer__drawer' },
-            _react3.default.createElement('div', { className: 'mdc-persistent-drawer__toolbar-spacer' }),
-            _react3.default.createElement(
-              'div',
-              { className: 'mdc-list-group' },
-              _react3.default.createElement(
-                'nav',
-                { className: 'mdc-list' },
-                _react3.default.createElement(
-                  'a',
-                  { className: 'mdc-list-item', href: '#' },
-                  _react3.default.createElement(
-                    'i',
-                    { className: 'material-icons mdc-list-item__start-detail', 'aria-hidden': 'true' },
-                    'dashboard'
-                  ),
-                  'Dashboard'
-                ),
-                _react3.default.createElement(
-                  'a',
-                  { className: 'mdc-list-item mdc-persistent-drawer--selected', href: '#' },
-                  _react3.default.createElement(
-                    'i',
-                    { className: 'material-icons mdc-list-item__start-detail', 'aria-hidden': 'true' },
-                    'code'
-                  ),
-                  'Modules & Elements'
-                ),
-                _react3.default.createElement(
-                  'a',
-                  { className: 'mdc-list-item', href: '#' },
-                  _react3.default.createElement(
-                    'i',
-                    { className: 'material-icons mdc-list-item__start-detail', 'aria-hidden': 'true' },
-                    'bubble_chart'
-                  ),
-                  'Classes'
-                ),
-                _react3.default.createElement(
-                  'a',
-                  { className: 'mdc-list-item', href: '#' },
-                  _react3.default.createElement(
-                    'i',
-                    { className: 'material-icons mdc-list-item__start-detail', 'aria-hidden': 'true' },
-                    'vpn_key'
-                  ),
-                  'Datatypes'
-                )
-              )
-            )
-          )
-        ),
-        _react3.default.createElement(
           'header',
           { className: 'mdc-toolbar mdc-elevation--z4 mdc-toolbar--fixed romajs-toolbar' },
           _react3.default.createElement(
@@ -435,11 +401,6 @@ var AppBody = _wrapComponent('AppBody')(function (_Component) {
             _react3.default.createElement(
               'section',
               { className: 'mdc-toolbar__section mdc-toolbar__section--align-start' },
-              _react3.default.createElement(
-                'button',
-                { className: 'romajs-menu material-icons' },
-                'menu'
-              ),
               _react3.default.createElement(
                 'span',
                 { className: 'mdc-toolbar__title' },
@@ -463,6 +424,73 @@ var AppBody = _wrapComponent('AppBody')(function (_Component) {
                 'file_download'
               )
             )
+          ),
+          _react3.default.createElement(
+            'div',
+            { className: 'mdc-toolbar__row romajs-toolbar2' },
+            _react3.default.createElement(
+              'section',
+              { className: 'mdc-toolbar__section mdc-toolbar__section--align-start' },
+              _react3.default.createElement(
+                'span',
+                { className: 'mdl-chip mdl-chip--deletable romajs-itemtype-selected' },
+                _react3.default.createElement(
+                  'span',
+                  { className: 'mdl-chip__text' },
+                  'Elements'
+                ),
+                _react3.default.createElement(
+                  'button',
+                  { type: 'button', className: 'mdl-chip__action' },
+                  _react3.default.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    'cancel'
+                  )
+                )
+              ),
+              _react3.default.createElement(
+                'span',
+                { className: 'mdl-chip mdl-chip--deletable' },
+                _react3.default.createElement(
+                  'span',
+                  { className: 'mdl-chip__text' },
+                  'Classes'
+                ),
+                _react3.default.createElement(
+                  'button',
+                  { type: 'button', className: 'mdl-chip__action' },
+                  _react3.default.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    'add_circle'
+                  )
+                )
+              ),
+              _react3.default.createElement(
+                'span',
+                { className: 'mdl-chip mdl-chip--deletable' },
+                _react3.default.createElement(
+                  'span',
+                  { className: 'mdl-chip__text' },
+                  'Datatypes'
+                ),
+                _react3.default.createElement(
+                  'button',
+                  { type: 'button', className: 'mdl-chip__action' },
+                  _react3.default.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    'add_circle'
+                  )
+                )
+              )
+            ),
+            _react3.default.createElement(
+              'section',
+              { className: 'mdc-toolbar__section mdc-toolbar__section--align-end' },
+              _react3.default.createElement(_FilterSearch2.default, null)
+            )
           )
         ),
         _react3.default.createElement(
@@ -471,24 +499,21 @@ var AppBody = _wrapComponent('AppBody')(function (_Component) {
           _react3.default.createElement(
             'main',
             { className: 'romajs-main' },
-            _react3.default.createElement(_FullModuleList2.default, null)
+            _react3.default.createElement(_FullItemList2.default, null)
           )
         )
       );
     }
-
-    // <FullModuleList/>
-
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // Use Drawer.MDCFoundation for greater control
-      var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
-      drawr.open = true;
-      // This should be handled more natively:
-      document.querySelector('.romajs-menu').addEventListener('click', function () {
-        drawr.open = !drawr.open;
-      });
+      // var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
+      // drawr.open = true;
+      // // This should be handled more natively:
+      // document.querySelector('.romajs-menu').addEventListener('click', function() {
+      //   drawr.open = !drawr.open;
+      // });
     }
   }]);
 
@@ -504,7 +529,7 @@ exports.default = AppBody;
 
 /***/ }),
 
-/***/ "./components/Element.js":
+/***/ "./components/FilterSearchBar.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -520,52 +545,120 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Element = function Element(_ref) {
-  var onChange = _ref.onChange,
-      selected = _ref.selected,
-      ident = _ref.ident;
+var FilterSearchBar = function FilterSearchBar(_ref) {
+  var onInputChange = _ref.onInputChange;
   return _react2.default.createElement(
-    "li",
-    { className: "mdc-list-item" },
+    "span",
+    { className: "mdl-chip mdl-chip--deletable romajs-searchbar" },
     _react2.default.createElement(
       "span",
-      { className: "romajs-elementIdent" },
-      ident
+      { className: "mdl-chip__text" },
+      _react2.default.createElement(
+        "div",
+        { className: "mdc-textfield" },
+        _react2.default.createElement("input", { type: "text", className: "mdc-textfield__input",
+          id: "search-textfield", placeholder: "filter items",
+          onChange: function onChange(e) {
+            onInputChange(e.target.value);
+          } })
+      )
     ),
     _react2.default.createElement(
-      "span",
-      { className: "mdc-list-item__end-detail " },
+      "button",
+      { type: "button", className: "mdl-chip__action" },
       _react2.default.createElement(
-        "span",
-        { className: "mdc-checkbox" },
-        _react2.default.createElement("input", { type: "checkbox", id: "basic-checkbox", className: "mdc-checkbox__native-control",
-          checked: selected, onChange: onChange }),
-        _react2.default.createElement(
-          "span",
-          { className: "mdc-checkbox__background" },
-          _react2.default.createElement(
-            "svg",
-            { className: "mdc-checkbox__checkmark", viewBox: "0 0 24 24" },
-            _react2.default.createElement("path", { className: "mdc-checkbox__checkmark__path", fill: "none", stroke: "white", d: "M1.73,12.91 8.1,19.28 22.79,4.59" })
-          ),
-          _react2.default.createElement("span", { className: "mdc-checkbox__mixedmark" })
-        )
+        "i",
+        { className: "material-icons" },
+        "search"
       )
     )
   );
 };
 
-Element.propTypes = {
-  onChange: _react.PropTypes.func.isRequired,
-  selected: _react.PropTypes.bool.isRequired,
-  ident: _react.PropTypes.string.isRequired
+FilterSearchBar.propTypes = {
+  onInputChange: _react.PropTypes.func.isRequired
 };
 
-exports.default = Element;
+exports.default = FilterSearchBar;
 
 /***/ }),
 
-/***/ "./components/ElementList.js":
+/***/ "./components/Item.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _SingleModule = __webpack_require__("./containers/SingleModule.js");
+
+var _SingleModule2 = _interopRequireDefault(_SingleModule);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Item = function Item(_ref) {
+  var onChange = _ref.onChange,
+      selected = _ref.selected,
+      ident = _ref.ident,
+      desc = _ref.desc,
+      module = _ref.module;
+  return _react2.default.createElement(
+    'li',
+    { className: 'mdc-list-item mdc-elevation--z1' },
+    _react2.default.createElement(
+      'span',
+      { className: 'mdc-checkbox' },
+      _react2.default.createElement('input', { type: 'checkbox', id: 'basic-checkbox', className: 'mdc-checkbox__native-control',
+        checked: selected, onChange: onChange }),
+      _react2.default.createElement(
+        'span',
+        { className: 'mdc-checkbox__background' },
+        _react2.default.createElement(
+          'svg',
+          { className: 'mdc-checkbox__checkmark', viewBox: '0 0 24 24' },
+          _react2.default.createElement('path', { className: 'mdc-checkbox__checkmark__path', fill: 'none', stroke: 'white', d: 'M1.73,12.91 8.1,19.28 22.79,4.59' })
+        ),
+        _react2.default.createElement('span', { className: 'mdc-checkbox__mixedmark' })
+      )
+    ),
+    _react2.default.createElement(
+      'span',
+      { className: 'mdc-list-item__text' },
+      ident,
+      _react2.default.createElement(
+        'span',
+        { className: 'mdc-list-item__text__secondary' },
+        desc
+      )
+    ),
+    _react2.default.createElement(
+      'span',
+      { className: 'mdc-list-item__end-detail' },
+      _react2.default.createElement(_SingleModule2.default, { ident: module })
+    )
+  );
+};
+
+Item.propTypes = {
+  onChange: _react.PropTypes.func.isRequired,
+  selected: _react.PropTypes.bool.isRequired,
+  ident: _react.PropTypes.string.isRequired,
+  desc: _react.PropTypes.string.isRequired,
+  module: _react.PropTypes.string.isRequired
+};
+
+exports.default = Item;
+
+/***/ }),
+
+/***/ "./components/ItemList.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -581,39 +674,44 @@ var _react = __webpack_require__("./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Element = __webpack_require__("./components/Element.js");
+var _Item = __webpack_require__("./components/Item.js");
 
-var _Element2 = _interopRequireDefault(_Element);
+var _Item2 = _interopRequireDefault(_Item);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ElementList = function ElementList(_ref) {
+var ItemList = function ItemList(_ref) {
   var elements = _ref.elements,
-      onElementChange = _ref.onElementChange;
+      onItemChange = _ref.onItemChange;
   return _react2.default.createElement(
     'ul',
-    { className: 'mdc-list mdc-list--dense' },
+    { className: 'mdc-list mdc-list--two-line romajs-itemlist' },
     elements.map(function (element) {
-      return _react2.default.createElement(_Element2.default, _extends({
-        key: element.ident
-      }, element, {
-        onChange: function onChange() {
-          return onElementChange(element.ident, element.module, element.selected);
-        }
-      }));
+      if (element.visible) {
+        return _react2.default.createElement(_Item2.default, _extends({
+          key: element.ident
+        }, element, {
+          onChange: function onChange() {
+            return onItemChange(element.ident, element.module, element.selected);
+          }
+        }));
+      }
     })
   );
 };
 
-ElementList.propTypes = {
+ItemList.propTypes = {
   elements: _react.PropTypes.arrayOf(_react.PropTypes.shape({
     selected: _react.PropTypes.bool,
-    ident: _react.PropTypes.string.isRequired
+    visible: _react.PropTypes.bool,
+    ident: _react.PropTypes.string.isRequired,
+    desc: _react.PropTypes.string.isRequired,
+    module: _react.PropTypes.string.isRequired
   }).isRequired).isRequired,
-  onElementChange: _react.PropTypes.func.isRequired
+  onItemChange: _react.PropTypes.func.isRequired
 };
 
-exports.default = ElementList;
+exports.default = ItemList;
 
 /***/ }),
 
@@ -631,10 +729,6 @@ var _react = __webpack_require__("./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _FullElementList = __webpack_require__("./containers/FullElementList.js");
-
-var _FullElementList2 = _interopRequireDefault(_FullElementList);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Module = function Module(_ref) {
@@ -642,48 +736,33 @@ var Module = function Module(_ref) {
       selected = _ref.selected,
       ident = _ref.ident;
   return _react2.default.createElement(
-    'div',
-    { className: 'mdl-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone' },
+    "span",
+    null,
     _react2.default.createElement(
-      'div',
-      { className: 'mdc-card romajs-card', style: {
-          backgroundColor: selected ? "#d2f9c2" : ""
+      "button",
+      { type: "button", className: "mdl-chip__action", onClick: function onClick() {
+          return onChange(ident, selected);
         } },
-      _react2.default.createElement(
-        'section',
-        { className: 'mdc-card__primary' },
-        _react2.default.createElement(
-          'h1',
-          { className: 'mdc-card__title mdc-card__title--large' },
-          ident
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'mdc-form-field' },
-          _react2.default.createElement(
-            'div',
-            { className: 'mdc-checkbox' },
-            _react2.default.createElement('input', { type: 'checkbox', id: 'basic-checkbox', className: 'mdc-checkbox__native-control',
-              checked: selected, onChange: onChange }),
-            _react2.default.createElement(
-              'div',
-              { className: 'mdc-checkbox__background' },
-              _react2.default.createElement(
-                'svg',
-                { className: 'mdc-checkbox__checkmark', viewBox: '0 0 24 24' },
-                _react2.default.createElement('path', { className: 'mdc-checkbox__checkmark__path', fill: 'none', stroke: 'white', d: 'M1.73,12.91 8.1,19.28 22.79,4.59' })
-              ),
-              _react2.default.createElement('div', { className: 'mdc-checkbox__mixedmark' })
-            )
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'section',
-        { className: 'mdc-card__supporting-text' },
-        _react2.default.createElement(_FullElementList2.default, { module: ident, module_selected: selected })
-      )
-    )
+      _react2.default.createElement(Icon, { selected: selected })
+    ),
+    " (",
+    ident,
+    ")"
+  );
+};
+
+var Icon = function Icon(props) {
+  if (props.selected) {
+    return _react2.default.createElement(
+      "i",
+      { className: "material-icons romajs-color-no" },
+      "cancel"
+    );
+  }
+  return _react2.default.createElement(
+    "i",
+    { className: "material-icons romajs-color-yes" },
+    "add_circle"
   );
 };
 
@@ -694,58 +773,6 @@ Module.propTypes = {
 };
 
 exports.default = Module;
-
-/***/ }),
-
-/***/ "./components/ModuleList.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__("./node_modules/react/react.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Module = __webpack_require__("./components/Module.js");
-
-var _Module2 = _interopRequireDefault(_Module);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ModuleList = function ModuleList(_ref) {
-  var modules = _ref.modules,
-      onModuleChange = _ref.onModuleChange;
-  return _react2.default.createElement(
-    'div',
-    { className: 'mdc-layout-grid' },
-    modules.map(function (module) {
-      return _react2.default.createElement(_Module2.default, _extends({
-        key: module.ident
-      }, module, {
-        onChange: function onChange() {
-          return onModuleChange(module.ident, module.selected);
-        }
-      }));
-    })
-  );
-};
-
-ModuleList.propTypes = {
-  modules: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-    selected: _react.PropTypes.bool.isRequired,
-    ident: _react.PropTypes.string.isRequired
-  }).isRequired).isRequired,
-  onModuleChange: _react.PropTypes.func.isRequired
-};
-
-exports.default = ModuleList;
 
 /***/ }),
 
@@ -776,39 +803,13 @@ var _saveAs2 = _interopRequireDefault(_saveAs);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
-
-  // if (state.odd.customization) {
-  //   let odd = state.odd.customization.json
-  //
-  //   let selectedModules = Object.keys(odd).reduce((acc, node_id)=>{
-  //     if (odd[node_id].name == "moduleRef") {
-  //       acc.push(odd[node_id]["@"]["key"])
-  //     }
-  //     return acc
-  //   }, [])
-  //
-  //   let modules = state.odd.localsource.json.modules.map(module => {
-  //     let selected = false
-  //     if (selectedModules.indexOf(module.ident) > -1) {
-  //       selected = true
-  //     }
-  //     return Object.assign({}, module,
-  //       {selected: selected}
-  //     )
-  //   })
-  //   return {
-  //     modules: modules
-  //   }
-  // }
-  // else return {modules: []}
-
   return state;
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onUploadClick: function onUploadClick() {
-      // this is wrong, find way of passing it to function instead:
+      // TODO: this is wrong, find way of passing it to function instead:
       var files = document.getElementById("files").files;
       var reader = new FileReader();
       reader.readAsText(files[0]);
@@ -831,7 +832,45 @@ exports.default = App;
 
 /***/ }),
 
-/***/ "./containers/FullElementList.js":
+/***/ "./containers/FilterSearch.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _interface = __webpack_require__("./actions/interface.js");
+
+var _FilterSearchBar = __webpack_require__("./components/FilterSearchBar.js");
+
+var _FilterSearchBar2 = _interopRequireDefault(_FilterSearchBar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onInputChange: function onInputChange(term) {
+      dispatch((0, _interface.setFilterTerm)(term));
+    }
+  };
+};
+
+var FilterSearch = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_FilterSearchBar2.default);
+
+exports.default = FilterSearch;
+
+/***/ }),
+
+/***/ "./containers/FullItemList.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -845,9 +884,9 @@ var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js")
 
 var _actions = __webpack_require__("./actions/index.js");
 
-var _ElementList = __webpack_require__("./components/ElementList.js");
+var _ItemList = __webpack_require__("./components/ItemList.js");
 
-var _ElementList2 = _interopRequireDefault(_ElementList);
+var _ItemList2 = _interopRequireDefault(_ItemList);
 
 var _selectors = __webpack_require__("./selectors/index.js");
 
@@ -855,56 +894,23 @@ var _selectors2 = _interopRequireDefault(_selectors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state, params) {
-
-  return {
-    elements: (0, _selectors2.default)(state, params)
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    onElementChange: function onElementChange(name, module, selected) {
-      if (selected) {
-        dispatch((0, _actions.excludeElements)([name], module));
-      } else {
-        dispatch((0, _actions.includeElements)([name], module));
-      }
-    }
-  };
-};
-
-var FullElementList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ElementList2.default);
-
-exports.default = FullElementList;
-
-/***/ }),
-
-/***/ "./containers/FullModuleList.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
-
-var _actions = __webpack_require__("./actions/index.js");
-
-var _ModuleList = __webpack_require__("./components/ModuleList.js");
-
-var _ModuleList2 = _interopRequireDefault(_ModuleList);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/*
+An Item is anything that has a @ident in ODD and belongs to a module. Namely:
+- elements
+- classes
+- datatypes
+- macros
+*/
 
 var mapStateToProps = function mapStateToProps(state) {
 
   if (state.odd.customization && state.odd.localsource) {
     if (!state.odd.localsource.isFetching) {
       var odd = state.odd.customization.json;
+
+      // If a filterTerm is set, use it to filter results
+      var filter = state.ui.filterTerm ? state.ui.filterTerm : false;
+      var visible = true;
 
       var selectedModules = Object.keys(odd).reduce(function (acc, node_id) {
         if (odd[node_id].name == "moduleRef") {
@@ -920,16 +926,129 @@ var mapStateToProps = function mapStateToProps(state) {
         }
         return Object.assign({}, module, { selected: selected });
       });
-      return {
-        modules: modules
-      };
-    } else return { modules: [] };
-  } else return { modules: [] };
+
+      var elements = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = modules[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var module = _step.value;
+
+          elements = elements.concat((0, _selectors2.default)(state.odd, { module: module.ident, module_selected: module.selected,
+            props: { visible: true }
+          }));
+        }
+
+        // When filtering, determine whether elements are visible
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      if (filter) {
+        elements = elements.map(function (el) {
+          if (el.ident.toLowerCase().match(filter.toLowerCase())) {
+            el.visible = true;
+          } else {
+            el.visible = false;
+          }
+          return el;
+        });
+      }
+
+      // Finally, sort alphabetically
+      elements.sort(function (a, b) {
+        return a.ident.toLowerCase() > b.ident.toLowerCase() ? 1 : b.ident.toLowerCase() > a.ident.toLowerCase() ? -1 : 0;
+      });
+
+      return { elements: elements };
+    } else return { elements: [] };
+  } else return { elements: []
+    // else return {elements: [], classes: [], datatypes: [], macros: []}
+
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    onModuleChange: function onModuleChange(name, selected) {
+    onItemChange: function onItemChange(name, module, selected) {
+      if (selected) {
+        dispatch((0, _actions.excludeElements)([name], module));
+      } else {
+        dispatch((0, _actions.includeElements)([name], module));
+      }
+    }
+  };
+};
+
+var FullItemList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ItemList2.default);
+
+exports.default = FullItemList;
+
+/***/ }),
+
+/***/ "./containers/SingleModule.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _actions = __webpack_require__("./actions/index.js");
+
+var _Module = __webpack_require__("./components/Module.js");
+
+var _Module2 = _interopRequireDefault(_Module);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, params) {
+
+  var empty = { selected: false, ident: "" };
+
+  if (state.odd.customization && state.odd.localsource) {
+    if (!state.odd.localsource.isFetching) {
+      var odd = state.odd.customization.json;
+
+      // determine if it is selected
+      var selected = Object.keys(odd).filter(function (node_id) {
+        return odd[node_id].name == "moduleRef" && odd[node_id]["@"]["key"] == params.ident;
+      }).length > 0 ? true : false;
+
+      // If we need to pass more state data about the module, use:
+      // let module = state.odd.localsource.json.modules.filter(module => {
+      //   return module.ident == params.ident
+      // })[0]
+
+      return {
+        selected: selected,
+        ident: params.ident
+      };
+    } else return empty;
+  } else return empty;
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onChange: function onChange(name, selected) {
+      console.log(name, selected);
       if (selected) {
         dispatch((0, _actions.excludeModules)([name]));
       } else {
@@ -939,9 +1058,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-var FullModuleList = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ModuleList2.default);
+var SingleModule = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Module2.default);
 
-exports.default = FullModuleList;
+exports.default = SingleModule;
 
 /***/ }),
 
@@ -973,8 +1092,6 @@ var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
 var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 
-var _actions = __webpack_require__("./actions/index.js");
-
 var _reducers = __webpack_require__("./reducers/index.js");
 
 var _reducers2 = _interopRequireDefault(_reducers);
@@ -991,6 +1108,7 @@ var _saveAs2 = _interopRequireDefault(_saveAs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { selectOdd, fetchOdd, fetchP5, parseOdd, includeModules } from './actions'
 var loggerMiddleware = (0, _reduxLogger2.default)();
 
 var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, // lets us dispatch() functions
@@ -1057,1090 +1175,6 @@ loggerMiddleware // neat middleware that logs actions
   { store: store },
   _react2.default.createElement(_App2.default, null)
 ), document.getElementById('romajs'));
-
-/***/ }),
-
-/***/ "./node_modules/@material/base/component.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__("./node_modules/@material/base/foundation.js");
-/**
- * Copyright 2016 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-class MDCComponent {
-  static attachTo(root) {
-    // Subclasses which extend MDCBase should provide an attachTo() method that takes a root element and
-    // returns an instantiated component with its root set to that element. Also note that in the cases of
-    // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
-    // from getDefaultFoundation().
-    return new MDCComponent(root, new __WEBPACK_IMPORTED_MODULE_0__foundation__["a" /* default */]());
-  }
-
-  constructor(root, foundation = undefined, ...args) {
-    this.root_ = root;
-    this.initialize(...args);
-    // Note that we initialize foundation here and not within the constructor's default param so that
-    // this.root_ is defined and can be used within the foundation class.
-    this.foundation_ = foundation === undefined ? this.getDefaultFoundation() : foundation;
-    this.foundation_.init();
-    this.initialSyncWithDOM();
-  }
-
-  initialize(/* ...args */) {
-    // Subclasses can override this to do any additional setup work that would be considered part of a
-    // "constructor". Essentially, it is a hook into the parent constructor before the foundation is
-    // initialized. Any additional arguments besides root and foundation will be passed in here.
-  }
-
-  getDefaultFoundation() {
-    // Subclasses must override this method to return a properly configured foundation class for the
-    // component.
-    throw new Error('Subclasses must override getDefaultFoundation to return a properly configured ' +
-      'foundation class');
-  }
-
-  initialSyncWithDOM() {
-    // Subclasses should override this method if they need to perform work to synchronize with a host DOM
-    // object. An example of this would be a form control wrapper that needs to synchronize its internal state
-    // to some property or attribute of the host DOM. Please note: this is *not* the place to perform DOM
-    // reads/writes that would cause layout / paint, as this is called synchronously from within the constructor.
-  }
-
-  destroy() {
-    // Subclasses may implement this method to release any resources / deregister any listeners they have
-    // attached. An example of this might be deregistering a resize event from the window object.
-    this.foundation_.destroy();
-  }
-
-  // Wrapper method to add an event listener to the component's root element. This is most useful when
-  // listening for custom events.
-  listen(evtType, handler) {
-    this.root_.addEventListener(evtType, handler);
-  }
-
-  // Wrapper method to remove an event listener to the component's root element. This is most useful when
-  // unlistening for custom events.
-  unlisten(evtType, handler) {
-    this.root_.removeEventListener(evtType, handler);
-  }
-
-  // Fires a cross-browser-compatible custom event from the component root of the given type,
-  // with the given data.
-  emit(evtType, evtData) {
-    let evt;
-    if (typeof CustomEvent === 'function') {
-      evt = new CustomEvent(evtType, {detail: evtData});
-    } else {
-      evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(evtType, false, false, evtData);
-    }
-
-    this.root_.dispatchEvent(evt);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCComponent;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/base/foundation.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2016 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-class MDCFoundation {
-  static get cssClasses() {
-    // Classes extending MDCFoundation should implement this method to return an object which exports every
-    // CSS class the foundation class needs as a property. e.g. {ACTIVE: 'mdc-component--active'}
-    return {};
-  }
-
-  static get strings() {
-    // Classes extending MDCFoundation should implement this method to return an object which exports all
-    // semantic strings as constants. e.g. {ARIA_ROLE: 'tablist'}
-    return {};
-  }
-
-  static get numbers() {
-    // Classes extending MDCFoundation should implement this method to return an object which exports all
-    // of its semantic numbers as constants. e.g. {ANIMATION_DELAY_MS: 350}
-    return {};
-  }
-
-  static get defaultAdapter() {
-    // Classes extending MDCFoundation may choose to implement this getter in order to provide a convenient
-    // way of viewing the necessary methods of an adapter. In the future, this could also be used for adapter
-    // validation.
-    return {};
-  }
-
-  constructor(adapter = {}) {
-    this.adapter_ = adapter;
-  }
-
-  init() {
-    // Subclasses should override this method to perform initialization routines (registering events, etc.)
-  }
-
-  destroy() {
-    // Subclasses should override this method to perform de-initialization routines (de-registering events, etc.)
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCFoundation;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/base/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__("./node_modules/@material/base/foundation.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__foundation__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__component__ = __webpack_require__("./node_modules/@material/base/component.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__component__["a"]; });
-/**
- * Copyright 2016 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__("./node_modules/@material/drawer/util.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__temporary__ = __webpack_require__("./node_modules/@material/drawer/temporary/index.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCTemporaryDrawer", function() { return __WEBPACK_IMPORTED_MODULE_1__temporary__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCTemporaryDrawerFoundation", function() { return __WEBPACK_IMPORTED_MODULE_1__temporary__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__persistent__ = __webpack_require__("./node_modules/@material/drawer/persistent/index.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCPersistentDrawer", function() { return __WEBPACK_IMPORTED_MODULE_2__persistent__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCPersistentDrawerFoundation", function() { return __WEBPACK_IMPORTED_MODULE_2__persistent__["b"]; });
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "util", function() { return __WEBPACK_IMPORTED_MODULE_0__util__; });
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/persistent/constants.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__slidable__ = __webpack_require__("./node_modules/@material/drawer/slidable/index.js");
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-const cssClasses = {
-  ROOT: 'mdc-persistent-drawer',
-  OPEN: 'mdc-persistent-drawer--open',
-  ANIMATING: 'mdc-persistent-drawer--animating',
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = cssClasses;
-
-
-const strings = {
-  DRAWER_SELECTOR: '.mdc-persistent-drawer__drawer',
-  FOCUSABLE_ELEMENTS: __WEBPACK_IMPORTED_MODULE_0__slidable__["b" /* FOCUSABLE_ELEMENTS */],
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = strings;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/persistent/foundation.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__slidable__ = __webpack_require__("./node_modules/@material/drawer/slidable/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./node_modules/@material/drawer/persistent/constants.js");
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-class MDCPersistentDrawerFoundation extends __WEBPACK_IMPORTED_MODULE_0__slidable__["a" /* MDCSlidableDrawerFoundation */] {
-  static get cssClasses() {
-    return __WEBPACK_IMPORTED_MODULE_1__constants__["a" /* cssClasses */];
-  }
-
-  static get strings() {
-    return __WEBPACK_IMPORTED_MODULE_1__constants__["b" /* strings */];
-  }
-
-  static get defaultAdapter() {
-    return Object.assign(__WEBPACK_IMPORTED_MODULE_0__slidable__["a" /* MDCSlidableDrawerFoundation */].defaultAdapter, {
-      isDrawer: () => false,
-    });
-  }
-
-  constructor(adapter) {
-    super(
-      Object.assign(MDCPersistentDrawerFoundation.defaultAdapter, adapter),
-      MDCPersistentDrawerFoundation.cssClasses.ROOT,
-      MDCPersistentDrawerFoundation.cssClasses.ANIMATING,
-      MDCPersistentDrawerFoundation.cssClasses.OPEN);
-  }
-
-  isRootTransitioningEventTarget_(el) {
-    return this.adapter_.isDrawer(el);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCPersistentDrawerFoundation;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/persistent/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base__ = __webpack_require__("./node_modules/@material/base/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__foundation__ = __webpack_require__("./node_modules/@material/drawer/persistent/foundation.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__("./node_modules/@material/drawer/util.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__foundation__["a"]; });
-/* unused harmony reexport util */
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-
-
-class MDCPersistentDrawer extends __WEBPACK_IMPORTED_MODULE_0__material_base__["a" /* MDCComponent */] {
-  static attachTo(root) {
-    return new MDCPersistentDrawer(root);
-  }
-
-  get open() {
-    return this.foundation_.isOpen();
-  }
-
-  set open(value) {
-    if (value) {
-      this.foundation_.open();
-    } else {
-      this.foundation_.close();
-    }
-  }
-
-  /* Return the drawer element inside the component. */
-  get drawer() {
-    return this.root_.querySelector(__WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */].strings.DRAWER_SELECTOR);
-  }
-
-  getDefaultFoundation() {
-    const {FOCUSABLE_ELEMENTS} = __WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */].strings;
-
-    return new __WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */]({
-      addClass: (className) => this.root_.classList.add(className),
-      removeClass: (className) => this.root_.classList.remove(className),
-      hasClass: (className) => this.root_.classList.contains(className),
-      hasNecessaryDom: () => Boolean(this.drawer),
-      registerInteractionHandler: (evt, handler) =>
-          this.root_.addEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler, __WEBPACK_IMPORTED_MODULE_2__util__["applyPassive"]()),
-      deregisterInteractionHandler: (evt, handler) =>
-          this.root_.removeEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler, __WEBPACK_IMPORTED_MODULE_2__util__["applyPassive"]()),
-      registerDrawerInteractionHandler: (evt, handler) =>
-          this.drawer.addEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler),
-      deregisterDrawerInteractionHandler: (evt, handler) =>
-          this.drawer.removeEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler),
-      registerTransitionEndHandler: (handler) =>
-          this.root_.addEventListener('transitionend', handler),
-      deregisterTransitionEndHandler: (handler) =>
-          this.root_.removeEventListener('transitionend', handler),
-      registerDocumentKeydownHandler: (handler) => document.addEventListener('keydown', handler),
-      deregisterDocumentKeydownHandler: (handler) => document.removeEventListener('keydown', handler),
-      getDrawerWidth: () => this.drawer.offsetWidth,
-      setTranslateX: (value) => this.drawer.style.setProperty(
-          __WEBPACK_IMPORTED_MODULE_2__util__["getTransformPropertyName"](), value === null ? null : `translateX(${value}px)`),
-      getFocusableElements: () => this.drawer.querySelectorAll(FOCUSABLE_ELEMENTS),
-      saveElementTabState: (el) => __WEBPACK_IMPORTED_MODULE_2__util__["saveElementTabState"](el),
-      restoreElementTabState: (el) => __WEBPACK_IMPORTED_MODULE_2__util__["restoreElementTabState"](el),
-      makeElementUntabbable: (el) => el.setAttribute('tabindex', -1),
-      isRtl: () => getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
-      isDrawer: (el) => el === this.drawer,
-    });
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCPersistentDrawer;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/slidable/constants.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-const FOCUSABLE_ELEMENTS =
-	'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), ' +
-	'button:not([disabled]), iframe, object, embed, [tabindex], [contenteditable]';
-/* harmony export (immutable) */ __webpack_exports__["a"] = FOCUSABLE_ELEMENTS;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/slidable/foundation.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base__ = __webpack_require__("./node_modules/@material/base/index.js");
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-class MDCSlidableDrawerFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base__["b" /* MDCFoundation */] {
-
-  static get defaultAdapter() {
-    return {
-      addClass: (/* className: string */) => {},
-      removeClass: (/* className: string */) => {},
-      hasClass: (/* className: string */) => {},
-      hasNecessaryDom: () => /* boolean */ false,
-      registerInteractionHandler: (/* evt: string, handler: EventListener */) => {},
-      deregisterInteractionHandler: (/* evt: string, handler: EventListener */) => {},
-      registerDrawerInteractionHandler: (/* evt: string, handler: EventListener */) => {},
-      deregisterDrawerInteractionHandler: (/* evt: string, handler: EventListener */) => {},
-      registerTransitionEndHandler: (/* handler: EventListener */) => {},
-      deregisterTransitionEndHandler: (/* handler: EventListener */) => {},
-      registerDocumentKeydownHandler: (/* handler: EventListener */) => {},
-      deregisterDocumentKeydownHandler: (/* handler: EventListener */) => {},
-      setTranslateX: (/* value: number | null */) => {},
-      getFocusableElements: () => /* NodeList */ {},
-      saveElementTabState: (/* el: Element */) => {},
-      restoreElementTabState: (/* el: Element */) => {},
-      makeElementUntabbable: (/* el: Element */) => {},
-      isRtl: () => /* boolean */ false,
-      getDrawerWidth: () => /* number */ 0,
-    };
-  }
-
-  constructor(adapter, rootCssClass, animatingCssClass, openCssClass) {
-    super(Object.assign(MDCSlidableDrawerFoundation.defaultAdapter, adapter));
-
-    this.rootCssClass_ = rootCssClass;
-    this.animatingCssClass_ = animatingCssClass;
-    this.openCssClass_ = openCssClass;
-
-    this.transitionEndHandler_ = (ev) => {
-      if (this.isRootTransitioningEventTarget_(ev.target)) {
-        this.adapter_.removeClass(this.animatingCssClass_);
-        this.adapter_.deregisterTransitionEndHandler(this.transitionEndHandler_);
-      }
-    };
-
-    this.inert_ = false;
-
-    this.drawerClickHandler_ = (evt) => evt.stopPropagation();
-    this.componentTouchStartHandler_ = (evt) => this.handleTouchStart_(evt);
-    this.componentTouchMoveHandler_ = (evt) => this.handleTouchMove_(evt);
-    this.componentTouchEndHandler_ = (evt) => this.handleTouchEnd_(evt);
-    this.documentKeydownHandler_ = (evt) => {
-      if (evt.key && evt.key === 'Escape' || evt.keyCode === 27) {
-        this.close();
-      }
-    };
-  }
-
-  init() {
-    const ROOT = this.rootCssClass_;
-    const OPEN = this.openCssClass_;
-
-    if (!this.adapter_.hasClass(ROOT)) {
-      throw new Error(`${ROOT} class required in root element.`);
-    }
-
-    if (!this.adapter_.hasNecessaryDom()) {
-      throw new Error(`Required DOM nodes missing in ${ROOT} component.`);
-    }
-
-    if (this.adapter_.hasClass(OPEN)) {
-      this.isOpen_ = true;
-    } else {
-      this.detabinate_();
-      this.isOpen_ = false;
-    }
-
-    this.adapter_.registerDrawerInteractionHandler('click', this.drawerClickHandler_);
-    this.adapter_.registerDrawerInteractionHandler('touchstart', this.componentTouchStartHandler_);
-    this.adapter_.registerInteractionHandler('touchmove', this.componentTouchMoveHandler_);
-    this.adapter_.registerInteractionHandler('touchend', this.componentTouchEndHandler_);
-  }
-
-  destroy() {
-    this.adapter_.deregisterDrawerInteractionHandler('click', this.drawerClickHandler_);
-    this.adapter_.deregisterDrawerInteractionHandler('touchstart', this.componentTouchStartHandler_);
-    this.adapter_.deregisterInteractionHandler('touchmove', this.componentTouchMoveHandler_);
-    this.adapter_.deregisterInteractionHandler('touchend', this.componentTouchEndHandler_);
-    // Deregister the document keydown handler just in case the component is destroyed while the menu is open.
-    this.adapter_.deregisterDocumentKeydownHandler(this.documentKeydownHandler_);
-  }
-
-  open() {
-    this.adapter_.registerTransitionEndHandler(this.transitionEndHandler_);
-    this.adapter_.registerDocumentKeydownHandler(this.documentKeydownHandler_);
-    this.adapter_.addClass(this.animatingCssClass_);
-    this.adapter_.addClass(this.openCssClass_);
-    this.retabinate_();
-    this.isOpen_ = true;
-  }
-
-  close() {
-    this.adapter_.deregisterDocumentKeydownHandler(this.documentKeydownHandler_);
-    this.adapter_.registerTransitionEndHandler(this.transitionEndHandler_);
-    this.adapter_.addClass(this.animatingCssClass_);
-    this.adapter_.removeClass(this.openCssClass_);
-    this.detabinate_();
-    this.isOpen_ = false;
-  }
-
-  isOpen() {
-    return this.isOpen_;
-  }
-
-  /**
-   *  Render all children of the drawer inert when it's closed.
-   */
-  detabinate_() {
-    if (this.inert_) {
-      return;
-    }
-
-    const elements = this.adapter_.getFocusableElements();
-    if (elements) {
-      for (let i = 0; i < elements.length; i++) {
-        this.adapter_.saveElementTabState(elements[i]);
-        this.adapter_.makeElementUntabbable(elements[i]);
-      }
-    }
-
-    this.inert_ = true;
-  }
-
-  /**
-   *  Make all children of the drawer tabbable again when it's open.
-   */
-  retabinate_() {
-    if (!this.inert_) {
-      return;
-    }
-
-    const elements = this.adapter_.getFocusableElements();
-    if (elements) {
-      for (let i = 0; i < elements.length; i++) {
-        this.adapter_.restoreElementTabState(elements[i]);
-      }
-    }
-
-    this.inert_ = false;
-  }
-
-  handleTouchStart_(evt) {
-    if (!this.adapter_.hasClass(this.openCssClass_)) {
-      return;
-    }
-    if (evt.pointerType && evt.pointerType !== 'touch') {
-      return;
-    }
-
-    this.direction_ = this.adapter_.isRtl() ? -1 : 1;
-    this.drawerWidth_ = this.adapter_.getDrawerWidth();
-    this.startX_ = evt.touches ? evt.touches[0].pageX : evt.pageX;
-    this.currentX_ = this.startX_;
-    this.touchingSideNav_ = true;
-
-    requestAnimationFrame(this.updateDrawer_.bind(this));
-  }
-
-  handleTouchMove_(evt) {
-    if (evt.pointerType && evt.pointerType !== 'touch') {
-      return;
-    }
-
-    this.currentX_ = evt.touches ? evt.touches[0].pageX : evt.pageX;
-  }
-
-  handleTouchEnd_(evt) {
-    if (evt.pointerType && evt.pointerType !== 'touch') {
-      return;
-    }
-
-    this.prepareForTouchEnd_();
-
-    // Did the user close the drawer by more than 50%?
-    if (Math.abs(this.newPosition_ / this.drawerWidth_) >= 0.5) {
-      this.close();
-    } else {
-      // Triggering an open here means we'll get a nice animation back to the fully open state.
-      this.open();
-    }
-  }
-
-  prepareForTouchEnd_() {
-    this.touchingSideNav_ = false;
-    this.adapter_.setTranslateX(null);
-  }
-
-  updateDrawer_() {
-    if (!this.touchingSideNav_) {
-      return;
-    }
-
-    requestAnimationFrame(this.updateDrawer_.bind(this));
-    this.adapter_.setTranslateX(this.newPosition_);
-  }
-
-  get newPosition_() {
-    let newPos = null;
-
-    if (this.direction_ === 1) {
-      newPos = Math.min(0, this.currentX_ - this.startX_);
-    } else {
-      newPos = Math.max(0, this.currentX_ - this.startX_);
-    }
-
-    return newPos;
-  }
-
-  isRootTransitioningEventTarget_(el) {
-    // Classes extending MDCSlidableDrawerFoundation should implement this method to return true or false
-    // if the event target is the root event target currently transitioning.
-    return false;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCSlidableDrawerFoundation;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/slidable/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__("./node_modules/@material/drawer/slidable/constants.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__constants__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__foundation__ = __webpack_require__("./node_modules/@material/drawer/slidable/foundation.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__foundation__["a"]; });
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/temporary/constants.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__slidable__ = __webpack_require__("./node_modules/@material/drawer/slidable/index.js");
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-const cssClasses = {
-  ROOT: 'mdc-temporary-drawer',
-  OPEN: 'mdc-temporary-drawer--open',
-  ANIMATING: 'mdc-temporary-drawer--animating',
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = cssClasses;
-
-
-const strings = {
-  DRAWER_SELECTOR: '.mdc-temporary-drawer__drawer',
-  OPACITY_VAR_NAME: '--mdc-temporary-drawer-opacity',
-  FOCUSABLE_ELEMENTS: __WEBPACK_IMPORTED_MODULE_0__slidable__["b" /* FOCUSABLE_ELEMENTS */],
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = strings;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/temporary/foundation.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__slidable__ = __webpack_require__("./node_modules/@material/drawer/slidable/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__("./node_modules/@material/drawer/temporary/constants.js");
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-class MDCTemporaryDrawerFoundation extends __WEBPACK_IMPORTED_MODULE_0__slidable__["a" /* MDCSlidableDrawerFoundation */] {
-  static get cssClasses() {
-    return __WEBPACK_IMPORTED_MODULE_1__constants__["a" /* cssClasses */];
-  }
-
-  static get strings() {
-    return __WEBPACK_IMPORTED_MODULE_1__constants__["b" /* strings */];
-  }
-
-  static get defaultAdapter() {
-    return Object.assign(__WEBPACK_IMPORTED_MODULE_0__slidable__["a" /* MDCSlidableDrawerFoundation */].defaultAdapter, {
-      isDrawer: () => false,
-      updateCssVariable: (/* value: string */) => {},
-    });
-  }
-
-  constructor(adapter) {
-    super(
-      Object.assign(MDCTemporaryDrawerFoundation.defaultAdapter, adapter),
-      MDCTemporaryDrawerFoundation.cssClasses.ROOT,
-      MDCTemporaryDrawerFoundation.cssClasses.ANIMATING,
-      MDCTemporaryDrawerFoundation.cssClasses.OPEN);
-
-    this.componentClickHandler_ = () => this.close();
-  }
-
-  init() {
-    super.init();
-
-    // Make browser aware of custom property being used in this element.
-    // Workaround for certain types of hard-to-reproduce heisenbugs.
-    this.adapter_.updateCssVariable(0);
-    this.adapter_.registerInteractionHandler('click', this.componentClickHandler_);
-  }
-
-  destroy() {
-    super.destroy();
-
-    this.adapter_.deregisterInteractionHandler('click', this.componentClickHandler_);
-  }
-
-  open() {
-    // Make sure custom property values are cleared before starting.
-    this.adapter_.updateCssVariable('');
-
-    super.open();
-  }
-
-  close() {
-    // Make sure custom property values are cleared before making any changes.
-    this.adapter_.updateCssVariable('');
-
-    super.close();
-  }
-
-  prepareForTouchEnd_() {
-    super.prepareForTouchEnd_();
-
-    this.adapter_.updateCssVariable('');
-  }
-
-  updateDrawer_() {
-    super.updateDrawer_();
-
-    const newOpacity = Math.max(0, 1 + this.direction_ * (this.newPosition_ / this.drawerWidth_));
-    this.adapter_.updateCssVariable(newOpacity);
-  }
-
-  isRootTransitioningEventTarget_(el) {
-    return this.adapter_.isDrawer(el);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCTemporaryDrawerFoundation;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/temporary/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base__ = __webpack_require__("./node_modules/@material/base/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__foundation__ = __webpack_require__("./node_modules/@material/drawer/temporary/foundation.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__("./node_modules/@material/drawer/util.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__foundation__["a"]; });
-/* unused harmony reexport util */
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-
-
-class MDCTemporaryDrawer extends __WEBPACK_IMPORTED_MODULE_0__material_base__["a" /* MDCComponent */] {
-  static attachTo(root) {
-    return new MDCTemporaryDrawer(root);
-  }
-
-  get open() {
-    return this.foundation_.isOpen();
-  }
-
-  set open(value) {
-    if (value) {
-      this.foundation_.open();
-    } else {
-      this.foundation_.close();
-    }
-  }
-
-  /* Return the drawer element inside the component. */
-  get drawer() {
-    return this.root_.querySelector(__WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */].strings.DRAWER_SELECTOR);
-  }
-
-  getDefaultFoundation() {
-    const {FOCUSABLE_ELEMENTS, OPACITY_VAR_NAME} = __WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */].strings;
-
-    return new __WEBPACK_IMPORTED_MODULE_1__foundation__["a" /* default */]({
-      addClass: (className) => this.root_.classList.add(className),
-      removeClass: (className) => this.root_.classList.remove(className),
-      hasClass: (className) => this.root_.classList.contains(className),
-      hasNecessaryDom: () => Boolean(this.drawer),
-      registerInteractionHandler: (evt, handler) =>
-          this.root_.addEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler, __WEBPACK_IMPORTED_MODULE_2__util__["applyPassive"]()),
-      deregisterInteractionHandler: (evt, handler) =>
-          this.root_.removeEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler, __WEBPACK_IMPORTED_MODULE_2__util__["applyPassive"]()),
-      registerDrawerInteractionHandler: (evt, handler) =>
-          this.drawer.addEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler),
-      deregisterDrawerInteractionHandler: (evt, handler) =>
-          this.drawer.removeEventListener(__WEBPACK_IMPORTED_MODULE_2__util__["remapEvent"](evt), handler),
-      registerTransitionEndHandler: (handler) => this.drawer.addEventListener('transitionend', handler),
-      deregisterTransitionEndHandler: (handler) => this.drawer.removeEventListener('transitionend', handler),
-      registerDocumentKeydownHandler: (handler) => document.addEventListener('keydown', handler),
-      deregisterDocumentKeydownHandler: (handler) => document.removeEventListener('keydown', handler),
-      getDrawerWidth: () => this.drawer.offsetWidth,
-      setTranslateX: (value) => this.drawer.style.setProperty(
-          __WEBPACK_IMPORTED_MODULE_2__util__["getTransformPropertyName"](), value === null ? null : `translateX(${value}px)`),
-      updateCssVariable: (value) => {
-        if (__WEBPACK_IMPORTED_MODULE_2__util__["supportsCssCustomProperties"]()) {
-          this.root_.style.setProperty(OPACITY_VAR_NAME, value);
-        }
-      },
-      getFocusableElements: () => this.drawer.querySelectorAll(FOCUSABLE_ELEMENTS),
-      saveElementTabState: (el) => __WEBPACK_IMPORTED_MODULE_2__util__["saveElementTabState"](el),
-      restoreElementTabState: (el) => __WEBPACK_IMPORTED_MODULE_2__util__["restoreElementTabState"](el),
-      makeElementUntabbable: (el) => el.setAttribute('tabindex', -1),
-      isRtl: () => getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
-      isDrawer: (el) => el === this.drawer,
-    });
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCTemporaryDrawer;
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material/drawer/util.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (immutable) */ __webpack_exports__["remapEvent"] = remapEvent;
-/* harmony export (immutable) */ __webpack_exports__["getTransformPropertyName"] = getTransformPropertyName;
-/* harmony export (immutable) */ __webpack_exports__["supportsCssCustomProperties"] = supportsCssCustomProperties;
-/* harmony export (immutable) */ __webpack_exports__["applyPassive"] = applyPassive;
-/* harmony export (immutable) */ __webpack_exports__["saveElementTabState"] = saveElementTabState;
-/* harmony export (immutable) */ __webpack_exports__["restoreElementTabState"] = restoreElementTabState;
-/**
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-const TAB_DATA = 'data-mdc-tabindex';
-const TAB_DATA_HANDLED = 'data-mdc-tabindex-handled';
-
-let storedTransformPropertyName_;
-let supportsPassive_;
-
-// Remap touch events to pointer events, if the browser doesn't support touch events.
-function remapEvent(eventName, globalObj = window) {
-  if (!('ontouchstart' in globalObj.document)) {
-    switch (eventName) {
-      case 'touchstart':
-        return 'pointerdown';
-      case 'touchmove':
-        return 'pointermove';
-      case 'touchend':
-        return 'pointerup';
-      default:
-        return eventName;
-    }
-  }
-
-  return eventName;
-}
-
-// Choose the correct transform property to use on the current browser.
-function getTransformPropertyName(globalObj = window, forceRefresh = false) {
-  if (storedTransformPropertyName_ === undefined || forceRefresh) {
-    const el = globalObj.document.createElement('div');
-    const transformPropertyName = ('transform' in el.style ? 'transform' : '-webkit-transform');
-    storedTransformPropertyName_ = transformPropertyName;
-  }
-
-  return storedTransformPropertyName_;
-}
-
-// Determine whether the current browser supports CSS properties.
-function supportsCssCustomProperties(globalObj = window) {
-  if ('CSS' in globalObj) {
-    return globalObj.CSS.supports('(--color: red)');
-  }
-  return false;
-}
-
-// Determine whether the current browser supports passive event listeners, and if so, use them.
-function applyPassive(globalObj = window, forceRefresh = false) {
-  if (supportsPassive_ === undefined || forceRefresh) {
-    let isSupported = false;
-    try {
-      globalObj.document.addEventListener('test', null, {get passive() {
-        isSupported = true;
-      }});
-    } catch (e) { }
-
-    supportsPassive_ = isSupported;
-  }
-
-  return supportsPassive_ ? {passive: true} : false;
-}
-
-// Save the tab state for an element.
-function saveElementTabState(el) {
-  if (el.hasAttribute('tabindex')) {
-    el.setAttribute(TAB_DATA, el.getAttribute('tabindex'));
-  }
-  el.setAttribute(TAB_DATA_HANDLED, true);
-}
-
-// Restore the tab state for an element, if it was saved.
-function restoreElementTabState(el) {
-  // Only modify elements we've already handled, in case anything was dynamically added since we saved state.
-  if (el.hasAttribute(TAB_DATA_HANDLED)) {
-    if (el.hasAttribute(TAB_DATA)) {
-      el.setAttribute('tabindex', el.getAttribute(TAB_DATA));
-      el.removeAttribute(TAB_DATA);
-    } else {
-      el.removeAttribute('tabindex');
-    }
-    el.removeAttribute(TAB_DATA_HANDLED);
-  }
-}
-
 
 /***/ }),
 
@@ -2263,123 +1297,6 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-
-/***/ }),
-
-/***/ "./node_modules/buffer-shims/index.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-var buffer = __webpack_require__("./node_modules/buffer/index.js");
-var Buffer = buffer.Buffer;
-var SlowBuffer = buffer.SlowBuffer;
-var MAX_LEN = buffer.kMaxLength || 2147483647;
-exports.alloc = function alloc(size, fill, encoding) {
-  if (typeof Buffer.alloc === 'function') {
-    return Buffer.alloc(size, fill, encoding);
-  }
-  if (typeof encoding === 'number') {
-    throw new TypeError('encoding must not be number');
-  }
-  if (typeof size !== 'number') {
-    throw new TypeError('size must be a number');
-  }
-  if (size > MAX_LEN) {
-    throw new RangeError('size is too large');
-  }
-  var enc = encoding;
-  var _fill = fill;
-  if (_fill === undefined) {
-    enc = undefined;
-    _fill = 0;
-  }
-  var buf = new Buffer(size);
-  if (typeof _fill === 'string') {
-    var fillBuf = new Buffer(_fill, enc);
-    var flen = fillBuf.length;
-    var i = -1;
-    while (++i < size) {
-      buf[i] = fillBuf[i % flen];
-    }
-  } else {
-    buf.fill(_fill);
-  }
-  return buf;
-}
-exports.allocUnsafe = function allocUnsafe(size) {
-  if (typeof Buffer.allocUnsafe === 'function') {
-    return Buffer.allocUnsafe(size);
-  }
-  if (typeof size !== 'number') {
-    throw new TypeError('size must be a number');
-  }
-  if (size > MAX_LEN) {
-    throw new RangeError('size is too large');
-  }
-  return new Buffer(size);
-}
-exports.from = function from(value, encodingOrOffset, length) {
-  if (typeof Buffer.from === 'function' && (!global.Uint8Array || Uint8Array.from !== Buffer.from)) {
-    return Buffer.from(value, encodingOrOffset, length);
-  }
-  if (typeof value === 'number') {
-    throw new TypeError('"value" argument must not be a number');
-  }
-  if (typeof value === 'string') {
-    return new Buffer(value, encodingOrOffset);
-  }
-  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
-    var offset = encodingOrOffset;
-    if (arguments.length === 1) {
-      return new Buffer(value);
-    }
-    if (typeof offset === 'undefined') {
-      offset = 0;
-    }
-    var len = length;
-    if (typeof len === 'undefined') {
-      len = value.byteLength - offset;
-    }
-    if (offset >= value.byteLength) {
-      throw new RangeError('\'offset\' is out of bounds');
-    }
-    if (len > value.byteLength - offset) {
-      throw new RangeError('\'length\' is out of bounds');
-    }
-    return new Buffer(value.slice(offset, offset + len));
-  }
-  if (Buffer.isBuffer(value)) {
-    var out = new Buffer(value.length);
-    value.copy(out, 0, 0, value.length);
-    return out;
-  }
-  if (value) {
-    if (Array.isArray(value) || (typeof ArrayBuffer !== 'undefined' && value.buffer instanceof ArrayBuffer) || 'length' in value) {
-      return new Buffer(value);
-    }
-    if (value.type === 'Buffer' && Array.isArray(value.data)) {
-      return new Buffer(value.data);
-    }
-  }
-
-  throw new TypeError('First argument must be a string, Buffer, ' + 'ArrayBuffer, Array, or array-like object.');
-}
-exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
-  if (typeof Buffer.allocUnsafeSlow === 'function') {
-    return Buffer.allocUnsafeSlow(size);
-  }
-  if (typeof size !== 'number') {
-    throw new TypeError('size must be a number');
-  }
-  if (size >= MAX_LEN) {
-    throw new RangeError('size is too large');
-  }
-  return new SlowBuffer(size);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -4304,10 +3221,16 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".mdc-animation-linear-out-slow-in {\n  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-animation-fast-out-slow-in {\n  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-animation-fast-out-linear-in {\n  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-button {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  display: inline-block;\n  position: relative;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  border-radius: 2px;\n  outline: none;\n  background: transparent;\n  font-size: 14px;\n  font-weight: 500;\n  line-height: 36px;\n  text-align: center;\n  text-decoration: none;\n  text-transform: uppercase;\n  overflow: hidden;\n  vertical-align: middle;\n  user-select: none;\n  box-sizing: border-box;\n  -webkit-appearance: none;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded):hover::before, .mdc-button:not(.mdc-ripple-upgraded):focus::before, .mdc-button:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);\n}\n\n.mdc-button--theme-dark,\n.mdc-theme--dark .mdc-button {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded):hover::before, .mdc-button--theme-dark:not(.mdc-ripple-upgraded):focus::before, .mdc-button--theme-dark:not(.mdc-ripple-upgraded):active::after,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):hover::before,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):focus::before,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--theme-dark::before,\n.mdc-theme--dark .mdc-button::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--theme-dark::after,\n.mdc-theme--dark .mdc-button::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded),\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.18);\n}\n\n.mdc-button.mdc-button--primary {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):hover::before, .mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):focus::before, .mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button.mdc-button--primary::before {\n  background-color: rgba(63, 81, 181, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--primary::before {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--primary::after {\n  background-color: rgba(63, 81, 181, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--primary::after {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button.mdc-button--accent {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):hover::before, .mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):focus::before, .mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button.mdc-button--accent::before {\n  background-color: rgba(255, 64, 129, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--accent::before {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--accent::after {\n  background-color: rgba(255, 64, 129, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--accent::after {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button:active {\n  outline: none;\n}\n\n.mdc-button:hover {\n  cursor: pointer;\n}\n\n.mdc-button::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n.mdc-button--dense {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n.mdc-button--raised {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  will-change: box-shadow;\n  min-width: 88px;\n}\n\n.mdc-button--raised:active {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-button--raised.mdc-button--primary {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):hover::before, .mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):focus::before, .mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--raised.mdc-button--primary::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--primary::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--raised.mdc-button--accent {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):hover::before, .mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):focus::before, .mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--raised.mdc-button--accent::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--accent::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--theme-dark .mdc-button--raised,\n.mdc-theme--dark .mdc-button--raised {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-button--theme-dark .mdc-button--raised::before,\n.mdc-theme--dark .mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--primary {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-button--theme-dark .mdc-button--primary,\n.mdc-theme--dark .mdc-button--primary {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-button--primary.mdc-button--raised {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-button--primary.mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--accent {\n  color: #ff4081;\n  color: var(--mdc-theme-accent, #ff4081);\n}\n\n.mdc-button--theme-dark .mdc-button--accent,\n.mdc-theme--dark .mdc-button--accent {\n  color: #ff4081;\n  color: var(--mdc-theme-accent, #ff4081);\n}\n\n.mdc-button--accent.mdc-button--raised {\n  background-color: #ff4081;\n  background-color: var(--mdc-theme-accent, #ff4081);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-accent, white);\n}\n\n.mdc-button--accent.mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--compact {\n  padding: 0 8px;\n}\n\nfieldset:disabled .mdc-button, .mdc-button:disabled {\n  color: rgba(0, 0, 0, 0.26);\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-button--theme-dark fieldset:disabled .mdc-button,\n.mdc-theme--dark fieldset:disabled .mdc-button, .mdc-button--theme-dark .mdc-button:disabled,\n.mdc-theme--dark .mdc-button:disabled {\n  color: rgba(255, 255, 255, 0.3);\n}\n\nfieldset:disabled .mdc-button--raised, .mdc-button--raised:disabled {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n  background-color: rgba(0, 0, 0, 0.12);\n  pointer-events: none;\n}\n\n.mdc-button--theme-dark fieldset:disabled .mdc-button--raised,\n.mdc-theme--dark fieldset:disabled .mdc-button--raised, .mdc-button--theme-dark .mdc-button--raised:disabled,\n.mdc-theme--dark .mdc-button--raised:disabled {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-card {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.mdc-card__primary {\n  padding: 16px;\n}\n\n.mdc-card__primary .mdc-card__title--large {\n  padding-top: 8px;\n}\n\n.mdc-card__primary:last-child {\n  padding-bottom: 24px;\n}\n\n.mdc-card__supporting-text {\n  padding: 8px 16px;\n  box-sizing: border-box;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-card--theme-dark .mdc-card__supporting-text,\n.mdc-theme--dark .mdc-card__supporting-text {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__primary + .mdc-card__supporting-text {\n  margin-top: -8px;\n  padding-top: 0;\n}\n\n.mdc-card__supporting-text:last-child {\n  padding-bottom: 24px;\n}\n\n.mdc-card__actions {\n  display: flex;\n  padding: 8px;\n  box-sizing: border-box;\n}\n\n.mdc-card--theme-dark .mdc-card__actions,\n.mdc-theme--dark .mdc-card__actions {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__actions .mdc-card__action {\n  margin: 0 8px 0 0;\n}\n\n.mdc-card__actions .mdc-card__action:last-child {\n  margin-right: 0;\n}\n\n.mdc-card__actions--vertical {\n  flex-flow: column;\n  align-items: flex-start;\n}\n\n.mdc-card__actions--vertical .mdc-card__action {\n  margin: 0 0 4px;\n}\n\n.mdc-card__actions--vertical .mdc-card__action:last-child {\n  margin-bottom: 0;\n}\n\n.mdc-card__media {\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-card__media-item {\n  display: inline-block;\n  width: auto;\n  height: 80px;\n  margin: 16px 0 0;\n  padding: 0;\n}\n\n.mdc-card__media-item--1dot5x {\n  width: auto;\n  height: 120px;\n}\n\n.mdc-card__media-item--2x {\n  width: auto;\n  height: 160px;\n}\n\n.mdc-card__media-item--3x {\n  width: auto;\n  height: 240px;\n}\n\n.mdc-card__title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: -.063rem 0;\n}\n\n.mdc-card--theme-dark .mdc-card__title,\n.mdc-theme--dark .mdc-card__title {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__title--large {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2rem;\n  margin: 0;\n}\n\n.mdc-card__subtitle {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: -.063rem 0;\n}\n\n.mdc-card--theme-dark .mdc-card__subtitle,\n.mdc-theme--dark .mdc-card__subtitle {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__horizontal-block {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-start;\n  justify-content: space-between;\n  padding: 0 16px 0 0;\n  box-sizing: border-box;\n}\n\n.mdc-card__horizontal-block .mdc-card__actions--vertical {\n  margin: 16px;\n}\n\n.mdc-card__horizontal-block .mdc-card__media-item {\n  margin-left: 16px;\n}\n\n.mdc-card__horizontal-block .mdc-card__media-item--3x {\n  margin-bottom: 16px;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/* Manual calculation done on SVG */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* Manual calculation done on SVG */\n@keyframes mdc-checkbox-fade-in-background {\n  0% {\n    border-color: rgba(0, 0, 0, 0.54);\n    background-color: transparent;\n  }\n  50% {\n    border-color: #3f51b5;\n    border-color: var(--mdc-theme-primary, #3f51b5);\n    background-color: #3f51b5;\n    background-color: var(--mdc-theme-primary, #3f51b5);\n  }\n}\n\n@keyframes mdc-checkbox-fade-out-background {\n  0%,\n  80% {\n    border-color: #3f51b5;\n    border-color: var(--mdc-theme-primary, #3f51b5);\n    background-color: #3f51b5;\n    background-color: var(--mdc-theme-primary, #3f51b5);\n  }\n  100% {\n    border-color: rgba(0, 0, 0, 0.54);\n    background-color: transparent;\n  }\n}\n\n@keyframes mdc-checkbox-fade-in-background-dark {\n  0% {\n    border-color: white;\n    background-color: transparent;\n  }\n  50% {\n    border-color: #3f51b5;\n    border-color: var(--mdc-theme-primary, #3f51b5);\n    background-color: #3f51b5;\n    background-color: var(--mdc-theme-primary, #3f51b5);\n  }\n}\n\n@keyframes mdc-checkbox-fade-out-background-dark {\n  0%,\n  80% {\n    border-color: #3f51b5;\n    border-color: var(--mdc-theme-primary, #3f51b5);\n    background-color: #3f51b5;\n    background-color: var(--mdc-theme-primary, #3f51b5);\n  }\n  100% {\n    border-color: white;\n    background-color: transparent;\n  }\n}\n\n@keyframes mdc-checkbox-unchecked-checked-checkmark-path {\n  0%,\n  50% {\n    stroke-dashoffset: 29.78334;\n  }\n  50% {\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  100% {\n    stroke-dashoffset: 0;\n  }\n}\n\n@keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {\n  0%,\n  68.2% {\n    transform: scaleX(0);\n  }\n  68.2% {\n    animation-timing-function: cubic-bezier(0, 0, 0, 1);\n  }\n  100% {\n    transform: scaleX(1);\n  }\n}\n\n@keyframes mdc-checkbox-checked-unchecked-checkmark-path {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);\n    opacity: 1;\n    stroke-dashoffset: 0;\n  }\n  to {\n    opacity: 0;\n    stroke-dashoffset: -29.78334;\n  }\n}\n\n@keyframes mdc-checkbox-checked-indeterminate-checkmark {\n  from {\n    transform: rotate(0deg);\n    opacity: 1;\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  to {\n    transform: rotate(45deg);\n    opacity: 0;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-checked-checkmark {\n  from {\n    transform: rotate(45deg);\n    opacity: 0;\n    animation-timing-function: cubic-bezier(0.14, 0, 0, 1);\n  }\n  to {\n    transform: rotate(360deg);\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-checkbox-checked-indeterminate-mixedmark {\n  from {\n    transform: rotate(-45deg);\n    opacity: 0;\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  to {\n    transform: rotate(0deg);\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-checked-mixedmark {\n  from {\n    transform: rotate(0deg);\n    opacity: 1;\n    animation-timing-function: cubic-bezier(0.14, 0, 0, 1);\n  }\n  to {\n    transform: rotate(315deg);\n    opacity: 0;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-unchecked-mixedmark {\n  0% {\n    transform: scaleX(1);\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  32.8%,\n  100% {\n    transform: scaleX(0);\n    opacity: 0;\n  }\n}\n\n.mdc-checkbox {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  position: relative;\n  box-sizing: content-box;\n  width: 18px;\n  height: 18px;\n  flex: 0 0 18px;\n  padding: 11px;\n  line-height: 0;\n  white-space: nowrap;\n  cursor: pointer;\n  vertical-align: bottom;\n}\n\n.mdc-checkbox:not(.mdc-ripple-upgraded):hover::before, .mdc-checkbox:not(.mdc-ripple-upgraded):focus::before, .mdc-checkbox:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-checkbox::before {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-checkbox::before {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-checkbox.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-checkbox::after {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-checkbox::after {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-checkbox.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-checkbox:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-checkbox::before, .mdc-checkbox::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded .mdc-checkbox__background::before {\n  content: none;\n}\n\n.mdc-checkbox__background {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  left: 11px;\n  right: initial;\n  display: inline-flex;\n  top: 11px;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  pointer-events: none;\n  width: 45%;\n  height: 45%;\n  transition: background-color 90ms 0ms cubic-bezier(0.4, 0, 1, 1), border-color 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border: 2px solid rgba(0, 0, 0, 0.54);\n  border-radius: 2px;\n  background-color: transparent;\n  will-change: background-color, border-color;\n}\n\n[dir=\"rtl\"] .mdc-checkbox .mdc-checkbox__background,\n.mdc-checkbox[dir=\"rtl\"] .mdc-checkbox__background {\n  left: initial;\n  right: 11px;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__background {\n  border-color: white;\n}\n\n.mdc-checkbox__background::before {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n  will-change: opacity, transform;\n  background: #3f51b5;\n  background: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-checkbox__native-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  cursor: inherit;\n  opacity: 0;\n}\n\n.mdc-checkbox__checkmark {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  transition: opacity 180ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n  fill: white;\n}\n\n.mdc-checkbox__checkmark__path {\n  transition: stroke-dashoffset 180ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  stroke: white !important;\n  stroke-width: 3.12px;\n  stroke-dashoffset: 29.78334;\n  stroke-dasharray: 29.78334;\n}\n\n.mdc-checkbox__mixedmark {\n  width: 100%;\n  height: 2px;\n  transform: scaleX(0) rotate(0deg);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  background-color: white;\n  opacity: 0;\n}\n\n.mdc-checkbox__native-control:focus ~ .mdc-checkbox__background::before {\n  transform: scale(2.75, 2.75);\n  transition: opacity 80ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 80ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .26;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {\n  transition: border-color 90ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 90ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  border-color: #3f51b5;\n  border-color: var(--mdc-theme-primary, #3f51b5);\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__checkmark {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__checkmark__path {\n  stroke-dashoffset: 0;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__mixedmark {\n  transform: scaleX(1) rotate(-45deg);\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  border-color: #3f51b5;\n  border-color: var(--mdc-theme-primary, #3f51b5);\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__checkmark {\n  transform: rotate(45deg);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__checkmark__path {\n  stroke-dashoffset: 0;\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__mixedmark {\n  transform: scaleX(1) rotate(0deg);\n  opacity: 1;\n}\n\n.mdc-checkbox__native-control:disabled,\nfieldset:disabled .mdc-checkbox__native-control,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control {\n  cursor: default;\n}\n\n.mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background {\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background, .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  border-color: transparent;\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  background-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-checkbox--upgraded .mdc-checkbox__background,\n.mdc-checkbox--upgraded .mdc-checkbox__checkmark,\n.mdc-checkbox--upgraded .mdc-checkbox__checkmark__path,\n.mdc-checkbox--upgraded .mdc-checkbox__mixedmark {\n  transition: none !important;\n}\n\n.mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background {\n  animation: mdc-checkbox-fade-in-background 180ms linear;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background {\n  animation-name: mdc-checkbox-fade-in-background-dark;\n}\n\n.mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background {\n  animation: mdc-checkbox-fade-out-background 180ms linear;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background {\n  animation-name: mdc-checkbox-fade-out-background-dark;\n}\n\n.mdc-checkbox--anim-unchecked-checked .mdc-checkbox__checkmark__path {\n  animation: 180ms linear 0s :local(mdc-checkbox-unchecked-checked-checkmark-path);\n  transition: none;\n}\n\n.mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__mixedmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-unchecked-indeterminate-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-unchecked .mdc-checkbox__checkmark__path {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-unchecked-checkmark-path);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-indeterminate .mdc-checkbox__checkmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-indeterminate-checkmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-indeterminate .mdc-checkbox__mixedmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-indeterminate-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-checked .mdc-checkbox__checkmark {\n  animation: 500ms linear 0s :local(mdc-checkbox-indeterminate-checked-checkmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-checked .mdc-checkbox__mixedmark {\n  animation: 500ms linear 0s :local(mdc-checkbox-indeterminate-checked-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__mixedmark {\n  animation: 300ms linear 0s :local(mdc-checkbox-indeterminate-unchecked-mixedmark);\n  transition: none;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n:root {\n  --mdc-dialog-dark-theme-bg-color: #303030;\n}\n\n.mdc-dialog {\n  display: flex;\n  position: fixed;\n  align-items: center;\n  justify-content: center;\n  opacity: 0;\n  z-index: -1;\n}\n\n.mdc-dialog__surface {\n  display: inline-flex;\n  flex-direction: column;\n  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);\n  width: calc(100% - 30px);\n  min-width: 640px;\n  max-width: 865px;\n  transform: translateY(150px) scale(0.8);\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  border-radius: 2px;\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  opacity: 0;\n}\n\n.mdc-dialog--theme-dark .mdc-dialog__surface,\n.mdc-theme--dark .mdc-dialog__surface {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  background-color: #303030;\n  background-color: var(--mdc-dialog-dark-theme-bg-color, #303030);\n}\n\n[dir=\"rtl\"] .mdc-dialog .mdc-dialog__surface,\n.mdc-dialog[dir=\"rtl\"] .mdc-dialog__surface {\n  text-align: right;\n}\n\n.mdc-dialog__backdrop {\n  display: flex;\n  position: fixed;\n  top: 0;\n  left: 0;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.87);\n  background-color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  opacity: 0;\n  z-index: -1;\n}\n\n.mdc-dialog__header {\n  display: flex;\n  align-items: center;\n  padding: 24px 24px 0;\n}\n\n.mdc-dialog__header__empty {\n  padding: 0;\n}\n\n[dir=\"rtl\"] .mdc-dialog .mdc-dialog__header,\n.mdc-dialog[dir=\"rtl\"] .mdc-dialog__header {\n  text-align: right;\n}\n\n.mdc-dialog__header__title {\n  flex: 1;\n  margin: 0;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n}\n\n.mdc-dialog__body {\n  margin-top: 20px;\n  padding: 0 24px 24px;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n}\n\n.mdc-dialog--theme-dark.mdc-dialog__body,\n.mdc-theme--dark .mdc-dialog__body {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-dialog__body--scrollable {\n  max-height: 195px;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  overflow-y: scroll;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n}\n\n.mdc-dialog__footer {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  justify-content: flex-end;\n  padding: 8px;\n}\n\n@media (max-width: 640px) {\n  .mdc-dialog {\n    min-width: 280px;\n  }\n  .mdc-dialog__surface {\n    min-width: 280px;\n  }\n  .mdc-dialog__body {\n    line-height: 24px;\n  }\n}\n\n.mdc-dialog--open {\n  display: flex;\n  top: 0;\n  left: 0;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  z-index: 2;\n}\n\n.mdc-dialog--open .mdc-dialog__surface {\n  transform: translateY(0) scale(1);\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.mdc-dialog--open .mdc-dialog__backdrop {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .3;\n}\n\n.mdc-dialog-scroll-lock {\n  height: 100vh;\n  overflow: hidden;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n:root {\n  --mdc-persistent-drawer-dark-theme-bg-color: #212121;\n}\n\n.mdc-persistent-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  width: 0;\n}\n\n.mdc-persistent-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-persistent-drawer__toolbar-spacer--theme-dark .mdc-persistent-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-persistent-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-persistent-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-persistent-drawer__header {\n  position: relative;\n}\n\n.mdc-persistent-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-persistent-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-persistent-drawer .mdc-list-group,\n.mdc-persistent-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-persistent-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-persistent-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-persistent-drawer .mdc-list-item__start-detail--theme-dark .mdc-persistent-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-persistent-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-persistent-drawer--selected.mdc-list-item,\n.mdc-persistent-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-persistent-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-persistent-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-persistent-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-persistent-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer__drawer {\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  border-left: 0;\n  border-right: 1px solid #e4e4e4;\n  left: 0;\n  right: initial;\n  height: 100%;\n  transform: translateX(-107%);\n  transform: translateX(calc(-100% - 20px));\n  will-change: transform;\n  display: inline-flex;\n  flex-direction: column;\n  box-sizing: border-box;\n  overflow: hidden;\n  touch-action: none;\n  width: 240px;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer, .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  border-left: 1px solid #e4e4e4;\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer, .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-persistent-drawer__drawer--theme-dark,\n.mdc-theme--dark .mdc-persistent-drawer__drawer {\n  background-color: #212121;\n  background-color: var(--mdc-persistent-drawer-dark-theme-bg-color, #212121);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  border-left: 0;\n  border-right: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer--theme-dark, .mdc-persistent-drawer__drawer--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-persistent-drawer__drawer,\n.mdc-theme--dark .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  border-left: 1px solid rgba(255, 255, 255, 0.12);\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer .mdc-persistent-drawer__drawer,\n.mdc-persistent-drawer[dir=\"rtl\"] .mdc-persistent-drawer__drawer {\n  transform: translateX(107%);\n  transform: translateX(calc(100% + 20px));\n}\n\n.mdc-persistent-drawer--animating .mdc-persistent-drawer__drawer {\n  transition: transform 0.13s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer--animating.mdc-persistent-drawer--open .mdc-persistent-drawer__drawer {\n  transition: transform 0.33s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer--open {\n  width: 240px;\n  pointer-events: auto;\n}\n\n.mdc-persistent-drawer--open .mdc-persistent-drawer__drawer {\n  transform: none;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer--open .mdc-persistent-drawer__drawer, .mdc-persistent-drawer--open[dir=\"rtl\"] .mdc-persistent-drawer__drawer {\n  transform: none;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n:root {\n  --mdc-permanent-drawer-dark-theme-bg-color: #212121;\n}\n\n.mdc-permanent-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  border-left: 0;\n  border-right: 1px solid #e4e4e4;\n  left: 0;\n  right: initial;\n  display: inline-flex;\n  flex-direction: column;\n  width: 240px;\n  height: 100%;\n  box-sizing: border-box;\n  overflow: hidden;\n}\n\n.mdc-permanent-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-permanent-drawer__toolbar-spacer--theme-dark .mdc-permanent-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-permanent-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-permanent-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-permanent-drawer__header {\n  position: relative;\n}\n\n.mdc-permanent-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-permanent-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-permanent-drawer .mdc-list-group,\n.mdc-permanent-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-permanent-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-permanent-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-permanent-drawer .mdc-list-item__start-detail--theme-dark .mdc-permanent-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-permanent-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-permanent-drawer--selected.mdc-list-item,\n.mdc-permanent-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-permanent-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-permanent-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-permanent-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-permanent-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer, .mdc-permanent-drawer[dir=\"rtl\"] {\n  border-left: 1px solid #e4e4e4;\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer, .mdc-permanent-drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-permanent-drawer--theme-dark,\n.mdc-theme--dark .mdc-permanent-drawer {\n  background-color: #212121;\n  background-color: var(--mdc-permanent-drawer-dark-theme-bg-color, #212121);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  border-left: 0;\n  border-right: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--theme-dark, .mdc-permanent-drawer--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-permanent-drawer,\n.mdc-theme--dark .mdc-permanent-drawer[dir=\"rtl\"] {\n  border-left: 1px solid rgba(255, 255, 255, 0.12);\n  border-right: 0;\n}\n\n.mdc-permanent-drawer--floating {\n  background: none;\n  border-left: 0;\n  border-right: none;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--floating, .mdc-permanent-drawer--floating[dir=\"rtl\"] {\n  border-left: none;\n  border-right: 0;\n}\n\n.mdc-permanent-drawer--floating--theme-dark,\n.mdc-theme--dark .mdc-permanent-drawer--floating {\n  background: none;\n  border-left: 0;\n  border-right: none;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--floating--theme-dark, .mdc-permanent-drawer--floating--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-permanent-drawer--floating,\n.mdc-theme--dark .mdc-permanent-drawer--floating[dir=\"rtl\"] {\n  border-left: none;\n  border-right: 0;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n.mdc-temporary-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  pointer-events: none;\n  box-sizing: border-box;\n  contain: strict;\n  z-index: 3;\n  /* Shaded background */\n}\n\n.mdc-temporary-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-temporary-drawer__toolbar-spacer--theme-dark .mdc-temporary-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-temporary-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-temporary-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-temporary-drawer__header {\n  position: relative;\n}\n\n.mdc-temporary-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-temporary-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-temporary-drawer .mdc-list-group,\n.mdc-temporary-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-temporary-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-temporary-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-temporary-drawer .mdc-list-item__start-detail--theme-dark .mdc-temporary-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-temporary-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-temporary-drawer--selected.mdc-list-item,\n.mdc-temporary-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-temporary-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-temporary-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-temporary-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-temporary-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer::before {\n  display: block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  content: \"\";\n  opacity: 0;\n  opacity: var(--mdc-temporary-drawer-opacity, 0);\n  will-change: opacity;\n  box-sizing: border-box;\n}\n\n.mdc-temporary-drawer__drawer {\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);\n  left: 0;\n  right: initial;\n  height: 100%;\n  transform: translateX(-107%);\n  transform: translateX(calc(-100% - 20px));\n  will-change: transform;\n  display: flex;\n  position: absolute;\n  flex-direction: column;\n  width: calc(100% - 56px);\n  max-width: 280px;\n  box-sizing: border-box;\n  overflow: hidden;\n  touch-action: none;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer__drawer, .mdc-temporary-drawer__drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-temporary-drawer--theme-dark .mdc-temporary-drawer__drawer,\n.mdc-theme--dark .mdc-temporary-drawer__drawer {\n  background: #303030;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer__drawer .mdc-temporary-drawer__drawer,\n.mdc-temporary-drawer__drawer[dir=\"rtl\"] .mdc-temporary-drawer__drawer {\n  transform: translateX(107%);\n  transform: translateX(calc(100% + 20px));\n}\n\n@media (min-width: 600px) {\n  .mdc-temporary-drawer__drawer {\n    width: calc(100% - 64px);\n    max-width: 320px;\n  }\n}\n\n.mdc-temporary-drawer__content {\n  flex-grow: 1;\n  margin: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  -webkit-overflow-scrolling: touch;\n  touch-action: pan-y;\n}\n\n.mdc-temporary-drawer__footer {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  flex-shrink: 0;\n}\n\n.mdc-temporary-drawer--animating::before {\n  transition: opacity 0.3s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--animating.mdc-temporary-drawer--open .mdc-temporary-drawer__drawer {\n  transition: transform 0.33s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--animating .mdc-temporary-drawer__drawer {\n  transition: transform 0.13s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--open {\n  pointer-events: auto;\n}\n\n.mdc-temporary-drawer--open::before {\n  opacity: 1;\n  opacity: var(--mdc-temporary-drawer-opacity, 1);\n}\n\n.mdc-temporary-drawer--open .mdc-temporary-drawer__drawer {\n  transform: none;\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer--open .mdc-temporary-drawer__drawer, .mdc-temporary-drawer--open[dir=\"rtl\"] .mdc-temporary-drawer__drawer {\n  transform: none;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n.mdc-elevation--z0 {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z1 {\n  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z2 {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z3 {\n  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z4 {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z5 {\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z6 {\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z7 {\n  box-shadow: 0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z8 {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z9 {\n  box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.2), 0px 9px 12px 1px rgba(0, 0, 0, 0.14), 0px 3px 16px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z10 {\n  box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z11 {\n  box-shadow: 0px 6px 7px -4px rgba(0, 0, 0, 0.2), 0px 11px 15px 1px rgba(0, 0, 0, 0.14), 0px 4px 20px 3px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z12 {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z13 {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 13px 19px 2px rgba(0, 0, 0, 0.14), 0px 5px 24px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z14 {\n  box-shadow: 0px 7px 9px -4px rgba(0, 0, 0, 0.2), 0px 14px 21px 2px rgba(0, 0, 0, 0.14), 0px 5px 26px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z15 {\n  box-shadow: 0px 8px 9px -5px rgba(0, 0, 0, 0.2), 0px 15px 22px 2px rgba(0, 0, 0, 0.14), 0px 6px 28px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z16 {\n  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z17 {\n  box-shadow: 0px 8px 11px -5px rgba(0, 0, 0, 0.2), 0px 17px 26px 2px rgba(0, 0, 0, 0.14), 0px 6px 32px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z18 {\n  box-shadow: 0px 9px 11px -5px rgba(0, 0, 0, 0.2), 0px 18px 28px 2px rgba(0, 0, 0, 0.14), 0px 7px 34px 6px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z19 {\n  box-shadow: 0px 9px 12px -6px rgba(0, 0, 0, 0.2), 0px 19px 29px 2px rgba(0, 0, 0, 0.14), 0px 7px 36px 6px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z20 {\n  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z21 {\n  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 21px 33px 3px rgba(0, 0, 0, 0.14), 0px 8px 40px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z22 {\n  box-shadow: 0px 10px 14px -6px rgba(0, 0, 0, 0.2), 0px 22px 35px 3px rgba(0, 0, 0, 0.14), 0px 8px 42px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z23 {\n  box-shadow: 0px 11px 14px -7px rgba(0, 0, 0, 0.2), 0px 23px 36px 3px rgba(0, 0, 0, 0.14), 0px 9px 44px 8px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z24 {\n  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation-transition {\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  will-change: box-shadow;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-fab {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  width: 56px;\n  height: 56px;\n  padding: 0;\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  border: none;\n  border-radius: 50%;\n  cursor: pointer;\n  user-select: none;\n  box-sizing: border-box;\n  fill: currentColor;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  background-color: #ff4081;\n  background-color: var(--mdc-theme-accent, #ff4081);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-accent, white);\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded):hover::before, .mdc-fab:not(.mdc-ripple-upgraded):focus::before, .mdc-fab:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-fab::before {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-fab.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-fab.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab::after {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-fab.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-fab.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-fab.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);\n}\n\n.mdc-fab--mini {\n  width: 40px;\n  height: 40px;\n}\n\n.mdc-fab--plain {\n  background-color: white;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-fab--plain::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab--plain::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-fab--plain:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-fab:active, .mdc-fab:focus {\n  outline: none;\n}\n\n.mdc-fab:active {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-fab:hover {\n  cursor: pointer;\n}\n\n.mdc-fab::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n.mdc-fab > svg {\n  width: 100%;\n}\n\nfieldset:disabled .mdc-fab, .mdc-fab:disabled {\n  background-color: rgba(0, 0, 0, 0.12);\n  color: rgba(0, 0, 0, 0.26);\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-fab__icon {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* stylelint-disable selector-no-type */\n.mdc-form-field {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  display: inline-flex;\n  align-items: center;\n  vertical-align: middle;\n}\n\n.mdc-form-field--theme-dark,\n.mdc-theme--dark .mdc-form-field {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-form-field > label {\n  order: 0;\n  margin-right: auto;\n  padding-left: 4px;\n}\n\n[dir=\"rtl\"] .mdc-form-field > label, .mdc-form-field[dir=\"rtl\"] > label {\n  margin-left: auto;\n  padding-right: 4px;\n}\n\n.mdc-form-field--align-end > label {\n  order: -1;\n  margin-left: auto;\n  padding-right: 4px;\n}\n\n[dir=\"rtl\"] .mdc-form-field--align-end > label, .mdc-form-field--align-end[dir=\"rtl\"] > label {\n  margin-right: auto;\n  padding-left: 4px;\n}\n\n/* stylelint-enable selector-no-type */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-grid-list .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1);\n}\n\n.mdc-grid-list .mdc-grid-tile {\n  margin: 2px 0;\n  padding: 0 2px;\n}\n\n.mdc-grid-list .mdc-grid-tile__secondary {\n  left: 2px;\n  width: calc(100% - 4px);\n}\n\n.mdc-grid-list .mdc-grid-list__tiles {\n  margin: 2px auto;\n}\n\n.mdc-grid-list__tiles {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin: 0;\n  padding: 0;\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-tile {\n  margin: 0.5px 0;\n  padding: 0 0.5px;\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-tile__secondary {\n  left: 0.5px;\n  width: calc(100% - 1px);\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-list__tiles {\n  margin: 0.5px auto;\n}\n\n.mdc-grid-list--tile-aspect-16x9 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.77778);\n}\n\n.mdc-grid-list--tile-aspect-3x2 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.5);\n}\n\n.mdc-grid-list--tile-aspect-2x3 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 0.66667);\n}\n\n.mdc-grid-list--tile-aspect-4x3 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.33333);\n}\n\n.mdc-grid-list--tile-aspect-3x4 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 0.75);\n}\n\n.mdc-grid-list--twoline-caption .mdc-grid-tile__secondary {\n  height: 68px;\n}\n\n.mdc-grid-list--header-caption .mdc-grid-tile__secondary {\n  top: 0;\n  bottom: auto;\n}\n\n.mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary {\n  padding-left: 56px;\n  padding-right: 8px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary {\n  padding-left: 8px;\n  padding-right: 56px;\n}\n\n.mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon {\n  left: 16px;\n  right: initial;\n  font-size: 24px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon {\n  left: initial;\n  right: 16px;\n}\n\n.mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary {\n  padding-left: 16px;\n  padding-right: 56px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary {\n  padding-left: 56px;\n  padding-right: 16px;\n}\n\n.mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon {\n  left: initial;\n  right: 16px;\n  font-size: 24px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon {\n  left: 16px;\n  right: initial;\n}\n\n.mdc-grid-tile {\n  display: block;\n  position: relative;\n  width: var(--mdc-grid-list-tile-width, 200px);\n}\n\n.mdc-grid-tile__primary {\n  position: relative;\n  height: 0;\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-grid-tile__primary-content {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.mdc-grid-tile__secondary {\n  position: absolute;\n  box-sizing: border-box;\n  bottom: 0;\n  height: 48px;\n  padding: 16px;\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-grid-tile__title {\n  display: block;\n  margin: 0;\n  padding: 0;\n  font-size: 1rem;\n  font-weight: 500;\n  line-height: 1rem;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.mdc-grid-tile__support-text {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  display: block;\n  margin: 0;\n  margin-top: 4px;\n  padding: 0;\n}\n\n.mdc-grid-tile__icon {\n  position: absolute;\n  top: calc(50% - 24px / 2);\n  font-size: 0;\n}\n\n/** postcss-bem-linter: define icon-toggle */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-icon-toggle {\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  will-change: initial;\n  display: flex;\n  position: relative;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  width: 48px;\n  height: 48px;\n  padding: 12px;\n  outline: none;\n  font-size: 1.5rem;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-icon-toggle:not(.mdc-ripple-upgraded):hover::before, .mdc-icon-toggle:not(.mdc-ripple-upgraded):focus::before, .mdc-icon-toggle:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-icon-toggle::before {\n  background-color: rgba(0, 0, 0, 0.062);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle::after {\n  background-color: rgba(0, 0, 0, 0.062);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle::before,\n.mdc-theme--dark .mdc-icon-toggle::before {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle::after,\n.mdc-theme--dark .mdc-icon-toggle::after {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle::after {\n  position: absolute;\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n}\n\n.mdc-icon-toggle--theme-dark,\n.mdc-theme--dark .mdc-icon-toggle {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-icon-toggle--primary {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-icon-toggle--primary::before {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--primary::before {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--primary::after {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--primary::after {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--accent {\n  color: #ff4081;\n  color: var(--mdc-theme-accent, #ff4081);\n}\n\n.mdc-icon-toggle--accent::before {\n  background-color: rgba(255, 64, 129, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--accent::before {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(14%));\n  }\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--accent::after {\n  background-color: rgba(255, 64, 129, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--accent::after {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(14%));\n  }\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--disabled {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  pointer-events: none;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle--disabled,\n.mdc-theme--dark .mdc-icon-toggle--disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n/** postcss-bem-linter: end */\n.mdc-layout-grid {\n  display: flex;\n  flex-flow: row wrap;\n  align-items: stretch;\n  margin: 0 auto;\n  box-sizing: border-box;\n  padding: 8px;\n  padding: calc(var(--mdc-layout-grid-margin, 16px) - var(--mdc-layout-grid-gutter, 16px) / 2);\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid {\n    display: grid;\n    grid-gap: 16px;\n    grid-gap: var(--mdc-layout-grid-gutter, 16px);\n    padding: 16px;\n    padding: var(--mdc-layout-grid-margin, 16px);\n  }\n  @media (min-width: 840px) {\n    .mdc-layout-grid {\n      grid-template-columns: repeat(12, minmax(0, 1fr));\n    }\n  }\n  @media (min-width: 480px) and (max-width: 839px) {\n    .mdc-layout-grid {\n      grid-template-columns: repeat(8, minmax(0, 1fr));\n    }\n  }\n  @media (max-width: 479px) {\n    .mdc-layout-grid {\n      grid-template-columns: repeat(4, minmax(0, 1fr));\n    }\n  }\n}\n\n.mdc-layout-grid__cell {\n  margin: 8px;\n  margin: calc(var(--mdc-layout-grid-gutter, 16px) / 2);\n  box-sizing: border-box;\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid__cell {\n    margin: 0;\n  }\n}\n\n@media (min-width: 840px) {\n  .mdc-layout-grid__cell {\n    width: calc(33.33333% - 16px);\n    width: calc(33.33333% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n}\n\n@media (min-width: 480px) and (max-width: 839px) {\n  .mdc-layout-grid__cell {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n}\n\n@media (max-width: 479px) {\n  .mdc-layout-grid__cell {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n}\n\n@media (min-width: 840px) {\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-desktop.mdc-layout-grid__cell--span-1-desktop {\n    width: calc(8.33333% - 16px);\n    width: calc(8.33333% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-desktop.mdc-layout-grid__cell--span-1-desktop {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-desktop.mdc-layout-grid__cell--span-2-desktop {\n    width: calc(16.66667% - 16px);\n    width: calc(16.66667% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-desktop.mdc-layout-grid__cell--span-2-desktop {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-desktop.mdc-layout-grid__cell--span-3-desktop {\n    width: calc(25% - 16px);\n    width: calc(25% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-desktop.mdc-layout-grid__cell--span-3-desktop {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-desktop.mdc-layout-grid__cell--span-4-desktop {\n    width: calc(33.33333% - 16px);\n    width: calc(33.33333% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-desktop.mdc-layout-grid__cell--span-4-desktop {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-desktop.mdc-layout-grid__cell--span-5-desktop {\n    width: calc(41.66667% - 16px);\n    width: calc(41.66667% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-desktop.mdc-layout-grid__cell--span-5-desktop {\n      width: auto;\n      grid-column-end: span 5;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-desktop.mdc-layout-grid__cell--span-6-desktop {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-desktop.mdc-layout-grid__cell--span-6-desktop {\n      width: auto;\n      grid-column-end: span 6;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-desktop.mdc-layout-grid__cell--span-7-desktop {\n    width: calc(58.33333% - 16px);\n    width: calc(58.33333% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-desktop.mdc-layout-grid__cell--span-7-desktop {\n      width: auto;\n      grid-column-end: span 7;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-desktop.mdc-layout-grid__cell--span-8-desktop {\n    width: calc(66.66667% - 16px);\n    width: calc(66.66667% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-desktop.mdc-layout-grid__cell--span-8-desktop {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-desktop.mdc-layout-grid__cell--span-9-desktop {\n    width: calc(75% - 16px);\n    width: calc(75% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-desktop.mdc-layout-grid__cell--span-9-desktop {\n      width: auto;\n      grid-column-end: span 9;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-desktop.mdc-layout-grid__cell--span-10-desktop {\n    width: calc(83.33333% - 16px);\n    width: calc(83.33333% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-desktop.mdc-layout-grid__cell--span-10-desktop {\n      width: auto;\n      grid-column-end: span 10;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-desktop.mdc-layout-grid__cell--span-11-desktop {\n    width: calc(91.66667% - 16px);\n    width: calc(91.66667% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-desktop.mdc-layout-grid__cell--span-11-desktop {\n      width: auto;\n      grid-column-end: span 11;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-desktop.mdc-layout-grid__cell--span-12-desktop {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-desktop.mdc-layout-grid__cell--span-12-desktop {\n      width: auto;\n      grid-column-end: span 12;\n    }\n  }\n}\n\n@media (min-width: 480px) and (max-width: 839px) {\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-tablet.mdc-layout-grid__cell--span-1-tablet {\n    width: calc(12.5% - 16px);\n    width: calc(12.5% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-tablet.mdc-layout-grid__cell--span-1-tablet {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-tablet.mdc-layout-grid__cell--span-2-tablet {\n    width: calc(25% - 16px);\n    width: calc(25% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-tablet.mdc-layout-grid__cell--span-2-tablet {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-tablet.mdc-layout-grid__cell--span-3-tablet {\n    width: calc(37.5% - 16px);\n    width: calc(37.5% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-tablet.mdc-layout-grid__cell--span-3-tablet {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-tablet.mdc-layout-grid__cell--span-4-tablet {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-tablet.mdc-layout-grid__cell--span-4-tablet {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-tablet.mdc-layout-grid__cell--span-5-tablet {\n    width: calc(62.5% - 16px);\n    width: calc(62.5% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-tablet.mdc-layout-grid__cell--span-5-tablet {\n      width: auto;\n      grid-column-end: span 5;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-tablet.mdc-layout-grid__cell--span-6-tablet {\n    width: calc(75% - 16px);\n    width: calc(75% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-tablet.mdc-layout-grid__cell--span-6-tablet {\n      width: auto;\n      grid-column-end: span 6;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-tablet.mdc-layout-grid__cell--span-7-tablet {\n    width: calc(87.5% - 16px);\n    width: calc(87.5% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-tablet.mdc-layout-grid__cell--span-7-tablet {\n      width: auto;\n      grid-column-end: span 7;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-tablet.mdc-layout-grid__cell--span-8-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-tablet.mdc-layout-grid__cell--span-8-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-tablet.mdc-layout-grid__cell--span-9-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-tablet.mdc-layout-grid__cell--span-9-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-tablet.mdc-layout-grid__cell--span-10-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-tablet.mdc-layout-grid__cell--span-10-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-tablet.mdc-layout-grid__cell--span-11-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-tablet.mdc-layout-grid__cell--span-11-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-tablet.mdc-layout-grid__cell--span-12-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-tablet.mdc-layout-grid__cell--span-12-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n}\n\n@media (max-width: 479px) {\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-phone.mdc-layout-grid__cell--span-1-phone {\n    width: calc(25% - 16px);\n    width: calc(25% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-phone.mdc-layout-grid__cell--span-1-phone {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-phone.mdc-layout-grid__cell--span-2-phone {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-phone.mdc-layout-grid__cell--span-2-phone {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-phone.mdc-layout-grid__cell--span-3-phone {\n    width: calc(75% - 16px);\n    width: calc(75% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-phone.mdc-layout-grid__cell--span-3-phone {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-phone.mdc-layout-grid__cell--span-4-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-phone.mdc-layout-grid__cell--span-4-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-phone.mdc-layout-grid__cell--span-5-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-phone.mdc-layout-grid__cell--span-5-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-phone.mdc-layout-grid__cell--span-6-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-phone.mdc-layout-grid__cell--span-6-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-phone.mdc-layout-grid__cell--span-7-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-phone.mdc-layout-grid__cell--span-7-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-phone.mdc-layout-grid__cell--span-8-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-phone.mdc-layout-grid__cell--span-8-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-phone.mdc-layout-grid__cell--span-9-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-phone.mdc-layout-grid__cell--span-9-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-phone.mdc-layout-grid__cell--span-10-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-phone.mdc-layout-grid__cell--span-10-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-phone.mdc-layout-grid__cell--span-11-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-phone.mdc-layout-grid__cell--span-11-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-phone.mdc-layout-grid__cell--span-12-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-phone.mdc-layout-grid__cell--span-12-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n}\n\n.mdc-layout-grid__cell--order-1 {\n  order: 1;\n}\n\n.mdc-layout-grid__cell--order-2 {\n  order: 2;\n}\n\n.mdc-layout-grid__cell--order-3 {\n  order: 3;\n}\n\n.mdc-layout-grid__cell--order-4 {\n  order: 4;\n}\n\n.mdc-layout-grid__cell--order-5 {\n  order: 5;\n}\n\n.mdc-layout-grid__cell--order-6 {\n  order: 6;\n}\n\n.mdc-layout-grid__cell--order-7 {\n  order: 7;\n}\n\n.mdc-layout-grid__cell--order-8 {\n  order: 8;\n}\n\n.mdc-layout-grid__cell--order-9 {\n  order: 9;\n}\n\n.mdc-layout-grid__cell--order-10 {\n  order: 10;\n}\n\n.mdc-layout-grid__cell--order-11 {\n  order: 11;\n}\n\n.mdc-layout-grid__cell--order-12 {\n  order: 12;\n}\n\n.mdc-layout-grid__cell--align-top {\n  align-self: flex-start;\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid__cell--align-top {\n    align-self: start;\n  }\n}\n\n.mdc-layout-grid__cell--align-middle {\n  align-self: center;\n}\n\n.mdc-layout-grid__cell--align-bottom {\n  align-self: flex-end;\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid__cell--align-bottom {\n    align-self: end;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-list {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: 0;\n  padding: 8px 16px 0;\n  line-height: 1.5rem;\n  list-style-type: none;\n}\n\n.mdc-list--theme-dark,\n.mdc-theme--dark .mdc-list {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-list--dense {\n  padding-top: 4px;\n  font-size: .812rem;\n}\n\n.mdc-list-item {\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  height: 48px;\n}\n\n.mdc-list-item__start-detail {\n  width: 24px;\n  height: 24px;\n  margin-left: 0;\n  margin-right: 32px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item__start-detail {\n  margin-left: 32px;\n  margin-right: 0;\n}\n\n.mdc-list-item__end-detail {\n  width: 24px;\n  height: 24px;\n  margin-left: auto;\n  margin-right: 16px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item__end-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item__end-detail {\n  margin-left: 16px;\n  margin-right: auto;\n}\n\n.mdc-list-item__text {\n  display: inline-flex;\n  flex-direction: column;\n}\n\n.mdc-list-item__text__secondary {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-list-item__text__secondary--theme-dark,\n.mdc-theme--dark .mdc-list-item__text__secondary {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-list--dense .mdc-list-item__text__secondary {\n  font-size: inherit;\n}\n\n.mdc-list--dense .mdc-list-item {\n  height: 40px;\n}\n\n.mdc-list--dense .mdc-list-item__start-detail {\n  width: 20px;\n  height: 20px;\n  margin-left: 0;\n  margin-right: 36px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list--dense .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list--dense .mdc-list-item__start-detail {\n  margin-left: 36px;\n  margin-right: 0;\n}\n\n.mdc-list--dense .mdc-list-item__end-detail {\n  width: 20px;\n  height: 20px;\n}\n\n.mdc-list--avatar-list .mdc-list-item {\n  height: 56px;\n}\n\n.mdc-list--avatar-list .mdc-list-item__start-detail {\n  width: 40px;\n  height: 40px;\n  margin-left: 0;\n  margin-right: 16px;\n  border-radius: 50%;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list--avatar-list .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list--avatar-list .mdc-list-item__start-detail {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n.mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item {\n  height: 48px;\n}\n\n.mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail {\n  width: 36px;\n  height: 36px;\n  margin-left: 0;\n  margin-right: 20px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail {\n  margin-left: 20px;\n  margin-right: 0;\n}\n\n.mdc-list--two-line .mdc-list-item {\n  height: 72px;\n}\n\n.mdc-list--two-line.mdc-list--dense .mdc-list-item {\n  height: 60px;\n}\n\na.mdc-list-item {\n  color: inherit;\n  text-decoration: none;\n}\n\n.mdc-list-item.mdc-ripple-upgraded {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  position: relative;\n  left: -16px;\n  width: 100%;\n  padding: 0 16px;\n  overflow: hidden;\n}\n\n.mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):hover::before, .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):focus::before, .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-list-item.mdc-ripple-upgraded::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list-item.mdc-ripple-upgraded::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-list-item.mdc-ripple-upgraded:focus {\n  outline: none;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded::before {\n  background-color: rgba(255, 255, 255, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded::after {\n  background-color: rgba(255, 255, 255, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-list-divider {\n  height: 0;\n  margin: 0;\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n}\n\n.mdc-list--theme-dark .mdc-list-divider,\n.mdc-theme--dark .mdc-list-divider {\n  border-bottom-color: rgba(255, 255, 255, 0.2);\n}\n\n.mdc-list-divider--inset {\n  margin-left: 56px;\n  margin-right: 0;\n  width: calc(100% - 56px);\n}\n\n[dir=\"rtl\"] .mdc-list-group .mdc-list-divider--inset,\n.mdc-list-group[dir=\"rtl\"] .mdc-list-divider--inset {\n  margin-left: 0;\n  margin-right: 56px;\n}\n\n.mdc-list-group {\n  padding: 0 16px;\n}\n\n.mdc-list-group__subheader {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: 0.75rem 0;\n}\n\n.mdc-list-group__subheader--theme-dark,\n.mdc-theme--dark .mdc-list-group__subheader {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-list-group .mdc-list {\n  padding: 0;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* postcss-bem-linter: define simple-menu */\n.mdc-simple-menu {\n  display: none;\n  position: absolute;\n  max-width: calc(100vw - 32px);\n  max-height: calc(100vh - 32px);\n  margin: 0;\n  padding: 0;\n  transform: scale(0);\n  transform-origin: top left;\n  border-radius: 2px;\n  background-color: white;\n  white-space: nowrap;\n  opacity: 0;\n  overflow: hidden;\n  box-sizing: border-box;\n  will-change: transform, opacity;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-enable plugin/selector-bem-pattern */\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  /* stylelint-enable plugin/selector-bem-pattern */\n}\n\n.mdc-simple-menu--theme-dark,\n.mdc-theme--dark .mdc-simple-menu {\n  background-color: #424242;\n}\n\n.mdc-simple-menu:focus {\n  outline: none;\n}\n\n.mdc-simple-menu--open {\n  display: inline-block;\n  transform: scale(1);\n  opacity: 1;\n}\n\n.mdc-simple-menu--animating {\n  display: inline-block;\n  transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-simple-menu__items {\n  display: inline-block;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  will-change: transform;\n  /* stylelint-disable plugin/selector-bem-pattern, selector-no-universal */\n  /* stylelint-enable plugin/selector-bem-pattern, selector-no-universal */\n}\n\n.mdc-simple-menu__items > * {\n  opacity: 0;\n}\n\n.mdc-simple-menu__items > .mdc-list-item {\n  cursor: pointer;\n}\n\n.mdc-simple-menu--animating .mdc-simple-menu__items {\n  overflow-y: hidden;\n}\n\n.mdc-simple-menu--animating .mdc-simple-menu__items > * {\n  transition-duration: 0.3s;\n  transition-property: opacity;\n  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-simple-menu--open .mdc-simple-menu__items > * {\n  opacity: 1;\n  will-change: opacity;\n}\n\n[dir=\"rtl\"] .mdc-simple-menu {\n  transform-origin: top right;\n}\n\n.mdc-simple-menu--open-from-top-left {\n  transform-origin: top left !important;\n}\n\n.mdc-simple-menu--open-from-top-right {\n  transform-origin: top right !important;\n}\n\n.mdc-simple-menu--open-from-bottom-left {\n  transform-origin: bottom left !important;\n}\n\n.mdc-simple-menu--open-from-bottom-right {\n  transform-origin: bottom right !important;\n}\n\n.mdc-simple-menu .mdc-list-group,\n.mdc-simple-menu .mdc-list {\n  padding: 0;\n}\n\n.mdc-simple-menu .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-item,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-item {\n  color: white;\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-divider,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-divider {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-simple-menu .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-simple-menu--selected.mdc-list-item,\n.mdc-simple-menu--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-simple-menu .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms cubic-bezier(0, 0, 0.2, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-simple-menu .mdc-list-item:focus::before {\n  opacity: .12;\n}\n\n.mdc-simple-menu .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  opacity: .18;\n}\n\n/* postcss-bem-linter: end */\n.mdc-menu-anchor {\n  position: relative;\n  overflow: visible;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-radio {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  width: 40px;\n  height: 40px;\n  flex: 0 0 40px;\n  padding: 10px;\n  cursor: pointer;\n  will-change: opacity, transform, border-color, background-color, color;\n}\n\n.mdc-radio:not(.mdc-ripple-upgraded):hover::before, .mdc-radio:not(.mdc-ripple-upgraded):focus::before, .mdc-radio:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-radio::before {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-radio::before {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-radio.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-radio.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-radio.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-radio.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-radio::after {\n  background-color: rgba(63, 81, 181, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-radio::after {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(14%));\n  }\n}\n\n.mdc-radio.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-radio:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-radio.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-radio.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-radio.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-radio::before, .mdc-radio::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.mdc-radio.mdc-ripple-upgraded .mdc-radio__background::before {\n  content: none;\n}\n\n.mdc-radio__background {\n  display: inline-block;\n  position: absolute;\n  width: 50%;\n  height: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio__background::before {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n}\n\n.mdc-radio__outer-circle {\n  border-color: rgba(0, 0, 0, 0.54);\n  border-color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: border-color 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-width: 2px;\n  border-style: solid;\n  border-radius: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio--theme-dark .mdc-radio__outer-circle,\n.mdc-theme--dark .mdc-radio__outer-circle {\n  border-color: rgba(255, 255, 255, 0.7);\n  border-color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-radio__inner-circle {\n  background-color: rgba(0, 0, 0, 0.54);\n  background-color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: transform 120ms 0ms cubic-bezier(0.4, 0, 1, 1), background-color 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio--theme-dark .mdc-radio__inner-circle,\n.mdc-theme--dark .mdc-radio__inner-circle {\n  background-color: rgba(255, 255, 255, 0.7);\n  background-color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-radio__native-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  cursor: inherit;\n  opacity: 0;\n  z-index: 1;\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background,\n.mdc-radio__native-control:disabled + .mdc-radio__background {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle {\n  transition: border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle {\n  transition: transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio--disabled {\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: #3f51b5;\n  border-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  transform: scale(0.5);\n  transition: transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background {\n  cursor: default;\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-radio--theme-dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle, .mdc-radio--theme-dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle, .mdc-radio--theme-dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-radio--theme-dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle, .mdc-radio--theme-dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle, .mdc-radio--theme-dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-radio__native-control:focus + .mdc-radio__background::before {\n  transform: scale(2, 2);\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .26;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n.mdc-ripple-surface {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  position: relative;\n  outline: none;\n  overflow: hidden;\n}\n\n.mdc-ripple-surface:not(.mdc-ripple-upgraded):hover::before, .mdc-ripple-surface:not(.mdc-ripple-upgraded):focus::before, .mdc-ripple-surface:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-ripple-surface::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-ripple-surface[data-mdc-ripple-is-unbounded] {\n  overflow: visible;\n}\n\n.mdc-ripple-surface--primary::before, .mdc-ripple-surface--primary::after {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-ripple-surface--primary::before {\n  background-color: rgba(63, 81, 181, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--primary::before {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(16%));\n  }\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--primary::after {\n  background-color: rgba(63, 81, 181, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--primary::after {\n    background-color: color(var(--mdc-theme-primary, #3f51b5) a(16%));\n  }\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-ripple-surface--accent::before, .mdc-ripple-surface--accent::after {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-ripple-surface--accent::before {\n  background-color: rgba(255, 64, 129, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--accent::before {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(16%));\n  }\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--accent::after {\n  background-color: rgba(255, 64, 129, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--accent::after {\n    background-color: color(var(--mdc-theme-accent, #ff4081) a(16%));\n  }\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n.mdc-select {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  padding-left: 0;\n  padding-right: 24px;\n  appearance: none;\n  display: inline-flex;\n  align-items: center;\n  justify-content: flex-start;\n  max-width: calc(100% - 24px);\n  height: 32px;\n  transition: border-bottom-color 150ms 0ms cubic-bezier(0.4, 0, 1, 1), background-color 150ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 0;\n  background: none;\n  background-repeat: no-repeat;\n  background-position: right center;\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%230%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.54%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  font-family: Roboto, sans-serif;\n  font-size: .936rem;\n  cursor: pointer;\n}\n\n[dir=\"rtl\"] .mdc-select, .mdc-select[dir=\"rtl\"] {\n  padding-left: 24px;\n  padding-right: 0;\n}\n\n.mdc-select::-ms-expand {\n  display: none;\n}\n\n.mdc-select:focus {\n  border-bottom-color: #3f51b5;\n  border-bottom-color: var(--mdc-theme-primary, #3f51b5);\n  outline: none;\n  background-color: rgba(0, 0, 0, 0.06);\n}\n\n[dir=\"rtl\"] .mdc-select, .mdc-select[dir=\"rtl\"] {\n  background-position: left center;\n}\n\n.mdc-select--theme-dark,\n.mdc-theme--dark .mdc-select {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.54%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n.mdc-select--theme-dark:focus,\n.mdc-theme--dark .mdc-select:focus {\n  border-bottom-color: #3f51b5;\n  border-bottom-color: var(--mdc-theme-primary, #3f51b5);\n  background-color: rgba(255, 255, 255, 0.09);\n}\n\n.mdc-select__menu {\n  position: fixed;\n  top: 0;\n  left: 0;\n  max-height: 100%;\n  transform-origin: center center;\n  overflow-y: scroll;\n  z-index: 4;\n}\n\n.mdc-select__selected-text {\n  transition: opacity 125ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 125ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.mdc-select--open .mdc-select__selected-text {\n  transform: translateY(8px);\n  transition: opacity 125ms 125ms cubic-bezier(0, 0, 0.2, 1), transform 125ms 125ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: 0;\n}\n\n.mdc-select--disabled,\n.mdc-select[disabled] {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%230%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom-style: dotted;\n  cursor: default;\n  pointer-events: none;\n  user-select: none;\n}\n\n.mdc-select--theme-dark.mdc-select--disabled,\n.mdc-theme--dark .mdc-select--disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.38);\n}\n\n.mdc-select--theme-dark.mdc-select[disabled],\n.mdc-theme--dark .mdc-select[disabled] {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.38);\n}\n\n.mdc-select__menu .mdc-list-item {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-select__menu .mdc-list-item[aria-selected=\"true\"] {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-item,\n.mdc-theme--dark .mdc-select__menu .mdc-list-item {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-item[aria-selected=\"true\"],\n.mdc-theme--dark .mdc-select__menu .mdc-list-item[aria-selected=\"true\"] {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-select__menu .mdc-list-group,\n.mdc-select__menu .mdc-list-group > .mdc-list-item:first-child {\n  margin-top: 12px;\n}\n\n.mdc-select__menu .mdc-list-group {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  font-weight: normal;\n}\n\n.mdc-select__menu .mdc-list-group .mdc-list-item {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-group,\n.mdc-theme--dark .mdc-select__menu .mdc-list-group {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-group .mdc-list-item,\n.mdc-theme--dark .mdc-select__menu .mdc-list-group .mdc-list-item {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select {\n  appearance: none;\n  width: 250px;\n  padding: 0;\n  border: 1px solid;\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  outline: none;\n}\n\n.mdc-multi-select--theme-dark,\n.mdc-theme--dark .mdc-multi-select {\n  border-color: rgba(255, 255, 255, 0.5);\n  border-color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-multi-select .mdc-list-group {\n  margin: 16px 0 0;\n  padding: 0 0 0 16px;\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  font-weight: normal;\n}\n\n.mdc-multi-select .mdc-list-group--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-group {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-multi-select .mdc-list-group:last-child {\n  margin-bottom: 16px;\n}\n\n.mdc-multi-select .mdc-list-group .mdc-list-divider {\n  margin-left: -16px;\n}\n\n.mdc-multi-select .mdc-list-item {\n  margin: 0 0 0 -16px;\n  padding: 0 16px;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-multi-select .mdc-list-item--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-item {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select .mdc-list-item:first-child {\n  margin-top: 12px;\n}\n\n.mdc-multi-select .mdc-list-item:last-child {\n  margin-bottom: 8px;\n}\n\n.mdc-multi-select .mdc-list-item:checked {\n  background-color: rgba(0, 0, 0, 0.12);\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n}\n\n.mdc-multi-select .mdc-list-item:checked--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-item:checked {\n  background-color: white;\n  background-color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select:focus .mdc-list-item:checked {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-multi-select:focus .mdc-list-item:checked--theme-dark,\n.mdc-theme--dark .mdc-multi-select:focus .mdc-list-item:checked {\n  background-color: white;\n  background-color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-list-divider {\n  margin-bottom: 8px;\n  padding-top: 8px;\n  font-size: 0;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* postcss-bem-linter: define snackbar */\n.mdc-snackbar {\n  display: flex;\n  position: fixed;\n  bottom: 0;\n  left: 50%;\n  align-items: center;\n  justify-content: flex-start;\n  padding-right: 24px;\n  padding-left: 24px;\n  transform: translate(0, 100%);\n  transition: transform 0.25s 0ms cubic-bezier(0.4, 0, 1, 1);\n  background-color: #323232;\n  will-change: transform;\n  pointer-events: none;\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-enable plugin/selector-bem-pattern */\n}\n\n@media (max-width: 599px) {\n  .mdc-snackbar {\n    left: 0;\n    width: calc(100% - 48px);\n  }\n}\n\n@media (min-width: 600px) {\n  .mdc-snackbar {\n    min-width: 288px;\n    max-width: 568px;\n    transform: translate(-50%, 100%);\n    border-radius: 2px;\n  }\n}\n\n.mdc-snackbar--active {\n  transform: translate(0, 0);\n  pointer-events: auto;\n  transition: transform 0.25s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n@media (min-width: 600px) {\n  .mdc-snackbar--active {\n    transform: translate(-50%, 0);\n  }\n}\n\n.mdc-snackbar--action-on-bottom {\n  flex-direction: column;\n}\n\n.mdc-snackbar--action-on-bottom .mdc-snackbar__text {\n  margin-right: inherit;\n}\n\n.mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper {\n  flex-direction: column;\n  justify-content: flex-start;\n  margin-top: -12px;\n  margin-bottom: 8px;\n  margin-left: auto;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper, .mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: auto;\n}\n\n.mdc-snackbar__text {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  margin-left: 0;\n  margin-right: auto;\n  display: flex;\n  align-items: center;\n  height: 48px;\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  color: white;\n  opacity: 0;\n}\n\n[dir=\"rtl\"] .mdc-snackbar .mdc-snackbar__text,\n.mdc-snackbar[dir=\"rtl\"] .mdc-snackbar__text {\n  margin-left: auto;\n  margin-right: 0;\n}\n\n.mdc-snackbar--multiline .mdc-snackbar__text {\n  height: 80px;\n}\n\n.mdc-snackbar--multiline.mdc-snackbar--action-on-bottom .mdc-snackbar__text {\n  margin: 0;\n}\n\n.mdc-snackbar__action-button {\n  color: #ff4081;\n  color: var(--mdc-theme-accent, #ff4081);\n  margin-left: 0;\n  margin-right: -16px;\n  min-width: auto;\n  height: inherit;\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n  visibility: hidden;\n}\n\n[dir=\"rtl\"] .mdc-snackbar .mdc-snackbar__action-button,\n.mdc-snackbar[dir=\"rtl\"] .mdc-snackbar__action-button {\n  margin-left: -16px;\n  margin-right: 0;\n}\n\n.mdc-snackbar__action-button::-moz-focus-inner {\n  border: 0;\n}\n\n.mdc-snackbar__action-button:not([aria-hidden]) {\n  visibility: inherit;\n}\n\n.mdc-snackbar--active .mdc-snackbar__text,\n.mdc-snackbar--active .mdc-snackbar__action-button:not([aria-hidden]) {\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 1;\n}\n\n/* postcss-bem-linter: end */\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-switch {\n  display: inline-block;\n  position: relative;\n}\n\n.mdc-switch__native-control {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 34px;\n  height: 14px;\n  cursor: pointer;\n  opacity: 0;\n  z-index: 2;\n}\n\n.mdc-switch__background {\n  display: block;\n  position: relative;\n  width: 34px;\n  height: 14px;\n  border-radius: 7px;\n  outline: none;\n  background-color: transparent;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background,\n.mdc-theme--dark .mdc-switch__background {\n  background-color: transparent;\n}\n\n.mdc-switch__background::before {\n  display: block;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  transition: opacity 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 7px;\n  background-color: #000;\n  content: \"\";\n  opacity: .38;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background::before,\n.mdc-theme--dark .mdc-switch__background::before {\n  background-color: #fff;\n  opacity: .3;\n}\n\n.mdc-switch__background .mdc-switch__knob {\n  display: block;\n  position: absolute;\n  top: -3px;\n  left: 0;\n  width: 20px;\n  height: 20px;\n  transform: translateX(0);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 10px;\n  background-color: #fafafa;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  z-index: 1;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background .mdc-switch__knob,\n.mdc-theme--dark .mdc-switch__background .mdc-switch__knob {\n  background-color: #bdbdbd;\n}\n\n.mdc-switch__background .mdc-switch__knob::before {\n  position: absolute;\n  top: -14px;\n  left: -14px;\n  width: 48px;\n  height: 48px;\n  transform: scale(0);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 24px;\n  background-color: transparent;\n  content: \"\";\n  opacity: .2;\n}\n\n.mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before {\n  position: absolute;\n  width: 48px;\n  height: 48px;\n  transform: scale(1);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 24px;\n  background-color: #9e9e9e;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before,\n.mdc-theme--dark .mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #f1f1f1;\n  opacity: .14;\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background::before {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  opacity: .5;\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob {\n  transform: translateX(14px);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  opacity: .15;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before,\n.mdc-theme--dark .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-switch__native-control:disabled {\n  cursor: initial;\n}\n\n.mdc-switch__native-control:disabled ~ .mdc-switch__background::before {\n  background-color: #000;\n  opacity: .12;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:disabled ~ .mdc-switch__background::before,\n.mdc-theme--dark .mdc-switch__native-control:disabled ~ .mdc-switch__background::before {\n  background-color: #fff;\n  opacity: .1;\n}\n\n.mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob {\n  background-color: #bdbdbd;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob,\n.mdc-theme--dark .mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob {\n  background-color: #424242;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-textfield {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  letter-spacing: 0.04em;\n  display: inline-block;\n  margin-bottom: 8px;\n  will-change: opacity, transform, color;\n}\n\n.mdc-textfield__input {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  padding: 0 0 8px;\n  border: none;\n  background: none;\n  font-size: inherit;\n  appearance: none;\n}\n\n.mdc-textfield__input::placeholder {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  transition: color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.mdc-textfield__input:focus {\n  outline: none;\n}\n\n.mdc-textfield__input:focus::placeholder {\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-textfield__input:invalid {\n  box-shadow: none;\n}\n\n.mdc-textfield__input--theme-dark,\n.mdc-theme--dark .mdc-textfield__input {\n  color: white;\n}\n\n.mdc-textfield__input--theme-dark::placeholder,\n.mdc-theme--dark .mdc-textfield__input::placeholder {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield__input--theme-dark:focus::placeholder,\n.mdc-theme--dark .mdc-textfield__input:focus::placeholder {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-textfield__label {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  position: absolute;\n  bottom: 8px;\n  left: 0;\n  transform-origin: left top;\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1), color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  cursor: text;\n}\n\n[dir=\"rtl\"] .mdc-textfield .mdc-textfield__label,\n.mdc-textfield[dir=\"rtl\"] .mdc-textfield__label {\n  right: 0;\n  left: auto;\n  transform-origin: right top;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield__label {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield__label--float-above {\n  transform: translateY(-100%) scale(0.75, 0.75);\n  cursor: auto;\n}\n\n.mdc-textfield__input:-webkit-autofill + .mdc-textfield__label {\n  transform: translateY(-100%) scale(0.75, 0.75);\n  cursor: auto;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth) {\n  display: inline-flex;\n  position: relative;\n  box-sizing: border-box;\n  align-items: flex-end;\n  margin-top: 16px;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline) {\n  height: 48px;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  transform: translateY(50%) scaleY(1);\n  transform-origin: center bottom;\n  transition: background-color 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  background-color: rgba(0, 0, 0, 0.12);\n  content: \"\";\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after,\n.mdc-theme--dark .mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth) .mdc-textfield__label {\n  pointer-events: none;\n}\n\n.mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  transform: translateY(100%) scaleY(2);\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after,\n.mdc-theme--dark .mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  transform: translateY(100%) scaleY(2);\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-textfield--focused .mdc-textfield__label {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--focused .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield--focused .mdc-textfield__label {\n  color: #3f51b5;\n  color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-textfield--dense {\n  margin-top: 12px;\n  margin-bottom: 4px;\n  font-size: .813rem;\n}\n\n.mdc-textfield--dense .mdc-textfield__label--float-above {\n  transform: translateY(calc(-100% - 2px)) scale(0.923, 0.923);\n}\n\n.mdc-textfield--invalid:not(.mdc-textfield--focused)::after {\n  background-color: #d50000;\n}\n\n.mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label {\n  color: #d50000;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid:not(.mdc-textfield--focused)::after,\n.mdc-theme--dark .mdc-textfield--invalid:not(.mdc-textfield--focused)::after {\n  background-color: #ff6e6e;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label {\n  color: #ff6e6e;\n}\n\n.mdc-textfield--disabled {\n  border-bottom: 1px dotted rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield--disabled::after {\n  display: none;\n}\n\n.mdc-textfield--disabled .mdc-textfield__input {\n  padding-bottom: 7px;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--disabled,\n.mdc-theme--dark .mdc-textfield--disabled {\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--disabled .mdc-textfield__input,\n.mdc-textfield--disabled .mdc-textfield__label,\n.mdc-textfield--disabled + .mdc-textfield-helptext {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--disabled .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--disabled .mdc-textfield__input, .mdc-textfield--theme-dark\n.mdc-textfield--disabled .mdc-textfield__label,\n.mdc-theme--dark\n.mdc-textfield--disabled .mdc-textfield__label {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--disabled + .mdc-textfield-helptext,\n.mdc-theme--dark .mdc-textfield--disabled + .mdc-textfield-helptext {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield--disabled .mdc-textfield__label {\n  bottom: 7px;\n  cursor: default;\n}\n\n.mdc-textfield__input:required + .mdc-textfield__label::after {\n  margin-left: 1px;\n  content: \"*\";\n}\n\n.mdc-textfield--focused .mdc-textfield__input:required + .mdc-textfield__label::after {\n  color: #d50000;\n}\n\n.mdc-textfield--focused .mdc-textfield--theme-dark .mdc-textfield__input:required + .mdc-textfield__label::after, .mdc-textfield--focused\n.mdc-theme--dark .mdc-textfield__input:required + .mdc-textfield__label::after {\n  color: #ff6e6e;\n}\n\n.mdc-textfield--multiline {\n  display: flex;\n  height: initial;\n  transition: none;\n}\n\n.mdc-textfield--multiline::after {\n  content: initial;\n}\n\n.mdc-textfield--multiline .mdc-textfield__input {\n  padding: 4px;\n  transition: border-color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 2px;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--multiline .mdc-textfield__input {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--multiline .mdc-textfield__input:focus {\n  border-color: #3f51b5;\n  border-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #d50000;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus),\n.mdc-theme--dark .mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #ff6e6e;\n}\n\n.mdc-textfield--multiline .mdc-textfield__label {\n  top: 6px;\n  bottom: initial;\n  left: 4px;\n}\n\n[dir=\"rtl\"] .mdc-textfield--multiline .mdc-textfield--multiline .mdc-textfield__label,\n.mdc-textfield--multiline[dir=\"rtl\"] .mdc-textfield--multiline .mdc-textfield__label {\n  right: 4px;\n  left: auto;\n}\n\n.mdc-textfield--multiline .mdc-textfield__label--float-above {\n  transform: translateY(calc(-100% - 6px)) scale(0.923, 0.923);\n}\n\n.mdc-textfield--multiline.mdc-textfield--disabled {\n  border-bottom: none;\n}\n\n.mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input {\n  border: 1px dotted rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--fullwidth {\n  display: block;\n  width: 100%;\n  box-sizing: border-box;\n  margin: 0;\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  outline: none;\n}\n\n.mdc-textfield--fullwidth:not(.mdc-textfield--multiline) {\n  height: 56px;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--multiline {\n  padding: 20px 0 0;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--dense:not(.mdc-textfield--multiline) {\n  height: 48px;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--dense.mdc-textfield--multiline {\n  padding: 16px 0 0;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--disabled, .mdc-textfield--fullwidth.mdc-textfield--disabled.mdc-textfield--multiline {\n  border-bottom: 1px dotted rgba(0, 0, 0, 0.12);\n}\n\n.mdc-textfield--fullwidth--theme-dark,\n.mdc-theme--dark .mdc-textfield--fullwidth {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--fullwidth--theme-dark.mdc-textfield--disabled, .mdc-textfield--fullwidth--theme-dark.mdc-textfield--disabled.mdc-textfield--multiline,\n.mdc-theme--dark .mdc-textfield--fullwidth.mdc-textfield--disabled,\n.mdc-theme--dark .mdc-textfield--fullwidth.mdc-textfield--disabled.mdc-textfield--multiline {\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--fullwidth .mdc-textfield__input {\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  resize: none;\n  border: none !important;\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded):not(.mdc-textfield--multiline) .mdc-textfield__input {\n  transition: border-bottom-color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:focus {\n  border-color: #3f51b5;\n  border-color: var(--mdc-theme-primary, #3f51b5);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  border-style: dotted;\n  border-color: rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #d50000;\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:not(:focus),\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:not(:focus) {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled,\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus),\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #ff6e6e;\n}\n\n.mdc-textfield-helptext {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  margin: 0;\n  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  font-size: .75rem;\n  opacity: 0;\n  will-change: opacity;\n}\n\n.mdc-textfield-helptext--theme-dark,\n.mdc-theme--dark .mdc-textfield-helptext {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield + .mdc-textfield-helptext {\n  margin-bottom: 8px;\n}\n\n.mdc-textfield--dense + .mdc-textfield-helptext {\n  margin-bottom: 4px;\n}\n\n.mdc-textfield--focused + .mdc-textfield-helptext:not(.mdc-textfield-helptext--validation-msg) {\n  opacity: 1;\n}\n\n.mdc-textfield-helptext--persistent {\n  transition: none;\n  opacity: 1;\n  will-change: initial;\n}\n\n.mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg {\n  color: #d50000;\n  opacity: 1;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg,\n.mdc-theme--dark .mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg {\n  color: #ff6e6e;\n}\n\n.mdc-form-field > .mdc-textfield + label {\n  align-self: flex-start;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n:root {\n  --mdc-theme-primary: #3f51b5;\n  --mdc-theme-accent: #ff4081;\n  --mdc-theme-background: #fff;\n  --mdc-theme-text-primary-on-primary: white;\n  --mdc-theme-text-secondary-on-primary: rgba(255, 255, 255, 0.7);\n  --mdc-theme-text-hint-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-disabled-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-icon-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-primary-on-accent: white;\n  --mdc-theme-text-secondary-on-accent: rgba(255, 255, 255, 0.7);\n  --mdc-theme-text-hint-on-accent: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-disabled-on-accent: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-icon-on-accent: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);\n  --mdc-theme-text-secondary-on-background: rgba(0, 0, 0, 0.54);\n  --mdc-theme-text-hint-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-disabled-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-primary-on-light: rgba(0, 0, 0, 0.87);\n  --mdc-theme-text-secondary-on-light: rgba(0, 0, 0, 0.54);\n  --mdc-theme-text-hint-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-primary-on-dark: white;\n  --mdc-theme-text-secondary-on-dark: rgba(255, 255, 255, 0.7);\n  --mdc-theme-text-hint-on-dark: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-disabled-on-dark: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-icon-on-dark: rgba(255, 255, 255, 0.5);\n}\n\n/* Special case, so that .mdc-theme--background changes background color, not text color. */\n.mdc-theme--background {\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n}\n\n.mdc-theme--primary {\n  color: #3f51b5 !important;\n  color: var(--mdc-theme-primary, #3f51b5) !important;\n}\n\n.mdc-theme--accent {\n  color: #ff4081 !important;\n  color: var(--mdc-theme-accent, #ff4081) !important;\n}\n\n.mdc-theme--text-primary-on-primary {\n  color: white !important;\n  color: var(--mdc-theme-text-primary-on-primary, white) !important;\n}\n\n.mdc-theme--text-secondary-on-primary {\n  color: rgba(255, 255, 255, 0.7) !important;\n  color: var(--mdc-theme-text-secondary-on-primary, rgba(255, 255, 255, 0.7)) !important;\n}\n\n.mdc-theme--text-hint-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-hint-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-disabled-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-disabled-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-icon-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-icon-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-primary-on-accent {\n  color: white !important;\n  color: var(--mdc-theme-text-primary-on-accent, white) !important;\n}\n\n.mdc-theme--text-secondary-on-accent {\n  color: rgba(255, 255, 255, 0.7) !important;\n  color: var(--mdc-theme-text-secondary-on-accent, rgba(255, 255, 255, 0.7)) !important;\n}\n\n.mdc-theme--text-hint-on-accent {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-hint-on-accent, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-disabled-on-accent {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-disabled-on-accent, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-icon-on-accent {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-icon-on-accent, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-primary-on-background {\n  color: rgba(0, 0, 0, 0.87) !important;\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87)) !important;\n}\n\n.mdc-theme--text-secondary-on-background {\n  color: rgba(0, 0, 0, 0.54) !important;\n  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54)) !important;\n}\n\n.mdc-theme--text-hint-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-disabled-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-disabled-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-icon-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-primary-on-light {\n  color: rgba(0, 0, 0, 0.87) !important;\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87)) !important;\n}\n\n.mdc-theme--text-secondary-on-light {\n  color: rgba(0, 0, 0, 0.54) !important;\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54)) !important;\n}\n\n.mdc-theme--text-hint-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-disabled-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-icon-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-icon-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-primary-on-dark {\n  color: white !important;\n  color: var(--mdc-theme-text-primary-on-dark, white) !important;\n}\n\n.mdc-theme--text-secondary-on-dark {\n  color: rgba(255, 255, 255, 0.7) !important;\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7)) !important;\n}\n\n.mdc-theme--text-hint-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-disabled-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-icon-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-icon-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n/* CSS rules for using primary and accent as background colors. */\n.mdc-theme--primary-bg {\n  background-color: #3f51b5 !important;\n  background-color: var(--mdc-theme-primary, #3f51b5) !important;\n}\n\n.mdc-theme--accent-bg {\n  background-color: #ff4081 !important;\n  background-color: var(--mdc-theme-accent, #ff4081) !important;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-toolbar {\n  display: flex;\n  position: relative;\n  flex-direction: column;\n  justify-content: space-between;\n  width: 100%;\n  box-sizing: border-box;\n  background-color: #3f51b5;\n  background-color: var(--mdc-theme-primary, #3f51b5);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-toolbar__row {\n  display: flex;\n  position: relative;\n  width: 100%;\n  height: 64px;\n  padding: 20px 28px;\n  box-sizing: border-box;\n}\n\n@media (max-width: 599px) {\n  .mdc-toolbar__row {\n    height: 56px;\n    padding: 16px;\n  }\n}\n\n.mdc-toolbar__section {\n  display: inline-flex;\n  flex: 1;\n  align-items: flex-start;\n  justify-content: center;\n  z-index: 1;\n  overflow: hidden;\n}\n\n.mdc-toolbar__section--align-start {\n  justify-content: flex-start;\n  order: -1;\n}\n\n.mdc-toolbar__section--align-end {\n  justify-content: flex-end;\n  order: 1;\n}\n\n.mdc-toolbar__title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  margin: 0;\n  line-height: 1.5rem;\n}\n\n.mdc-toolbar--fixed {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 1;\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-toolbar-fixed-adjust {\n  margin-top: 64px;\n}\n\n@media (max-width: 599px) {\n  .mdc-toolbar-fixed-adjust {\n    margin-top: 56px;\n  }\n}\n\n.mdc-toolbar__section--shrink-to-fit {\n  flex: none;\n}\n\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-typography {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n}\n\n.mdc-typography--display4 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 7rem;\n  font-weight: 300;\n  letter-spacing: -0.04em;\n  line-height: 7rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display4 {\n  margin: -1rem 0 3.5rem -0.085em;\n}\n\n.mdc-typography--display3 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 3.5rem;\n  font-weight: 400;\n  letter-spacing: -0.02em;\n  line-height: 3.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display3 {\n  margin: -8px 0 64px -0.07em;\n}\n\n.mdc-typography--display2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.813rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 3rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display2 {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n.mdc-typography--display1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.125rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display1 {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n.mdc-typography--headline {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--headline {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n.mdc-typography--title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--title {\n  margin: -0.5rem 0 1rem -0.05em;\n}\n\n.mdc-typography--subheading2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--subheading2 {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n.mdc-typography--subheading1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.938rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--subheading1 {\n  margin: -0.313rem 0 0.813rem -0.06em;\n}\n\n.mdc-typography--body2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--body2 {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n.mdc-typography--body1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--body1 {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n.mdc-typography--caption {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.75rem;\n  font-weight: 400;\n  letter-spacing: 0.08em;\n  line-height: 1.25rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--caption {\n  margin: -0.5rem 0 1rem -0.04em;\n}\n\n/* Ensure layout covers the entire screen. */\nhtml {\n  height: 100%;\n}\n\n/* Place drawer and content side by side. */\nbody {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n  height: 100%;\n  width: 100%;\n}\n\n#romajs > div {\n  display: flex;\n  flex-direction: row;\n}\n\n/* A simple menu button. */\n.romajs-menu {\n  background: none;\n  border: none;\n  width: 24px;\n  height: 24px;\n  padding: 0;\n  margin: 0;\n  color: #FFF;\n  box-sizing: border-box;\n  outline-style: none;\n  text-decoration: none;\n  cursor: pointer;\n  padding: 0px 50px 0px 0px;\n}\n\n/* Stack toolbar and main on top of each other. */\n.romajs-content {\n  display: inline-flex;\n  flex-direction: column;\n  flex-grow: 1;\n  height: 100%;\n  box-sizing: border-box;\n  margin: 64px 0 0 0;\n}\n\n.romajs-main {\n  padding-left: 16px;\n}\n\n.romajs-toolbar .mdc-toolbar__section--align-end .material-icons {\n  padding-right: 20px;\n  cursor: pointer;\n}\n\n.romajs-card {\n  max-height: 300px;\n  min-height: 300px;\n  justify-content: flex-start;\n}\n\n.romajs-card .mdc-card__supporting-text {\n  overflow-y: auto;\n  margin-bottom: 24px;\n}\n\n.romajs-card .mdc-card__title--large {\n  padding-top: 3px;\n}\n\n.romajs-card h1 {\n  float: left;\n}\n\n.romajs-card .mdc-form-field {\n  float: right;\n}\n\n.romajs-card .romajs-elementIdent {\n  padding-top: 20px;\n}\n", ""]);
+exports.push([module.i, "/* Set Roma theme colors */\n/**\n * Copyright 2015 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/**\n * Copyright 2015 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/*------------------------------------*    $CONTENTS\n\\*------------------------------------*/\n/**\n * STYLE GUIDE VARIABLES------------------Declarations of Sass variables\n * -----Typography\n * -----Colors\n * -----Textfield\n * -----Switch\n * -----Spinner\n * -----Radio\n * -----Menu\n * -----List\n * -----Layout\n * -----Icon toggles\n * -----Footer\n * -----Column\n * -----Checkbox\n * -----Card\n * -----Button\n * -----Animation\n * -----Progress\n * -----Badge\n * -----Shadows\n * -----Grid\n * -----Data table\n * -----Dialog\n * -----Snackbar\n * -----Tooltip\n * -----Chip\n *\n * Even though all variables have the `!default` directive, most of them\n * should not be changed as they are dependent one another. This can cause\n * visual distortions (like alignment issues) that are hard to track down\n * and fix.\n */\n/* ==========  TYPOGRAPHY  ========== */\n/* We're splitting fonts into \"preferred\" and \"performance\" in order to optimize\n   page loading. For important text, such as the body, we want it to load\n   immediately and not wait for the web font load, whereas for other sections,\n   such as headers and titles, we're OK with things taking a bit longer to load.\n   We do have some optional classes and parameters in the mixins, in case you\n   definitely want to make sure you're using the preferred font and don't mind\n   the performance hit.\n   We should be able to improve on this once CSS Font Loading L3 becomes more\n   widely available.\n*/\n/* ==========  COLORS  ========== */\n/**\n*\n* Material design color palettes.\n* @see http://www.google.com/design/spec/style/color.html\n*\n**/\n/**\n * Copyright 2015 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/* ==========  Color Palettes  ========== */\n/* colors.scss */\n/**\n * Copyright 2015 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/* ==========  IMAGES  ========== */\n/* ==========  Color & Themes  ========== */\n/* ==========  Typography  ========== */\n/* ==========  Components  ========== */\n/* ==========  Standard Buttons  ========== */\n/* ==========  Icon Toggles  ========== */\n/* ==========  Radio Buttons  ========== */\n/* ==========  Ripple effect  ========== */\n/* ==========  Layout  ========== */\n/* ==========  Content Tabs  ========== */\n/* ==========  Checkboxes  ========== */\n/* ==========  Switches  ========== */\n/* ==========  Spinner  ========== */\n/* ==========  Text fields  ========== */\n/* ==========  Card  ========== */\n/* ==========  Sliders ========== */\n/* ========== Progress ========== */\n/* ==========  List ========== */\n/* ==========  Item ========== */\n/* ==========  Dropdown menu ========== */\n/* ==========  Tooltips  ========== */\n/* ==========  Footer  ========== */\n/* TEXTFIELD */\n/* SWITCH */\n/* SPINNER */\n/* RADIO */\n/* MENU */\n/* LIST */\n/* LAYOUT */\n/* ICON TOGGLE */\n/* FOOTER */\n/*mega-footer*/\n/*mini-footer*/\n/* CHECKBOX */\n/* CARD */\n/* Card dimensions */\n/* Cover image */\n/* BUTTON */\n/**\n *\n * Dimensions\n *\n */\n/* ANIMATION */\n/* PROGRESS */\n/* BADGE */\n/* SHADOWS */\n/* GRID */\n/* DATA TABLE */\n/* DIALOG */\n/* SNACKBAR */\n/* TOOLTIP */\n/* CHIP */\n/**\n * Copyright 2015 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/* Typography */\n/* Shadows */\n/* Animations */\n/* Dialog */\n.mdl-chip {\n  height: 32px;\n  font-family: \"Roboto\", \"Helvetica\", \"Arial\", sans-serif;\n  line-height: 32px;\n  padding: 0 12px;\n  border: 0;\n  border-radius: 16px;\n  background-color: #dedede;\n  display: inline-block;\n  color: rgba(0,0,0, 0.87);\n  margin: 2px 0;\n  font-size: 0;\n  white-space: nowrap;\n}\n\n.mdl-chip__text {\n  font-size: 13px;\n  vertical-align: middle;\n  display: inline-block;\n}\n\n.mdl-chip__action {\n  height: 24px;\n  width: 24px;\n  background: transparent;\n  opacity: 0.54;\n  display: inline-block;\n  cursor: pointer;\n  text-align: center;\n  vertical-align: middle;\n  padding: 0;\n  margin: 0 0 0 4px;\n  font-size: 13px;\n  text-decoration: none;\n  color: rgba(0,0,0, 0.87);\n  border: none;\n  outline: none;\n  overflow: hidden;\n}\n\n.mdl-chip__contact {\n  height: 32px;\n  width: 32px;\n  border-radius: 16px;\n  display: inline-block;\n  vertical-align: middle;\n  margin-right: 8px;\n  overflow: hidden;\n  text-align: center;\n  font-size: 18px;\n  line-height: 32px;\n}\n\n.mdl-chip:focus {\n  outline: 0;\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);\n}\n\n.mdl-chip:active {\n  background-color: #d6d6d6;\n}\n\n.mdl-chip--deletable {\n  padding-right: 4px;\n}\n\n.mdl-chip--contact {\n  padding-left: 0;\n}\n\n.mdc-animation-linear-out-slow-in {\n  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-animation-fast-out-slow-in {\n  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-animation-fast-out-linear-in {\n  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-button {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  display: inline-block;\n  position: relative;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  border-radius: 2px;\n  outline: none;\n  background: transparent;\n  font-size: 14px;\n  font-weight: 500;\n  line-height: 36px;\n  text-align: center;\n  text-decoration: none;\n  text-transform: uppercase;\n  overflow: hidden;\n  vertical-align: middle;\n  user-select: none;\n  box-sizing: border-box;\n  -webkit-appearance: none;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded):hover::before, .mdc-button:not(.mdc-ripple-upgraded):focus::before, .mdc-button:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);\n}\n\n.mdc-button--theme-dark,\n.mdc-theme--dark .mdc-button {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded):hover::before, .mdc-button--theme-dark:not(.mdc-ripple-upgraded):focus::before, .mdc-button--theme-dark:not(.mdc-ripple-upgraded):active::after,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):hover::before,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):focus::before,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--theme-dark::before,\n.mdc-theme--dark .mdc-button::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--theme-dark::after,\n.mdc-theme--dark .mdc-button::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--theme-dark.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-button.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--theme-dark:not(.mdc-ripple-upgraded),\n.mdc-theme--dark .mdc-button:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.18);\n}\n\n.mdc-button.mdc-button--primary {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):hover::before, .mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):focus::before, .mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button.mdc-button--primary::before {\n  background-color: rgba(34, 86, 136, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--primary::before {\n    background-color: color(var(--mdc-theme-primary, #225688) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--primary::after {\n  background-color: rgba(34, 86, 136, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--primary::after {\n    background-color: color(var(--mdc-theme-primary, #225688) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button.mdc-button--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-button--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button.mdc-button--accent {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):hover::before, .mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):focus::before, .mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button.mdc-button--accent::before {\n  background-color: rgba(210, 170, 40, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--accent::before {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-button--accent::after {\n  background-color: rgba(210, 170, 40, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-button.mdc-button--accent::after {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(12%));\n  }\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button.mdc-button--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button.mdc-button--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button:active {\n  outline: none;\n}\n\n.mdc-button:hover {\n  cursor: pointer;\n}\n\n.mdc-button::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n.mdc-button--dense {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n.mdc-button--raised {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  will-change: box-shadow;\n  min-width: 88px;\n}\n\n.mdc-button--raised:active {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-button--raised.mdc-button--primary {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):hover::before, .mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):focus::before, .mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--raised.mdc-button--primary::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--primary::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--raised.mdc-button--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--raised.mdc-button--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--raised.mdc-button--accent {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):hover::before, .mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):focus::before, .mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-button--raised.mdc-button--accent::before {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button--raised.mdc-button--accent::after {\n  background-color: rgba(255, 255, 255, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-button--raised.mdc-button--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-button--raised.mdc-button--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-button--theme-dark .mdc-button--raised,\n.mdc-theme--dark .mdc-button--raised {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-button--theme-dark .mdc-button--raised::before,\n.mdc-theme--dark .mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--primary {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-button--theme-dark .mdc-button--primary,\n.mdc-theme--dark .mdc-button--primary {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-button--primary.mdc-button--raised {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-button--primary.mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--accent {\n  color: #d2aa28;\n  color: var(--mdc-theme-accent, #d2aa28);\n}\n\n.mdc-button--theme-dark .mdc-button--accent,\n.mdc-theme--dark .mdc-button--accent {\n  color: #d2aa28;\n  color: var(--mdc-theme-accent, #d2aa28);\n}\n\n.mdc-button--accent.mdc-button--raised {\n  background-color: #d2aa28;\n  background-color: var(--mdc-theme-accent, #d2aa28);\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-accent, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-button--accent.mdc-button--raised::before {\n  color: black;\n}\n\n.mdc-button--compact {\n  padding: 0 8px;\n}\n\nfieldset:disabled .mdc-button, .mdc-button:disabled {\n  color: rgba(0, 0, 0, 0.26);\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-button--theme-dark fieldset:disabled .mdc-button,\n.mdc-theme--dark fieldset:disabled .mdc-button, .mdc-button--theme-dark .mdc-button:disabled,\n.mdc-theme--dark .mdc-button:disabled {\n  color: rgba(255, 255, 255, 0.3);\n}\n\nfieldset:disabled .mdc-button--raised, .mdc-button--raised:disabled {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n  background-color: rgba(0, 0, 0, 0.12);\n  pointer-events: none;\n}\n\n.mdc-button--theme-dark fieldset:disabled .mdc-button--raised,\n.mdc-theme--dark fieldset:disabled .mdc-button--raised, .mdc-button--theme-dark .mdc-button--raised:disabled,\n.mdc-theme--dark .mdc-button--raised:disabled {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n.mdc-card {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 0;\n  box-sizing: border-box;\n  border-radius: 2px;\n  overflow: hidden;\n}\n\n.mdc-card__primary {\n  padding: 16px;\n}\n\n.mdc-card__primary .mdc-card__title--large {\n  padding-top: 8px;\n}\n\n.mdc-card__primary:last-child {\n  padding-bottom: 24px;\n}\n\n.mdc-card__supporting-text {\n  padding: 8px 16px;\n  box-sizing: border-box;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-card--theme-dark .mdc-card__supporting-text,\n.mdc-theme--dark .mdc-card__supporting-text {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__primary + .mdc-card__supporting-text {\n  margin-top: -8px;\n  padding-top: 0;\n}\n\n.mdc-card__supporting-text:last-child {\n  padding-bottom: 24px;\n}\n\n.mdc-card__actions {\n  display: flex;\n  padding: 8px;\n  box-sizing: border-box;\n}\n\n.mdc-card--theme-dark .mdc-card__actions,\n.mdc-theme--dark .mdc-card__actions {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__actions .mdc-card__action {\n  margin: 0 8px 0 0;\n}\n\n[dir=\"rtl\"] .mdc-card__actions .mdc-card__action, .mdc-card__actions .mdc-card__action[dir=\"rtl\"] {\n  margin: 0 0 0 8px;\n}\n\n.mdc-card__actions .mdc-card__action:last-child {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__actions .mdc-card__action:last-child, .mdc-card__actions .mdc-card__action:last-child[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n.mdc-card__actions--vertical {\n  flex-flow: column;\n  align-items: flex-start;\n}\n\n.mdc-card__actions--vertical .mdc-card__action {\n  margin: 0 0 4px;\n}\n\n.mdc-card__actions--vertical .mdc-card__action:last-child {\n  margin-bottom: 0;\n}\n\n.mdc-card__media {\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-card__media-item {\n  display: inline-block;\n  width: auto;\n  height: 80px;\n  margin: 16px 0 0;\n  padding: 0;\n}\n\n.mdc-card__media-item--1dot5x {\n  width: auto;\n  height: 120px;\n}\n\n.mdc-card__media-item--2x {\n  width: auto;\n  height: 160px;\n}\n\n.mdc-card__media-item--3x {\n  width: auto;\n  height: 240px;\n}\n\n.mdc-card__title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: -.063rem 0;\n}\n\n.mdc-card--theme-dark .mdc-card__title,\n.mdc-theme--dark .mdc-card__title {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__title--large {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2rem;\n  margin: 0;\n}\n\n.mdc-card__subtitle {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: -.063rem 0;\n}\n\n.mdc-card--theme-dark .mdc-card__subtitle,\n.mdc-theme--dark .mdc-card__subtitle {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-card__horizontal-block {\n  display: flex;\n  flex-direction: row;\n  align-items: flex-start;\n  justify-content: space-between;\n  box-sizing: border-box;\n  padding: 0;\n  padding-left: 0;\n  padding-right: 16px;\n}\n\n[dir=\"rtl\"] .mdc-card__horizontal-block, .mdc-card__horizontal-block[dir=\"rtl\"] {\n  padding-left: 16px;\n  padding-right: 0;\n}\n\n.mdc-card__horizontal-block .mdc-card__actions--vertical {\n  margin: 16px;\n}\n\n.mdc-card__horizontal-block .mdc-card__media-item {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__horizontal-block .mdc-card__media-item, .mdc-card__horizontal-block .mdc-card__media-item[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 16px;\n}\n\n.mdc-card__horizontal-block .mdc-card__media-item--3x {\n  margin-bottom: 16px;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/* Manual calculation done on SVG */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* Manual calculation done on SVG */\n@keyframes mdc-checkbox-fade-in-background {\n  0% {\n    border-color: rgba(0, 0, 0, 0.54);\n    background-color: transparent;\n  }\n  50% {\n    border-color: #225688;\n    border-color: var(--mdc-theme-primary, #225688);\n    background-color: #225688;\n    background-color: var(--mdc-theme-primary, #225688);\n  }\n}\n\n@keyframes mdc-checkbox-fade-out-background {\n  0%,\n  80% {\n    border-color: #225688;\n    border-color: var(--mdc-theme-primary, #225688);\n    background-color: #225688;\n    background-color: var(--mdc-theme-primary, #225688);\n  }\n  100% {\n    border-color: rgba(0, 0, 0, 0.54);\n    background-color: transparent;\n  }\n}\n\n@keyframes mdc-checkbox-fade-in-background-dark {\n  0% {\n    border-color: white;\n    background-color: transparent;\n  }\n  50% {\n    border-color: #225688;\n    border-color: var(--mdc-theme-primary, #225688);\n    background-color: #225688;\n    background-color: var(--mdc-theme-primary, #225688);\n  }\n}\n\n@keyframes mdc-checkbox-fade-out-background-dark {\n  0%,\n  80% {\n    border-color: #225688;\n    border-color: var(--mdc-theme-primary, #225688);\n    background-color: #225688;\n    background-color: var(--mdc-theme-primary, #225688);\n  }\n  100% {\n    border-color: white;\n    background-color: transparent;\n  }\n}\n\n@keyframes mdc-checkbox-unchecked-checked-checkmark-path {\n  0%,\n  50% {\n    stroke-dashoffset: 29.78334;\n  }\n  50% {\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  100% {\n    stroke-dashoffset: 0;\n  }\n}\n\n@keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {\n  0%,\n  68.2% {\n    transform: scaleX(0);\n  }\n  68.2% {\n    animation-timing-function: cubic-bezier(0, 0, 0, 1);\n  }\n  100% {\n    transform: scaleX(1);\n  }\n}\n\n@keyframes mdc-checkbox-checked-unchecked-checkmark-path {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);\n    opacity: 1;\n    stroke-dashoffset: 0;\n  }\n  to {\n    opacity: 0;\n    stroke-dashoffset: -29.78334;\n  }\n}\n\n@keyframes mdc-checkbox-checked-indeterminate-checkmark {\n  from {\n    transform: rotate(0deg);\n    opacity: 1;\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  to {\n    transform: rotate(45deg);\n    opacity: 0;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-checked-checkmark {\n  from {\n    transform: rotate(45deg);\n    opacity: 0;\n    animation-timing-function: cubic-bezier(0.14, 0, 0, 1);\n  }\n  to {\n    transform: rotate(360deg);\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-checkbox-checked-indeterminate-mixedmark {\n  from {\n    transform: rotate(-45deg);\n    opacity: 0;\n    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);\n  }\n  to {\n    transform: rotate(0deg);\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-checked-mixedmark {\n  from {\n    transform: rotate(0deg);\n    opacity: 1;\n    animation-timing-function: cubic-bezier(0.14, 0, 0, 1);\n  }\n  to {\n    transform: rotate(315deg);\n    opacity: 0;\n  }\n}\n\n@keyframes mdc-checkbox-indeterminate-unchecked-mixedmark {\n  0% {\n    transform: scaleX(1);\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  32.8%,\n  100% {\n    transform: scaleX(0);\n    opacity: 0;\n  }\n}\n\n.mdc-checkbox {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  position: relative;\n  box-sizing: content-box;\n  flex: 0 0 18px;\n  width: 18px;\n  height: 18px;\n  padding: 11px;\n  line-height: 0;\n  white-space: nowrap;\n  cursor: pointer;\n  vertical-align: bottom;\n}\n\n.mdc-checkbox:not(.mdc-ripple-upgraded):hover::before, .mdc-checkbox:not(.mdc-ripple-upgraded):focus::before, .mdc-checkbox:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-checkbox::before {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-checkbox::before {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-checkbox.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-checkbox::after {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-checkbox::after {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-checkbox.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-checkbox:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-checkbox::before, .mdc-checkbox::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.mdc-checkbox.mdc-ripple-upgraded--unbounded .mdc-checkbox__background::before {\n  content: none;\n}\n\n.mdc-checkbox__background {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  left: 11px;\n  right: initial;\n  display: inline-flex;\n  top: 11px;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  pointer-events: none;\n  width: 45%;\n  height: 45%;\n  transition: background-color 90ms 0ms cubic-bezier(0.4, 0, 1, 1), border-color 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border: 2px solid rgba(0, 0, 0, 0.54);\n  border-radius: 2px;\n  background-color: transparent;\n  will-change: background-color, border-color;\n}\n\n[dir=\"rtl\"] .mdc-checkbox .mdc-checkbox__background,\n.mdc-checkbox[dir=\"rtl\"] .mdc-checkbox__background {\n  left: initial;\n  right: 11px;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__background {\n  border-color: white;\n}\n\n.mdc-checkbox__background::before {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n  will-change: opacity, transform;\n  background: #225688;\n  background: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-checkbox__native-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  cursor: inherit;\n  opacity: 0;\n}\n\n.mdc-checkbox__checkmark {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  transition: opacity 180ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n  fill: white;\n}\n\n.mdc-checkbox__checkmark__path {\n  transition: stroke-dashoffset 180ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  stroke: white !important;\n  stroke-width: 3.12px;\n  stroke-dashoffset: 29.78334;\n  stroke-dasharray: 29.78334;\n}\n\n.mdc-checkbox__mixedmark {\n  width: 100%;\n  height: 2px;\n  transform: scaleX(0) rotate(0deg);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  background-color: white;\n  opacity: 0;\n}\n\n.mdc-checkbox__native-control:focus ~ .mdc-checkbox__background::before {\n  transform: scale(2.75, 2.75);\n  transition: opacity 80ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 80ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .26;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {\n  transition: border-color 90ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 90ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  border-color: #225688;\n  border-color: var(--mdc-theme-primary, #225688);\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__checkmark {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__checkmark__path {\n  stroke-dashoffset: 0;\n}\n\n.mdc-checkbox__native-control:checked ~ .mdc-checkbox__background .mdc-checkbox__mixedmark {\n  transform: scaleX(1) rotate(-45deg);\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  border-color: #225688;\n  border-color: var(--mdc-theme-primary, #225688);\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__checkmark {\n  transform: rotate(45deg);\n  transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__checkmark__path {\n  stroke-dashoffset: 0;\n}\n\n.mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background .mdc-checkbox__mixedmark {\n  transform: scaleX(1) rotate(0deg);\n  opacity: 1;\n}\n\n.mdc-checkbox__native-control:disabled,\nfieldset:disabled .mdc-checkbox__native-control,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control {\n  cursor: default;\n}\n\n.mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background {\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control ~ .mdc-checkbox__background {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background, .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  border-color: transparent;\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox__native-control:disabled:indeterminate ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark\nfieldset:disabled .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background, .mdc-checkbox--theme-dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {\n  background-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-checkbox--disabled {\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-checkbox--upgraded .mdc-checkbox__background,\n.mdc-checkbox--upgraded .mdc-checkbox__checkmark,\n.mdc-checkbox--upgraded .mdc-checkbox__checkmark__path,\n.mdc-checkbox--upgraded .mdc-checkbox__mixedmark {\n  transition: none !important;\n}\n\n.mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background {\n  animation: mdc-checkbox-fade-in-background 180ms linear;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__background {\n  animation-name: mdc-checkbox-fade-in-background-dark;\n}\n\n.mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background {\n  animation: mdc-checkbox-fade-out-background 180ms linear;\n}\n\n.mdc-checkbox--theme-dark .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__background, .mdc-checkbox--theme-dark .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background,\n.mdc-theme--dark .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__background {\n  animation-name: mdc-checkbox-fade-out-background-dark;\n}\n\n.mdc-checkbox--anim-unchecked-checked .mdc-checkbox__checkmark__path {\n  animation: 180ms linear 0s :local(mdc-checkbox-unchecked-checked-checkmark-path);\n  transition: none;\n}\n\n.mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__mixedmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-unchecked-indeterminate-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-unchecked .mdc-checkbox__checkmark__path {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-unchecked-checkmark-path);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-indeterminate .mdc-checkbox__checkmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-indeterminate-checkmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-checked-indeterminate .mdc-checkbox__mixedmark {\n  animation: 90ms linear 0s :local(mdc-checkbox-checked-indeterminate-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-checked .mdc-checkbox__checkmark {\n  animation: 500ms linear 0s :local(mdc-checkbox-indeterminate-checked-checkmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-checked .mdc-checkbox__mixedmark {\n  animation: 500ms linear 0s :local(mdc-checkbox-indeterminate-checked-mixedmark);\n  transition: none;\n}\n\n.mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__mixedmark {\n  animation: 300ms linear 0s :local(mdc-checkbox-indeterminate-unchecked-mixedmark);\n  transition: none;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n:root {\n  --mdc-dialog-dark-theme-bg-color: #303030;\n}\n\n.mdc-dialog {\n  display: flex;\n  position: fixed;\n  top: 0;\n  left: 0;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 100%;\n  visibility: hidden;\n  z-index: 2;\n}\n\n.mdc-dialog__backdrop {\n  position: fixed;\n  top: 0;\n  left: 0;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.87);\n  background-color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  opacity: 0;\n  z-index: -1;\n}\n\n.mdc-dialog__surface {\n  display: inline-flex;\n  flex-direction: column;\n  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);\n  width: calc(100% - 30px);\n  min-width: 640px;\n  max-width: 865px;\n  transform: translateY(150px) scale(0.8);\n  border-radius: 2px;\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  opacity: 0;\n}\n\n.mdc-dialog--theme-dark .mdc-dialog__surface,\n.mdc-theme--dark .mdc-dialog__surface {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  background-color: #303030;\n  background-color: var(--mdc-dialog-dark-theme-bg-color, #303030);\n}\n\n[dir=\"rtl\"] .mdc-dialog .mdc-dialog__surface,\n.mdc-dialog[dir=\"rtl\"] .mdc-dialog__surface {\n  text-align: right;\n}\n\n.mdc-dialog__header {\n  display: flex;\n  align-items: center;\n  padding: 24px 24px 0;\n}\n\n.mdc-dialog__header__empty {\n  padding: 0;\n}\n\n[dir=\"rtl\"] .mdc-dialog .mdc-dialog__header,\n.mdc-dialog[dir=\"rtl\"] .mdc-dialog__header {\n  text-align: right;\n}\n\n.mdc-dialog__header__title {\n  flex: 1;\n  margin: 0;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n}\n\n.mdc-dialog__body {\n  margin-top: 20px;\n  padding: 0 24px 24px;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n}\n\n.mdc-dialog--theme-dark.mdc-dialog__body,\n.mdc-theme--dark .mdc-dialog__body {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-dialog__body--scrollable {\n  max-height: 195px;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  overflow-y: scroll;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n}\n\n.mdc-dialog__footer {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  justify-content: flex-end;\n  padding: 8px;\n}\n\n.mdc-dialog__footer__button {\n  margin-left: 0;\n  margin-right: 8px;\n}\n\n[dir=\"rtl\"] .mdc-dialog__footer__button, .mdc-dialog__footer__button[dir=\"rtl\"] {\n  margin-left: 8px;\n  margin-right: 0;\n}\n\n.mdc-dialog__footer__button:last-child {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-dialog__footer__button:last-child, .mdc-dialog__footer__button:last-child[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n@media (max-width: 640px) {\n  .mdc-dialog {\n    min-width: 280px;\n  }\n  .mdc-dialog__surface {\n    min-width: 280px;\n  }\n  .mdc-dialog__body {\n    line-height: 24px;\n  }\n}\n\n.mdc-dialog--animating {\n  visibility: visible;\n}\n\n.mdc-dialog--animating .mdc-dialog__backdrop {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-dialog--animating .mdc-dialog--open .mdc-dialog__surface {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-dialog--animating .mdc-dialog__surface {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-dialog--open {\n  visibility: visible;\n}\n\n.mdc-dialog--open .mdc-dialog__backdrop {\n  opacity: .3;\n}\n\n.mdc-dialog--open .mdc-dialog__surface {\n  transform: translateY(0) scale(1);\n  opacity: 1;\n}\n\n.mdc-dialog-scroll-lock {\n  height: 100vh;\n  overflow: hidden;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n:root {\n  --mdc-persistent-drawer-dark-theme-bg-color: #212121;\n}\n\n.mdc-persistent-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  width: 0;\n}\n\n.mdc-persistent-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-persistent-drawer__toolbar-spacer--theme-dark .mdc-persistent-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-persistent-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-persistent-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-persistent-drawer__header {\n  position: relative;\n}\n\n.mdc-persistent-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-persistent-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-persistent-drawer .mdc-list-group,\n.mdc-persistent-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-persistent-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-persistent-drawer .mdc-list-item.mdc-ripple-upgraded {\n  left: 0;\n}\n\n.mdc-persistent-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-persistent-drawer .mdc-list-item__start-detail--theme-dark .mdc-persistent-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-persistent-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-persistent-drawer--selected.mdc-list-item,\n.mdc-persistent-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-persistent-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-persistent-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-persistent-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-persistent-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer__drawer {\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  border-left: 0;\n  border-right: 1px solid #e4e4e4;\n  left: 0;\n  right: initial;\n  height: 100%;\n  transform: translateX(-107%);\n  transform: translateX(calc(-100% - 20px));\n  will-change: transform;\n  display: inline-flex;\n  flex-direction: column;\n  box-sizing: border-box;\n  width: 240px;\n  overflow: hidden;\n  touch-action: none;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer, .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  border-left: 1px solid #e4e4e4;\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer, .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-persistent-drawer__drawer--theme-dark,\n.mdc-theme--dark .mdc-persistent-drawer__drawer {\n  background-color: #212121;\n  background-color: var(--mdc-persistent-drawer-dark-theme-bg-color, #212121);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  border-left: 0;\n  border-right: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer__drawer--theme-dark, .mdc-persistent-drawer__drawer--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-persistent-drawer__drawer,\n.mdc-theme--dark .mdc-persistent-drawer__drawer[dir=\"rtl\"] {\n  border-left: 1px solid rgba(255, 255, 255, 0.12);\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer .mdc-persistent-drawer__drawer,\n.mdc-persistent-drawer[dir=\"rtl\"] .mdc-persistent-drawer__drawer {\n  transform: translateX(107%);\n  transform: translateX(calc(100% + 20px));\n}\n\n.mdc-persistent-drawer--animating .mdc-persistent-drawer__drawer {\n  transition: transform 0.13s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer--animating.mdc-persistent-drawer--open .mdc-persistent-drawer__drawer {\n  transition: transform 0.33s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-persistent-drawer--open {\n  width: 240px;\n  pointer-events: auto;\n}\n\n.mdc-persistent-drawer--open .mdc-persistent-drawer__drawer {\n  transform: none;\n}\n\n[dir=\"rtl\"] .mdc-persistent-drawer--open .mdc-persistent-drawer__drawer, .mdc-persistent-drawer--open[dir=\"rtl\"] .mdc-persistent-drawer__drawer {\n  transform: none;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n:root {\n  --mdc-permanent-drawer-dark-theme-bg-color: #212121;\n}\n\n.mdc-permanent-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  border-left: 0;\n  border-right: 1px solid #e4e4e4;\n  left: 0;\n  right: initial;\n  display: inline-flex;\n  flex-direction: column;\n  flex: 0 0 auto;\n  width: 240px;\n  box-sizing: border-box;\n  overflow: hidden;\n}\n\n.mdc-permanent-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-permanent-drawer__toolbar-spacer--theme-dark .mdc-permanent-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-permanent-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-permanent-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-permanent-drawer__header {\n  position: relative;\n}\n\n.mdc-permanent-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-permanent-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-permanent-drawer .mdc-list-group,\n.mdc-permanent-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-permanent-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-permanent-drawer .mdc-list-item.mdc-ripple-upgraded {\n  left: 0;\n}\n\n.mdc-permanent-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-permanent-drawer .mdc-list-item__start-detail--theme-dark .mdc-permanent-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-permanent-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-permanent-drawer--selected.mdc-list-item,\n.mdc-permanent-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-permanent-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-permanent-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-permanent-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-permanent-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer, .mdc-permanent-drawer[dir=\"rtl\"] {\n  border-left: 1px solid #e4e4e4;\n  border-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer, .mdc-permanent-drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-permanent-drawer--theme-dark,\n.mdc-theme--dark .mdc-permanent-drawer {\n  background-color: #212121;\n  background-color: var(--mdc-permanent-drawer-dark-theme-bg-color, #212121);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  border-left: 0;\n  border-right: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--theme-dark, .mdc-permanent-drawer--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-permanent-drawer,\n.mdc-theme--dark .mdc-permanent-drawer[dir=\"rtl\"] {\n  border-left: 1px solid rgba(255, 255, 255, 0.12);\n  border-right: 0;\n}\n\n.mdc-permanent-drawer--floating {\n  background: none;\n  border-left: 0;\n  border-right: none;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--floating, .mdc-permanent-drawer--floating[dir=\"rtl\"] {\n  border-left: none;\n  border-right: 0;\n}\n\n.mdc-permanent-drawer--floating--theme-dark,\n.mdc-theme--dark .mdc-permanent-drawer--floating {\n  background: none;\n  border-left: 0;\n  border-right: none;\n}\n\n[dir=\"rtl\"] .mdc-permanent-drawer--floating--theme-dark, .mdc-permanent-drawer--floating--theme-dark[dir=\"rtl\"], [dir=\"rtl\"]\n.mdc-theme--dark .mdc-permanent-drawer--floating,\n.mdc-theme--dark .mdc-permanent-drawer--floating[dir=\"rtl\"] {\n  border-left: none;\n  border-right: 0;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/**\n * Copyright 2016 Google Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n.mdc-temporary-drawer {\n  /* Use aspect ratio trick to maintain 16:9 aspect ratio on the header */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  pointer-events: none;\n  box-sizing: border-box;\n  contain: strict;\n  z-index: 3;\n  /* Shaded background */\n}\n\n.mdc-temporary-drawer__toolbar-spacer {\n  display: flex;\n  position: relative;\n  flex-direction: row;\n  flex-shrink: 0;\n  align-items: flex-center;\n  height: 56px;\n  padding: 16px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  box-sizing: border-box;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n.mdc-temporary-drawer__toolbar-spacer--theme-dark .mdc-temporary-drawer__toolbar-spacer,\n.mdc-theme--dark .mdc-temporary-drawer__toolbar-spacer {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n@media (min-width: 600px) {\n  .mdc-temporary-drawer__toolbar-spacer {\n    height: 64px;\n  }\n}\n\n.mdc-temporary-drawer__header {\n  position: relative;\n}\n\n.mdc-temporary-drawer__header::before {\n  display: block;\n  padding-top: 56.25%;\n  content: \"\";\n}\n\n.mdc-temporary-drawer__header-content {\n  display: flex;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  align-items: flex-end;\n  padding: 16px;\n  box-sizing: border-box;\n}\n\n.mdc-temporary-drawer .mdc-list-group,\n.mdc-temporary-drawer .mdc-list {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.mdc-temporary-drawer .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-temporary-drawer .mdc-list-item.mdc-ripple-upgraded {\n  left: 0;\n}\n\n.mdc-temporary-drawer .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-temporary-drawer .mdc-list-item__start-detail--theme-dark .mdc-temporary-drawer .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-temporary-drawer .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-temporary-drawer--selected.mdc-list-item,\n.mdc-temporary-drawer--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-temporary-drawer .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-temporary-drawer .mdc-list-item:focus::before {\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .12;\n}\n\n.mdc-temporary-drawer .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  transition: opacity 180ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .18;\n}\n\n.mdc-temporary-drawer .mdc-list-item:active:focus::before {\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer::before {\n  display: block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  content: \"\";\n  opacity: 0;\n  opacity: var(--mdc-temporary-drawer-opacity, 0);\n  will-change: opacity;\n  box-sizing: border-box;\n}\n\n.mdc-temporary-drawer__drawer {\n  background: #fff;\n  background: var(--mdc-theme-background, #fff);\n  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);\n  left: 0;\n  right: initial;\n  height: 100%;\n  transform: translateX(-107%);\n  transform: translateX(calc(-100% - 20px));\n  will-change: transform;\n  display: flex;\n  position: absolute;\n  flex-direction: column;\n  width: calc(100% - 56px);\n  max-width: 280px;\n  box-sizing: border-box;\n  overflow: hidden;\n  touch-action: none;\n  /* TODO(sgomes): replace with global breakpoints when we have them */\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer__drawer, .mdc-temporary-drawer__drawer[dir=\"rtl\"] {\n  left: initial;\n  right: 0;\n}\n\n.mdc-temporary-drawer--theme-dark .mdc-temporary-drawer__drawer,\n.mdc-theme--dark .mdc-temporary-drawer__drawer {\n  background: #303030;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer .mdc-temporary-drawer__drawer,\n.mdc-temporary-drawer[dir=\"rtl\"] .mdc-temporary-drawer__drawer {\n  transform: translateX(107%);\n  transform: translateX(calc(100% + 20px));\n}\n\n@media (min-width: 600px) {\n  .mdc-temporary-drawer__drawer {\n    width: calc(100% - 64px);\n    max-width: 320px;\n  }\n}\n\n.mdc-temporary-drawer__content {\n  flex-grow: 1;\n  margin: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  -webkit-overflow-scrolling: touch;\n  touch-action: pan-y;\n}\n\n.mdc-temporary-drawer__footer {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  flex-shrink: 0;\n}\n\n.mdc-temporary-drawer--animating::before {\n  transition: opacity 0.3s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--animating.mdc-temporary-drawer--open .mdc-temporary-drawer__drawer {\n  transition: transform 0.33s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--animating .mdc-temporary-drawer__drawer {\n  transition: transform 0.13s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-temporary-drawer--open {\n  pointer-events: auto;\n}\n\n.mdc-temporary-drawer--open::before {\n  opacity: 1;\n  opacity: var(--mdc-temporary-drawer-opacity, 1);\n}\n\n.mdc-temporary-drawer--open .mdc-temporary-drawer__drawer {\n  transform: none;\n}\n\n[dir=\"rtl\"] .mdc-temporary-drawer--open .mdc-temporary-drawer__drawer, .mdc-temporary-drawer--open[dir=\"rtl\"] .mdc-temporary-drawer__drawer {\n  transform: none;\n}\n\n.mdc-drawer-scroll-lock {\n  height: 100vh;\n  overflow: hidden;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n.mdc-elevation--z0 {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z1 {\n  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z2 {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z3 {\n  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z4 {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z5 {\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z6 {\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z7 {\n  box-shadow: 0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z8 {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z9 {\n  box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.2), 0px 9px 12px 1px rgba(0, 0, 0, 0.14), 0px 3px 16px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z10 {\n  box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z11 {\n  box-shadow: 0px 6px 7px -4px rgba(0, 0, 0, 0.2), 0px 11px 15px 1px rgba(0, 0, 0, 0.14), 0px 4px 20px 3px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z12 {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z13 {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 13px 19px 2px rgba(0, 0, 0, 0.14), 0px 5px 24px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z14 {\n  box-shadow: 0px 7px 9px -4px rgba(0, 0, 0, 0.2), 0px 14px 21px 2px rgba(0, 0, 0, 0.14), 0px 5px 26px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z15 {\n  box-shadow: 0px 8px 9px -5px rgba(0, 0, 0, 0.2), 0px 15px 22px 2px rgba(0, 0, 0, 0.14), 0px 6px 28px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z16 {\n  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z17 {\n  box-shadow: 0px 8px 11px -5px rgba(0, 0, 0, 0.2), 0px 17px 26px 2px rgba(0, 0, 0, 0.14), 0px 6px 32px 5px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z18 {\n  box-shadow: 0px 9px 11px -5px rgba(0, 0, 0, 0.2), 0px 18px 28px 2px rgba(0, 0, 0, 0.14), 0px 7px 34px 6px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z19 {\n  box-shadow: 0px 9px 12px -6px rgba(0, 0, 0, 0.2), 0px 19px 29px 2px rgba(0, 0, 0, 0.14), 0px 7px 36px 6px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z20 {\n  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z21 {\n  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 21px 33px 3px rgba(0, 0, 0, 0.14), 0px 8px 40px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z22 {\n  box-shadow: 0px 10px 14px -6px rgba(0, 0, 0, 0.2), 0px 22px 35px 3px rgba(0, 0, 0, 0.14), 0px 8px 42px 7px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z23 {\n  box-shadow: 0px 11px 14px -7px rgba(0, 0, 0, 0.2), 0px 23px 36px 3px rgba(0, 0, 0, 0.14), 0px 9px 44px 8px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation--z24 {\n  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-elevation-transition {\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  will-change: box-shadow;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-fab {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  width: 56px;\n  height: 56px;\n  padding: 0;\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  border: none;\n  border-radius: 50%;\n  cursor: pointer;\n  user-select: none;\n  box-sizing: border-box;\n  fill: currentColor;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  background-color: #d2aa28;\n  background-color: var(--mdc-theme-accent, #d2aa28);\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-accent, rgba(0, 0, 0, 0.87));\n  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded):hover::before, .mdc-fab:not(.mdc-ripple-upgraded):focus::before, .mdc-fab:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-fab::before {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-fab.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-fab.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab::after {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-fab.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-fab.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-fab.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-fab:not(.mdc-ripple-upgraded) {\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);\n}\n\n.mdc-fab--mini {\n  width: 40px;\n  height: 40px;\n}\n\n.mdc-fab--plain {\n  background-color: white;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-fab--plain::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-fab--plain::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-fab--plain:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-fab--plain.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-fab:active, .mdc-fab:focus {\n  outline: none;\n}\n\n.mdc-fab:active {\n  box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-fab:hover {\n  cursor: pointer;\n}\n\n.mdc-fab::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n.mdc-fab > svg {\n  width: 100%;\n}\n\nfieldset:disabled .mdc-fab, .mdc-fab:disabled {\n  background-color: rgba(0, 0, 0, 0.12);\n  color: rgba(0, 0, 0, 0.26);\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-fab__icon {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* stylelint-disable selector-no-type */\n.mdc-form-field {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  display: inline-flex;\n  align-items: center;\n  vertical-align: middle;\n}\n\n.mdc-form-field--theme-dark,\n.mdc-theme--dark .mdc-form-field {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-form-field > label {\n  order: 0;\n  margin-right: auto;\n  padding-left: 4px;\n}\n\n[dir=\"rtl\"] .mdc-form-field > label, .mdc-form-field[dir=\"rtl\"] > label {\n  margin-left: auto;\n  padding-right: 4px;\n}\n\n.mdc-form-field--align-end > label {\n  order: -1;\n  margin-left: auto;\n  padding-right: 4px;\n}\n\n[dir=\"rtl\"] .mdc-form-field--align-end > label, .mdc-form-field--align-end[dir=\"rtl\"] > label {\n  margin-right: auto;\n  padding-left: 4px;\n}\n\n/* stylelint-enable selector-no-type */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-grid-list .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1);\n}\n\n.mdc-grid-list .mdc-grid-tile {\n  margin: 2px 0;\n  padding: 0 2px;\n}\n\n.mdc-grid-list .mdc-grid-tile__secondary {\n  left: 2px;\n  width: calc(100% - 4px);\n}\n\n.mdc-grid-list .mdc-grid-list__tiles {\n  margin: 2px auto;\n}\n\n.mdc-grid-list__tiles {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin: 0;\n  padding: 0;\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-tile {\n  margin: 0.5px 0;\n  padding: 0 0.5px;\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-tile__secondary {\n  left: 0.5px;\n  width: calc(100% - 1px);\n}\n\n.mdc-grid-list--tile-gutter-1 .mdc-grid-list__tiles {\n  margin: 0.5px auto;\n}\n\n.mdc-grid-list--tile-aspect-16x9 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.77778);\n}\n\n.mdc-grid-list--tile-aspect-3x2 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.5);\n}\n\n.mdc-grid-list--tile-aspect-2x3 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 0.66667);\n}\n\n.mdc-grid-list--tile-aspect-4x3 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 1.33333);\n}\n\n.mdc-grid-list--tile-aspect-3x4 .mdc-grid-tile__primary {\n  padding-bottom: calc(100% / 0.75);\n}\n\n.mdc-grid-list--twoline-caption .mdc-grid-tile__secondary {\n  height: 68px;\n}\n\n.mdc-grid-list--header-caption .mdc-grid-tile__secondary {\n  top: 0;\n  bottom: auto;\n}\n\n.mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary {\n  padding-left: 56px;\n  padding-right: 8px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-start .mdc-grid-tile__secondary {\n  padding-left: 8px;\n  padding-right: 56px;\n}\n\n.mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon {\n  left: 16px;\n  right: initial;\n  font-size: 24px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-start .mdc-grid-tile__icon {\n  left: initial;\n  right: 16px;\n}\n\n.mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary {\n  padding-left: 16px;\n  padding-right: 56px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-end .mdc-grid-tile__secondary {\n  padding-left: 56px;\n  padding-right: 16px;\n}\n\n.mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon {\n  left: initial;\n  right: 16px;\n  font-size: 24px;\n}\n\n[dir=\"rtl\"] .mdc-grid-list .mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon,\n.mdc-grid-list[dir=\"rtl\"] .mdc-grid-list--with-icon-align-end .mdc-grid-tile__icon {\n  left: 16px;\n  right: initial;\n}\n\n.mdc-grid-tile {\n  display: block;\n  position: relative;\n  width: var(--mdc-grid-list-tile-width, 200px);\n}\n\n.mdc-grid-tile__primary {\n  position: relative;\n  height: 0;\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-grid-tile__primary-content {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: cover;\n}\n\n.mdc-grid-tile__secondary {\n  position: absolute;\n  box-sizing: border-box;\n  bottom: 0;\n  height: 48px;\n  padding: 16px;\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-grid-tile__title {\n  display: block;\n  margin: 0;\n  padding: 0;\n  font-size: 1rem;\n  font-weight: 500;\n  line-height: 1rem;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.mdc-grid-tile__support-text {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  display: block;\n  margin: 0;\n  margin-top: 4px;\n  padding: 0;\n}\n\n.mdc-grid-tile__icon {\n  position: absolute;\n  top: calc(50% - 24px / 2);\n  font-size: 0;\n}\n\n/** postcss-bem-linter: define icon-toggle */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-icon-toggle {\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  will-change: initial;\n  display: flex;\n  position: relative;\n  box-sizing: border-box;\n  align-items: center;\n  justify-content: center;\n  width: 48px;\n  height: 48px;\n  padding: 12px;\n  outline: none;\n  font-size: 1.5rem;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-icon-toggle:not(.mdc-ripple-upgraded):hover::before, .mdc-icon-toggle:not(.mdc-ripple-upgraded):focus::before, .mdc-icon-toggle:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-icon-toggle::before {\n  background-color: rgba(0, 0, 0, 0.062);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle::after {\n  background-color: rgba(0, 0, 0, 0.062);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle::before,\n.mdc-theme--dark .mdc-icon-toggle::before {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle::after,\n.mdc-theme--dark .mdc-icon-toggle::after {\n  background-color: rgba(255, 255, 255, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-icon-toggle:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-icon-toggle.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle::after {\n  position: absolute;\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n}\n\n.mdc-icon-toggle--theme-dark,\n.mdc-theme--dark .mdc-icon-toggle {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-icon-toggle--primary {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-icon-toggle--primary::before {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--primary::before {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--primary::after {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--primary::after {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--accent {\n  color: #d2aa28;\n  color: var(--mdc-theme-accent, #d2aa28);\n}\n\n.mdc-icon-toggle--accent::before {\n  background-color: rgba(210, 170, 40, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--accent::before {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(14%));\n  }\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-icon-toggle--accent::after {\n  background-color: rgba(210, 170, 40, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-icon-toggle--accent::after {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(14%));\n  }\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-icon-toggle--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-icon-toggle--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-icon-toggle--disabled {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  pointer-events: none;\n}\n\n.mdc-icon-toggle--theme-dark.mdc-icon-toggle--disabled,\n.mdc-theme--dark .mdc-icon-toggle--disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n/** postcss-bem-linter: end */\n:root {\n  --mdc-layout-grid-margin-desktop: 24px;\n  --mdc-layout-grid-gutter-desktop: 24px;\n  --mdc-layout-grid-margin-tablet: 16px;\n  --mdc-layout-grid-gutter-tablet: 16px;\n  --mdc-layout-grid-margin-phone: 16px;\n  --mdc-layout-grid-gutter-phone: 16px;\n}\n\n@media (min-width: 840px) {\n  .mdc-layout-grid {\n    box-sizing: border-box;\n    margin: 0 auto;\n    padding: 24px;\n    padding: var(--mdc-layout-grid-margin-desktop, 24px);\n  }\n}\n\n@media (min-width: 480px) and (max-width: 839px) {\n  .mdc-layout-grid {\n    box-sizing: border-box;\n    margin: 0 auto;\n    padding: 16px;\n    padding: var(--mdc-layout-grid-margin-tablet, 16px);\n  }\n}\n\n@media (max-width: 479px) {\n  .mdc-layout-grid {\n    box-sizing: border-box;\n    margin: 0 auto;\n    padding: 16px;\n    padding: var(--mdc-layout-grid-margin-phone, 16px);\n  }\n}\n\n@media (min-width: 840px) {\n  .mdc-layout-grid__inner {\n    display: flex;\n    flex-flow: row wrap;\n    align-items: stretch;\n    margin: -12px;\n    margin: calc(var(--mdc-layout-grid-gutter-desktop, 24px) / 2 * -1);\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__inner {\n      display: grid;\n      grid-gap: 24px;\n      grid-gap: var(--mdc-layout-grid-gutter-desktop, 24px);\n      margin: 0;\n      grid-template-columns: repeat(12, minmax(0, 1fr));\n    }\n  }\n}\n\n@media (min-width: 480px) and (max-width: 839px) {\n  .mdc-layout-grid__inner {\n    display: flex;\n    flex-flow: row wrap;\n    align-items: stretch;\n    margin: -8px;\n    margin: calc(var(--mdc-layout-grid-gutter-tablet, 16px) / 2 * -1);\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__inner {\n      display: grid;\n      grid-gap: 16px;\n      grid-gap: var(--mdc-layout-grid-gutter-tablet, 16px);\n      margin: 0;\n      grid-template-columns: repeat(8, minmax(0, 1fr));\n    }\n  }\n}\n\n@media (max-width: 479px) {\n  .mdc-layout-grid__inner {\n    display: flex;\n    flex-flow: row wrap;\n    align-items: stretch;\n    margin: -8px;\n    margin: calc(var(--mdc-layout-grid-gutter-phone, 16px) / 2 * -1);\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__inner {\n      display: grid;\n      grid-gap: 16px;\n      grid-gap: var(--mdc-layout-grid-gutter-phone, 16px);\n      margin: 0;\n      grid-template-columns: repeat(4, minmax(0, 1fr));\n    }\n  }\n}\n\n@media (min-width: 840px) {\n  .mdc-layout-grid__cell {\n    box-sizing: border-box;\n    margin: 12px;\n    margin: calc(var(--mdc-layout-grid-gutter-desktop, 24px) / 2);\n    width: calc(33.33333% - 24px);\n    width: calc(33.33333% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      margin: 0;\n    }\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-desktop.mdc-layout-grid__cell--span-1-desktop {\n    width: calc(8.33333% - 24px);\n    width: calc(8.33333% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-desktop.mdc-layout-grid__cell--span-1-desktop {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-desktop.mdc-layout-grid__cell--span-2-desktop {\n    width: calc(16.66667% - 24px);\n    width: calc(16.66667% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-desktop.mdc-layout-grid__cell--span-2-desktop {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-desktop.mdc-layout-grid__cell--span-3-desktop {\n    width: calc(25% - 24px);\n    width: calc(25% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-desktop.mdc-layout-grid__cell--span-3-desktop {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-desktop.mdc-layout-grid__cell--span-4-desktop {\n    width: calc(33.33333% - 24px);\n    width: calc(33.33333% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-desktop.mdc-layout-grid__cell--span-4-desktop {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-desktop.mdc-layout-grid__cell--span-5-desktop {\n    width: calc(41.66667% - 24px);\n    width: calc(41.66667% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-desktop.mdc-layout-grid__cell--span-5-desktop {\n      width: auto;\n      grid-column-end: span 5;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-desktop.mdc-layout-grid__cell--span-6-desktop {\n    width: calc(50% - 24px);\n    width: calc(50% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-desktop.mdc-layout-grid__cell--span-6-desktop {\n      width: auto;\n      grid-column-end: span 6;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-desktop.mdc-layout-grid__cell--span-7-desktop {\n    width: calc(58.33333% - 24px);\n    width: calc(58.33333% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-desktop.mdc-layout-grid__cell--span-7-desktop {\n      width: auto;\n      grid-column-end: span 7;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-desktop.mdc-layout-grid__cell--span-8-desktop {\n    width: calc(66.66667% - 24px);\n    width: calc(66.66667% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-desktop.mdc-layout-grid__cell--span-8-desktop {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-desktop.mdc-layout-grid__cell--span-9-desktop {\n    width: calc(75% - 24px);\n    width: calc(75% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-desktop.mdc-layout-grid__cell--span-9-desktop {\n      width: auto;\n      grid-column-end: span 9;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-desktop.mdc-layout-grid__cell--span-10-desktop {\n    width: calc(83.33333% - 24px);\n    width: calc(83.33333% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-desktop.mdc-layout-grid__cell--span-10-desktop {\n      width: auto;\n      grid-column-end: span 10;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-desktop.mdc-layout-grid__cell--span-11-desktop {\n    width: calc(91.66667% - 24px);\n    width: calc(91.66667% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-desktop.mdc-layout-grid__cell--span-11-desktop {\n      width: auto;\n      grid-column-end: span 11;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-desktop.mdc-layout-grid__cell--span-12-desktop {\n    width: calc(100% - 24px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-desktop, 24px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-desktop.mdc-layout-grid__cell--span-12-desktop {\n      width: auto;\n      grid-column-end: span 12;\n    }\n  }\n}\n\n@media (min-width: 480px) and (max-width: 839px) {\n  .mdc-layout-grid__cell {\n    box-sizing: border-box;\n    margin: 8px;\n    margin: calc(var(--mdc-layout-grid-gutter-tablet, 16px) / 2);\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      margin: 0;\n    }\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-tablet.mdc-layout-grid__cell--span-1-tablet {\n    width: calc(12.5% - 16px);\n    width: calc(12.5% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-tablet.mdc-layout-grid__cell--span-1-tablet {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-tablet.mdc-layout-grid__cell--span-2-tablet {\n    width: calc(25% - 16px);\n    width: calc(25% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-tablet.mdc-layout-grid__cell--span-2-tablet {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-tablet.mdc-layout-grid__cell--span-3-tablet {\n    width: calc(37.5% - 16px);\n    width: calc(37.5% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-tablet.mdc-layout-grid__cell--span-3-tablet {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-tablet.mdc-layout-grid__cell--span-4-tablet {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-tablet.mdc-layout-grid__cell--span-4-tablet {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-tablet.mdc-layout-grid__cell--span-5-tablet {\n    width: calc(62.5% - 16px);\n    width: calc(62.5% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-tablet.mdc-layout-grid__cell--span-5-tablet {\n      width: auto;\n      grid-column-end: span 5;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-tablet.mdc-layout-grid__cell--span-6-tablet {\n    width: calc(75% - 16px);\n    width: calc(75% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-tablet.mdc-layout-grid__cell--span-6-tablet {\n      width: auto;\n      grid-column-end: span 6;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-tablet.mdc-layout-grid__cell--span-7-tablet {\n    width: calc(87.5% - 16px);\n    width: calc(87.5% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-tablet.mdc-layout-grid__cell--span-7-tablet {\n      width: auto;\n      grid-column-end: span 7;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-tablet.mdc-layout-grid__cell--span-8-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-tablet.mdc-layout-grid__cell--span-8-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-tablet.mdc-layout-grid__cell--span-9-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-tablet.mdc-layout-grid__cell--span-9-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-tablet.mdc-layout-grid__cell--span-10-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-tablet.mdc-layout-grid__cell--span-10-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-tablet.mdc-layout-grid__cell--span-11-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-tablet.mdc-layout-grid__cell--span-11-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-tablet.mdc-layout-grid__cell--span-12-tablet {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-tablet, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-tablet.mdc-layout-grid__cell--span-12-tablet {\n      width: auto;\n      grid-column-end: span 8;\n    }\n  }\n}\n\n@media (max-width: 479px) {\n  .mdc-layout-grid__cell {\n    box-sizing: border-box;\n    margin: 8px;\n    margin: calc(var(--mdc-layout-grid-gutter-phone, 16px) / 2);\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      margin: 0;\n    }\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-1,\n  .mdc-layout-grid__cell--span-1-phone.mdc-layout-grid__cell--span-1-phone {\n    width: calc(25% - 16px);\n    width: calc(25% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-1,\n    .mdc-layout-grid__cell--span-1-phone.mdc-layout-grid__cell--span-1-phone {\n      width: auto;\n      grid-column-end: span 1;\n    }\n  }\n  .mdc-layout-grid__cell--span-2,\n  .mdc-layout-grid__cell--span-2-phone.mdc-layout-grid__cell--span-2-phone {\n    width: calc(50% - 16px);\n    width: calc(50% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-2,\n    .mdc-layout-grid__cell--span-2-phone.mdc-layout-grid__cell--span-2-phone {\n      width: auto;\n      grid-column-end: span 2;\n    }\n  }\n  .mdc-layout-grid__cell--span-3,\n  .mdc-layout-grid__cell--span-3-phone.mdc-layout-grid__cell--span-3-phone {\n    width: calc(75% - 16px);\n    width: calc(75% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-3,\n    .mdc-layout-grid__cell--span-3-phone.mdc-layout-grid__cell--span-3-phone {\n      width: auto;\n      grid-column-end: span 3;\n    }\n  }\n  .mdc-layout-grid__cell--span-4,\n  .mdc-layout-grid__cell--span-4-phone.mdc-layout-grid__cell--span-4-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-4,\n    .mdc-layout-grid__cell--span-4-phone.mdc-layout-grid__cell--span-4-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-5,\n  .mdc-layout-grid__cell--span-5-phone.mdc-layout-grid__cell--span-5-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-5,\n    .mdc-layout-grid__cell--span-5-phone.mdc-layout-grid__cell--span-5-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-6,\n  .mdc-layout-grid__cell--span-6-phone.mdc-layout-grid__cell--span-6-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-6,\n    .mdc-layout-grid__cell--span-6-phone.mdc-layout-grid__cell--span-6-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-7,\n  .mdc-layout-grid__cell--span-7-phone.mdc-layout-grid__cell--span-7-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-7,\n    .mdc-layout-grid__cell--span-7-phone.mdc-layout-grid__cell--span-7-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-8,\n  .mdc-layout-grid__cell--span-8-phone.mdc-layout-grid__cell--span-8-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-8,\n    .mdc-layout-grid__cell--span-8-phone.mdc-layout-grid__cell--span-8-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-9,\n  .mdc-layout-grid__cell--span-9-phone.mdc-layout-grid__cell--span-9-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-9,\n    .mdc-layout-grid__cell--span-9-phone.mdc-layout-grid__cell--span-9-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-10,\n  .mdc-layout-grid__cell--span-10-phone.mdc-layout-grid__cell--span-10-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-10,\n    .mdc-layout-grid__cell--span-10-phone.mdc-layout-grid__cell--span-10-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-11,\n  .mdc-layout-grid__cell--span-11-phone.mdc-layout-grid__cell--span-11-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-11,\n    .mdc-layout-grid__cell--span-11-phone.mdc-layout-grid__cell--span-11-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n  .mdc-layout-grid__cell--span-12,\n  .mdc-layout-grid__cell--span-12-phone.mdc-layout-grid__cell--span-12-phone {\n    width: calc(100% - 16px);\n    width: calc(100% - var(--mdc-layout-grid-gutter-phone, 16px));\n  }\n  @supports (display: grid) {\n    .mdc-layout-grid__cell--span-12,\n    .mdc-layout-grid__cell--span-12-phone.mdc-layout-grid__cell--span-12-phone {\n      width: auto;\n      grid-column-end: span 4;\n    }\n  }\n}\n\n.mdc-layout-grid__cell--order-1 {\n  order: 1;\n}\n\n.mdc-layout-grid__cell--order-2 {\n  order: 2;\n}\n\n.mdc-layout-grid__cell--order-3 {\n  order: 3;\n}\n\n.mdc-layout-grid__cell--order-4 {\n  order: 4;\n}\n\n.mdc-layout-grid__cell--order-5 {\n  order: 5;\n}\n\n.mdc-layout-grid__cell--order-6 {\n  order: 6;\n}\n\n.mdc-layout-grid__cell--order-7 {\n  order: 7;\n}\n\n.mdc-layout-grid__cell--order-8 {\n  order: 8;\n}\n\n.mdc-layout-grid__cell--order-9 {\n  order: 9;\n}\n\n.mdc-layout-grid__cell--order-10 {\n  order: 10;\n}\n\n.mdc-layout-grid__cell--order-11 {\n  order: 11;\n}\n\n.mdc-layout-grid__cell--order-12 {\n  order: 12;\n}\n\n.mdc-layout-grid__cell--align-top {\n  align-self: flex-start;\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid__cell--align-top {\n    align-self: start;\n  }\n}\n\n.mdc-layout-grid__cell--align-middle {\n  align-self: center;\n}\n\n.mdc-layout-grid__cell--align-bottom {\n  align-self: flex-end;\n}\n\n@supports (display: grid) {\n  .mdc-layout-grid__cell--align-bottom {\n    align-self: end;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-list {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: 0;\n  padding: 8px 16px 0;\n  line-height: 1.5rem;\n  list-style-type: none;\n}\n\n.mdc-list--theme-dark,\n.mdc-theme--dark .mdc-list {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-list--dense {\n  padding-top: 4px;\n  font-size: .812rem;\n}\n\n.mdc-list-item {\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  height: 48px;\n}\n\n.mdc-list-item__start-detail {\n  width: 24px;\n  height: 24px;\n  margin-left: 0;\n  margin-right: 32px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item__start-detail {\n  margin-left: 32px;\n  margin-right: 0;\n}\n\n.mdc-list-item__end-detail {\n  width: 24px;\n  height: 24px;\n  margin-left: auto;\n  margin-right: 16px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item__end-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item__end-detail {\n  margin-left: 16px;\n  margin-right: auto;\n}\n\n.mdc-list-item__text {\n  display: inline-flex;\n  flex-direction: column;\n}\n\n.mdc-list-item__text__secondary {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-list-item__text__secondary--theme-dark,\n.mdc-theme--dark .mdc-list-item__text__secondary {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-list--dense .mdc-list-item__text__secondary {\n  font-size: inherit;\n}\n\n.mdc-list--dense .mdc-list-item {\n  height: 40px;\n}\n\n.mdc-list--dense .mdc-list-item__start-detail {\n  width: 20px;\n  height: 20px;\n  margin-left: 0;\n  margin-right: 36px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list--dense .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list--dense .mdc-list-item__start-detail {\n  margin-left: 36px;\n  margin-right: 0;\n}\n\n.mdc-list--dense .mdc-list-item__end-detail {\n  width: 20px;\n  height: 20px;\n}\n\n.mdc-list--avatar-list .mdc-list-item {\n  height: 56px;\n}\n\n.mdc-list--avatar-list .mdc-list-item__start-detail {\n  width: 40px;\n  height: 40px;\n  margin-left: 0;\n  margin-right: 16px;\n  border-radius: 50%;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list--avatar-list .mdc-list-item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list--avatar-list .mdc-list-item__start-detail {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n.mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item {\n  height: 48px;\n}\n\n.mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail {\n  width: 36px;\n  height: 36px;\n  margin-left: 0;\n  margin-right: 20px;\n}\n\n[dir=\"rtl\"] .mdc-list-item .mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail,\n.mdc-list-item[dir=\"rtl\"] .mdc-list-item .mdc-list--avatar-list.mdc-list--dense .mdc-list__item__start-detail {\n  margin-left: 20px;\n  margin-right: 0;\n}\n\n.mdc-list--two-line .mdc-list-item {\n  height: 72px;\n}\n\n.mdc-list--two-line.mdc-list--dense .mdc-list-item {\n  height: 60px;\n}\n\na.mdc-list-item {\n  color: inherit;\n  text-decoration: none;\n}\n\n.mdc-list-item.mdc-ripple-upgraded {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  left: -16px;\n  right: initial;\n  position: relative;\n  width: 100%;\n  padding: 0 16px;\n  overflow: hidden;\n}\n\n.mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):hover::before, .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):focus::before, .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-list-item.mdc-ripple-upgraded::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list-item.mdc-ripple-upgraded::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n[dir=\"rtl\"] .mdc-list-item.mdc-ripple-upgraded, .mdc-list-item.mdc-ripple-upgraded[dir=\"rtl\"] {\n  left: initial;\n  right: -16px;\n}\n\n.mdc-list-item.mdc-ripple-upgraded:focus {\n  outline: none;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded::before {\n  background-color: rgba(255, 255, 255, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded::after {\n  background-color: rgba(255, 255, 255, 0.12);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-list--theme-dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after,\n.mdc-theme--dark .mdc-list-item.mdc-ripple-upgraded.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-list-divider {\n  height: 0;\n  margin: 0;\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n}\n\n.mdc-list--theme-dark .mdc-list-divider,\n.mdc-theme--dark .mdc-list-divider {\n  border-bottom-color: rgba(255, 255, 255, 0.2);\n}\n\n.mdc-list-divider--inset {\n  margin-left: 56px;\n  margin-right: 0;\n  width: calc(100% - 56px);\n}\n\n[dir=\"rtl\"] .mdc-list-group .mdc-list-divider--inset,\n.mdc-list-group[dir=\"rtl\"] .mdc-list-divider--inset {\n  margin-left: 0;\n  margin-right: 56px;\n}\n\n.mdc-list-group {\n  padding: 0 16px;\n}\n\n.mdc-list-group__subheader {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));\n  margin: 0.75rem 0;\n}\n\n.mdc-list-group__subheader--theme-dark,\n.mdc-theme--dark .mdc-list-group__subheader {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-list-group .mdc-list {\n  padding: 0;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* postcss-bem-linter: define simple-menu */\n.mdc-simple-menu {\n  display: none;\n  position: absolute;\n  min-width: 170px;\n  max-width: calc(100vw - 32px);\n  max-height: calc(100vh - 32px);\n  margin: 0;\n  padding: 0;\n  transform: scale(0);\n  transform-origin: top left;\n  border-radius: 2px;\n  background-color: white;\n  white-space: nowrap;\n  opacity: 0;\n  overflow: hidden;\n  box-sizing: border-box;\n  will-change: transform, opacity;\n  z-index: 4;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-enable plugin/selector-bem-pattern */\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-disable selector-no-qualifying-type */\n  /* stylelint-enable selector-no-qualifying-type */\n  /* TODO(sgomes): Revisit when we have interactive lists. */\n  /* stylelint-enable plugin/selector-bem-pattern */\n}\n\n.mdc-simple-menu--theme-dark,\n.mdc-theme--dark .mdc-simple-menu {\n  background-color: #424242;\n}\n\n.mdc-simple-menu:focus {\n  outline: none;\n}\n\n.mdc-simple-menu--open {\n  display: inline-block;\n  transform: scale(1);\n  opacity: 1;\n}\n\n.mdc-simple-menu--animating {\n  display: inline-block;\n  transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-simple-menu__items {\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  will-change: transform;\n  /* stylelint-disable plugin/selector-bem-pattern, selector-no-universal */\n  /* stylelint-enable plugin/selector-bem-pattern, selector-no-universal */\n}\n\n.mdc-simple-menu__items > * {\n  opacity: 0;\n}\n\n.mdc-simple-menu__items > .mdc-list-item {\n  cursor: pointer;\n}\n\n.mdc-simple-menu--animating .mdc-simple-menu__items {\n  overflow-y: hidden;\n}\n\n.mdc-simple-menu--animating .mdc-simple-menu__items > * {\n  transition-duration: 0.3s;\n  transition-property: opacity;\n  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-simple-menu--open .mdc-simple-menu__items > * {\n  opacity: 1;\n  will-change: opacity;\n}\n\n[dir=\"rtl\"] .mdc-simple-menu {\n  transform-origin: top right;\n}\n\n.mdc-simple-menu--open-from-top-left {\n  transform-origin: top left !important;\n}\n\n.mdc-simple-menu--open-from-top-right {\n  transform-origin: top right !important;\n}\n\n.mdc-simple-menu--open-from-bottom-left {\n  transform-origin: bottom left !important;\n}\n\n.mdc-simple-menu--open-from-bottom-right {\n  transform-origin: bottom right !important;\n}\n\n.mdc-simple-menu .mdc-list-group,\n.mdc-simple-menu .mdc-list {\n  padding: 8px 0;\n}\n\n.mdc-simple-menu .mdc-list-item {\n  position: relative;\n  padding: 0 16px;\n  outline: none;\n  color: inherit;\n  text-decoration: none;\n  user-select: none;\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-item,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-item {\n  color: white;\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-divider,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-divider {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-simple-menu .mdc-list-item__start-detail {\n  color: rgba(0, 0, 0, 0.54);\n}\n\n.mdc-simple-menu--theme-dark.mdc-simple-menu .mdc-list-item__start-detail,\n.mdc-theme--dark .mdc-simple-menu .mdc-list-item__start-detail {\n  color: rgba(255, 255, 255, 0.54);\n}\n\n.mdc-simple-menu--selected.mdc-list-item,\n.mdc-simple-menu--selected.mdc-list-item .mdc-list-item__start-detail {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-simple-menu .mdc-list-item::before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity 120ms cubic-bezier(0, 0, 0.2, 1);\n  border-radius: inherit;\n  background: currentColor;\n  content: \"\";\n  opacity: 0;\n}\n\n.mdc-simple-menu .mdc-list-item:focus::before {\n  opacity: .12;\n}\n\n.mdc-simple-menu .mdc-list-item:active::before {\n  /*\n      Slightly darker value for visual distinction.\n      This allows a full base that has distinct modes.\n      Progressive enhancement with ripples will provide complete button spec alignment.\n    */\n  opacity: .18;\n}\n\n.mdc-simple-menu .mdc-list-item[aria-disabled=\"true\"] {\n  cursor: default;\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-select--theme-dark .mdc-simple-menu .mdc-list-item[aria-disabled=\"true\"],\n.mdc-theme--dark .mdc-simple-menu .mdc-list-item[aria-disabled=\"true\"] {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-simple-menu .mdc-list-item[aria-disabled=\"true\"]:focus::before, .mdc-simple-menu .mdc-list-item[aria-disabled=\"true\"]:active::before {\n  opacity: 0;\n}\n\n/* postcss-bem-linter: end */\n.mdc-menu-anchor {\n  position: relative;\n  overflow: visible;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-radio {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  flex: 0 0 auto;\n  width: 40px;\n  height: 40px;\n  padding: 10px;\n  cursor: pointer;\n  will-change: opacity, transform, border-color, background-color, color;\n}\n\n.mdc-radio:not(.mdc-ripple-upgraded):hover::before, .mdc-radio:not(.mdc-ripple-upgraded):focus::before, .mdc-radio:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-radio::before {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-radio::before {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-radio.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-radio.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-radio.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-radio.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-radio::after {\n  background-color: rgba(34, 86, 136, 0.14);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-radio::after {\n    background-color: color(var(--mdc-theme-primary, #225688) a(14%));\n  }\n}\n\n.mdc-radio.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-radio:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-radio.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-radio.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-radio.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-radio::before, .mdc-radio::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.mdc-radio.mdc-ripple-upgraded .mdc-radio__background::before {\n  content: none;\n}\n\n.mdc-radio__background {\n  display: inline-block;\n  position: absolute;\n  left: 10px;\n  width: 50%;\n  height: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio__background::before {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: opacity 120ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  content: \"\";\n  opacity: 0;\n  pointer-events: none;\n}\n\n.mdc-radio__outer-circle {\n  border-color: rgba(0, 0, 0, 0.54);\n  border-color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: border-color 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-width: 2px;\n  border-style: solid;\n  border-radius: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio--theme-dark .mdc-radio__outer-circle,\n.mdc-theme--dark .mdc-radio__outer-circle {\n  border-color: rgba(255, 255, 255, 0.7);\n  border-color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-radio__inner-circle {\n  background-color: rgba(0, 0, 0, 0.54);\n  background-color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transform: scale(0, 0);\n  transition: transform 120ms 0ms cubic-bezier(0.4, 0, 1, 1), background-color 120ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border-radius: 50%;\n  box-sizing: border-box;\n}\n\n.mdc-radio--theme-dark .mdc-radio__inner-circle,\n.mdc-theme--dark .mdc-radio__inner-circle {\n  background-color: rgba(255, 255, 255, 0.7);\n  background-color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-radio__native-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  cursor: inherit;\n  opacity: 0;\n  z-index: 1;\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background,\n.mdc-radio__native-control:disabled + .mdc-radio__background {\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle {\n  transition: border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle {\n  transition: transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio--disabled {\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: #225688;\n  border-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-radio__native-control:checked + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  transform: scale(0.5);\n  transition: transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1), background-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background {\n  cursor: default;\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-radio--theme-dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__outer-circle, .mdc-radio--theme-dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle, .mdc-radio--theme-dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__outer-circle {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle,\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n.mdc-radio--theme-dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark .mdc-radio__native-control:disabled + .mdc-radio__background .mdc-radio__inner-circle, .mdc-radio--theme-dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark\nfieldset:disabled .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle, .mdc-radio--theme-dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle,\n.mdc-theme--dark\n[aria-disabled=\"true\"] .mdc-radio__native-control + .mdc-radio__background .mdc-radio__inner-circle {\n  background-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-radio__native-control:focus + .mdc-radio__background::before {\n  transform: scale(2, 2);\n  transition: opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1), transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: .26;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/** MDC Ripple keyframes are split into their own file so that _mixins.scss can rely on them. */\n@keyframes mdc-ripple-fg-radius-in {\n  from {\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  }\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    opacity: 0;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    opacity: 1;\n    animation-timing-function: linear;\n  }\n  to {\n    opacity: 0;\n  }\n}\n\n.mdc-ripple-surface {\n  --mdc-ripple-surface-width: 0;\n  --mdc-ripple-surface-height: 0;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  will-change: transform, opacity;\n  -webkit-tap-highlight-color: transparent;\n  position: relative;\n  outline: none;\n  overflow: hidden;\n}\n\n.mdc-ripple-surface:not(.mdc-ripple-upgraded):hover::before, .mdc-ripple-surface:not(.mdc-ripple-upgraded):focus::before, .mdc-ripple-surface:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 85ms;\n  opacity: .6;\n}\n\n.mdc-ripple-surface::before {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface::after {\n  background-color: rgba(0, 0, 0, 0.06);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-ripple-surface[data-mdc-ripple-is-unbounded] {\n  overflow: visible;\n}\n\n.mdc-ripple-surface--primary::before, .mdc-ripple-surface--primary::after {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-ripple-surface--primary::before {\n  background-color: rgba(34, 86, 136, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--primary::before {\n    background-color: color(var(--mdc-theme-primary, #225688) a(16%));\n  }\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--primary::after {\n  background-color: rgba(34, 86, 136, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--primary::after {\n    background-color: color(var(--mdc-theme-primary, #225688) a(16%));\n  }\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface--primary:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface--primary.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n.mdc-ripple-surface--accent::before, .mdc-ripple-surface--accent::after {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-ripple-surface--accent::before {\n  background-color: rgba(210, 170, 40, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--accent::before {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(16%));\n  }\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-focused::before {\n  opacity: .99999;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--background-active-fill::before {\n  transition-duration: 120ms;\n  opacity: 1;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--unbounded::before {\n  top: calc(50% - 50%);\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: calc(50% - 50%);\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-ripple-surface--accent::after {\n  background-color: rgba(210, 170, 40, 0.16);\n  position: absolute;\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transition: opacity 250ms linear;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n@supports (background-color: color(green a(10%))) {\n  .mdc-ripple-surface--accent::after {\n    background-color: color(var(--mdc-theme-accent, #d2aa28) a(16%));\n  }\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n  opacity: 0;\n}\n\n.mdc-ripple-surface--accent:not(.mdc-ripple-upgraded--unbounded)::after {\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--unbounded::after {\n  top: 0;\n  top: var(--mdc-ripple-top, 0);\n  left: 0;\n  left: var(--mdc-ripple-left, 0);\n  width: 100%;\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: 100%;\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 300ms :local(mdc-ripple-fg-radius-in) forwards, 83ms :local(mdc-ripple-fg-opacity-in) forwards;\n}\n\n.mdc-ripple-surface--accent.mdc-ripple-upgraded--foreground-deactivation::after {\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  animation: 250ms :local(mdc-ripple-fg-opacity-out);\n}\n\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n.mdc-select {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  padding-left: 0;\n  padding-right: 24px;\n  appearance: none;\n  display: inline-flex;\n  align-items: center;\n  justify-content: flex-start;\n  max-width: calc(100% - 24px);\n  height: 32px;\n  transition: border-bottom-color 150ms 0ms cubic-bezier(0.4, 0, 1, 1), background-color 150ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 0;\n  background: none;\n  background-repeat: no-repeat;\n  background-position: right center;\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%230%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.54%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  font-family: Roboto, sans-serif;\n  font-size: .936rem;\n  cursor: pointer;\n}\n\n[dir=\"rtl\"] .mdc-select, .mdc-select[dir=\"rtl\"] {\n  padding-left: 24px;\n  padding-right: 0;\n}\n\n.mdc-select::-ms-expand {\n  display: none;\n}\n\n.mdc-select:focus {\n  border-bottom-color: #225688;\n  border-bottom-color: var(--mdc-theme-primary, #225688);\n  outline: none;\n  background-color: rgba(0, 0, 0, 0.06);\n}\n\n[dir=\"rtl\"] .mdc-select, .mdc-select[dir=\"rtl\"] {\n  background-position: left center;\n}\n\n.mdc-select--theme-dark,\n.mdc-theme--dark .mdc-select {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.54%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n.mdc-select--theme-dark:focus,\n.mdc-theme--dark .mdc-select:focus {\n  border-bottom-color: #225688;\n  border-bottom-color: var(--mdc-theme-primary, #225688);\n  background-color: rgba(255, 255, 255, 0.09);\n}\n\n.mdc-select__menu {\n  position: fixed;\n  top: 0;\n  left: 0;\n  max-height: 100%;\n  transform-origin: center center;\n  overflow-y: scroll;\n  z-index: 4;\n}\n\n.mdc-select__selected-text {\n  transition: opacity 125ms 0ms cubic-bezier(0.4, 0, 1, 1), transform 125ms 0ms cubic-bezier(0.4, 0, 1, 1);\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.mdc-select--open .mdc-select__selected-text {\n  transform: translateY(8px);\n  transition: opacity 125ms 125ms cubic-bezier(0, 0, 0.2, 1), transform 125ms 125ms cubic-bezier(0, 0, 0.2, 1);\n  opacity: 0;\n}\n\n.mdc-select--disabled,\n.mdc-select[disabled] {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%230%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom-style: dotted;\n  cursor: default;\n  pointer-events: none;\n  user-select: none;\n}\n\n.mdc-select--theme-dark.mdc-select--disabled,\n.mdc-theme--dark .mdc-select--disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.38);\n}\n\n.mdc-select--theme-dark.mdc-select[disabled],\n.mdc-theme--dark .mdc-select[disabled] {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  background-image: url(data:image/svg+xml,%3Csvg%20width%3D%2210px%22%20height%3D%225px%22%20viewBox%3D%227%2010%2010%205%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cpolygon%20id%3D%22Shape%22%20stroke%3D%22none%22%20fill%3D%22%23ffffff%22%20fill-rule%3D%22evenodd%22%20opacity%3D%220.38%22%20points%3D%227%2010%2012%2015%2017%2010%22%3E%3C%2Fpolygon%3E%0A%3C%2Fsvg%3E);\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.38);\n}\n\n.mdc-select__menu .mdc-list-item {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-select__menu .mdc-list-item[aria-selected=\"true\"] {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-item,\n.mdc-theme--dark .mdc-select__menu .mdc-list-item {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-item[aria-selected=\"true\"],\n.mdc-theme--dark .mdc-select__menu .mdc-list-item[aria-selected=\"true\"] {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-select__menu .mdc-list-group,\n.mdc-select__menu .mdc-list-group > .mdc-list-item:first-child {\n  margin-top: 12px;\n}\n\n.mdc-select__menu .mdc-list-group {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  font-weight: normal;\n}\n\n.mdc-select__menu .mdc-list-group .mdc-list-item {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-group,\n.mdc-theme--dark .mdc-select__menu .mdc-list-group {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-select--theme-dark .mdc-select__menu .mdc-list-group .mdc-list-item,\n.mdc-theme--dark .mdc-select__menu .mdc-list-group .mdc-list-item {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select {\n  appearance: none;\n  width: 250px;\n  padding: 0;\n  border: 1px solid;\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  outline: none;\n}\n\n.mdc-multi-select--theme-dark,\n.mdc-theme--dark .mdc-multi-select {\n  border-color: rgba(255, 255, 255, 0.5);\n  border-color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-multi-select .mdc-list-group {\n  margin: 16px 0 0;\n  padding: 0 0 0 16px;\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  font-weight: normal;\n}\n\n.mdc-multi-select .mdc-list-group--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-group {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-multi-select .mdc-list-group:last-child {\n  margin-bottom: 16px;\n}\n\n.mdc-multi-select .mdc-list-group .mdc-list-divider {\n  margin-left: -16px;\n}\n\n.mdc-multi-select .mdc-list-item {\n  margin: 0 0 0 -16px;\n  padding: 0 16px;\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n}\n\n.mdc-multi-select .mdc-list-item--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-item {\n  color: white;\n  color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select .mdc-list-item:first-child {\n  margin-top: 12px;\n}\n\n.mdc-multi-select .mdc-list-item:last-child {\n  margin-bottom: 8px;\n}\n\n.mdc-multi-select .mdc-list-item:checked {\n  background-color: rgba(0, 0, 0, 0.12);\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n}\n\n.mdc-multi-select .mdc-list-item:checked--theme-dark,\n.mdc-theme--dark .mdc-multi-select .mdc-list-item:checked {\n  background-color: white;\n  background-color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n.mdc-multi-select .mdc-list-divider {\n  margin-bottom: 8px;\n  padding-top: 8px;\n  font-size: 0;\n}\n\n.mdc-multi-select:focus .mdc-list-item:checked {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-multi-select:focus .mdc-list-item:checked--theme-dark,\n.mdc-theme--dark .mdc-multi-select:focus .mdc-list-item:checked {\n  background-color: white;\n  background-color: var(--mdc-theme-text-primary-on-dark, white);\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* postcss-bem-linter: define snackbar */\n.mdc-snackbar {\n  display: flex;\n  position: fixed;\n  bottom: 0;\n  left: 50%;\n  align-items: center;\n  justify-content: flex-start;\n  padding-right: 24px;\n  padding-left: 24px;\n  transform: translate(0, 100%);\n  transition: transform 0.25s 0ms cubic-bezier(0.4, 0, 1, 1);\n  background-color: #323232;\n  will-change: transform;\n  pointer-events: none;\n  /* stylelint-disable plugin/selector-bem-pattern */\n  /* stylelint-enable plugin/selector-bem-pattern */\n}\n\n@media (max-width: 599px) {\n  .mdc-snackbar {\n    left: 0;\n    width: calc(100% - 48px);\n  }\n}\n\n@media (min-width: 600px) {\n  .mdc-snackbar {\n    min-width: 288px;\n    max-width: 568px;\n    transform: translate(-50%, 100%);\n    border-radius: 2px;\n  }\n}\n\n.mdc-snackbar--active {\n  transform: translate(0, 0);\n  pointer-events: auto;\n  transition: transform 0.25s 0ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n@media (min-width: 600px) {\n  .mdc-snackbar--active {\n    transform: translate(-50%, 0);\n  }\n}\n\n.mdc-snackbar--action-on-bottom {\n  flex-direction: column;\n}\n\n.mdc-snackbar--action-on-bottom .mdc-snackbar__text {\n  margin-right: inherit;\n}\n\n.mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper {\n  flex-direction: column;\n  justify-content: flex-start;\n  margin-top: -12px;\n  margin-bottom: 8px;\n  margin-left: auto;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper, .mdc-snackbar--action-on-bottom .mdc-snackbar__action-wrapper[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: auto;\n}\n\n.mdc-snackbar__text {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n  margin-left: 0;\n  margin-right: auto;\n  display: flex;\n  align-items: center;\n  height: 48px;\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  color: white;\n  opacity: 0;\n}\n\n[dir=\"rtl\"] .mdc-snackbar .mdc-snackbar__text,\n.mdc-snackbar[dir=\"rtl\"] .mdc-snackbar__text {\n  margin-left: auto;\n  margin-right: 0;\n}\n\n.mdc-snackbar--multiline .mdc-snackbar__text {\n  height: 80px;\n}\n\n.mdc-snackbar--multiline.mdc-snackbar--action-on-bottom .mdc-snackbar__text {\n  margin: 0;\n}\n\n.mdc-snackbar__action-button {\n  color: #d2aa28;\n  color: var(--mdc-theme-accent, #d2aa28);\n  margin-left: 0;\n  margin-right: -16px;\n  min-width: auto;\n  height: inherit;\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 0;\n  visibility: hidden;\n}\n\n[dir=\"rtl\"] .mdc-snackbar .mdc-snackbar__action-button,\n.mdc-snackbar[dir=\"rtl\"] .mdc-snackbar__action-button {\n  margin-left: -16px;\n  margin-right: 0;\n}\n\n.mdc-snackbar__action-button::-moz-focus-inner {\n  border: 0;\n}\n\n.mdc-snackbar__action-button:not([aria-hidden]) {\n  visibility: inherit;\n}\n\n.mdc-snackbar--active .mdc-snackbar__text,\n.mdc-snackbar--active .mdc-snackbar__action-button:not([aria-hidden]) {\n  transition: opacity 0.3s 0ms cubic-bezier(0.4, 0, 1, 1);\n  opacity: 1;\n}\n\n/* postcss-bem-linter: end */\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n.mdc-switch {\n  display: inline-block;\n  position: relative;\n}\n\n.mdc-switch__native-control {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 34px;\n  height: 14px;\n  cursor: pointer;\n  opacity: 0;\n  z-index: 2;\n}\n\n.mdc-switch__background {\n  display: block;\n  position: relative;\n  width: 34px;\n  height: 14px;\n  border-radius: 7px;\n  outline: none;\n  background-color: transparent;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background,\n.mdc-theme--dark .mdc-switch__background {\n  background-color: transparent;\n}\n\n.mdc-switch__background::before {\n  display: block;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  transition: opacity 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 7px;\n  background-color: #000;\n  content: \"\";\n  opacity: .38;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background::before,\n.mdc-theme--dark .mdc-switch__background::before {\n  background-color: #fff;\n  opacity: .3;\n}\n\n.mdc-switch__background .mdc-switch__knob {\n  display: block;\n  position: absolute;\n  top: -3px;\n  left: 0;\n  width: 20px;\n  height: 20px;\n  transform: translateX(0);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 10px;\n  background-color: #fafafa;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  z-index: 1;\n}\n\n.mdc-switch--theme-dark .mdc-switch__background .mdc-switch__knob,\n.mdc-theme--dark .mdc-switch__background .mdc-switch__knob {\n  background-color: #bdbdbd;\n}\n\n.mdc-switch__background .mdc-switch__knob::before {\n  position: absolute;\n  top: -14px;\n  left: -14px;\n  width: 48px;\n  height: 48px;\n  transform: scale(0);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 24px;\n  background-color: transparent;\n  content: \"\";\n  opacity: .2;\n}\n\n.mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before {\n  position: absolute;\n  width: 48px;\n  height: 48px;\n  transform: scale(1);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: 24px;\n  background-color: #9e9e9e;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before,\n.mdc-theme--dark .mdc-switch__native-control:focus ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #f1f1f1;\n  opacity: .14;\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background::before {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  opacity: .5;\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob {\n  transform: translateX(14px);\n  transition: transform 90ms cubic-bezier(0.4, 0, 0.2, 1), background-color 90ms cubic-bezier(0.4, 0, 0.2, 1);\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  opacity: .15;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before,\n.mdc-theme--dark .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob::before {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-switch__native-control:disabled {\n  cursor: initial;\n}\n\n.mdc-switch__native-control:disabled ~ .mdc-switch__background::before {\n  background-color: #000;\n  opacity: .12;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:disabled ~ .mdc-switch__background::before,\n.mdc-theme--dark .mdc-switch__native-control:disabled ~ .mdc-switch__background::before {\n  background-color: #fff;\n  opacity: .1;\n}\n\n.mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob {\n  background-color: #bdbdbd;\n}\n\n.mdc-switch--theme-dark .mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob,\n.mdc-theme--dark .mdc-switch__native-control:disabled ~ .mdc-switch__background .mdc-switch__knob {\n  background-color: #424242;\n}\n\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-textfield {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  letter-spacing: 0.04em;\n  display: inline-block;\n  margin-bottom: 8px;\n  will-change: opacity, transform, color;\n}\n\n.mdc-textfield__input {\n  color: rgba(0, 0, 0, 0.87);\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87));\n  padding: 0 0 8px;\n  border: none;\n  background: none;\n  font-size: inherit;\n  appearance: none;\n}\n\n.mdc-textfield__input::placeholder {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  transition: color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.mdc-textfield__input:focus {\n  outline: none;\n}\n\n.mdc-textfield__input:focus::placeholder {\n  color: rgba(0, 0, 0, 0.54);\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54));\n}\n\n.mdc-textfield__input:invalid {\n  box-shadow: none;\n}\n\n.mdc-textfield__input--theme-dark,\n.mdc-theme--dark .mdc-textfield__input {\n  color: white;\n}\n\n.mdc-textfield__input--theme-dark::placeholder,\n.mdc-theme--dark .mdc-textfield__input::placeholder {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield__input--theme-dark:focus::placeholder,\n.mdc-theme--dark .mdc-textfield__input:focus::placeholder {\n  color: rgba(255, 255, 255, 0.7);\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7));\n}\n\n.mdc-textfield__label {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  position: absolute;\n  bottom: 8px;\n  left: 0;\n  transform-origin: left top;\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1), color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  cursor: text;\n}\n\n[dir=\"rtl\"] .mdc-textfield .mdc-textfield__label,\n.mdc-textfield[dir=\"rtl\"] .mdc-textfield__label {\n  right: 0;\n  left: auto;\n  transform-origin: right top;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield__label {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield__label--float-above {\n  transform: translateY(-100%) scale(0.75, 0.75);\n  cursor: auto;\n}\n\n.mdc-textfield__input:-webkit-autofill + .mdc-textfield__label {\n  transform: translateY(-100%) scale(0.75, 0.75);\n  cursor: auto;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth) {\n  display: inline-flex;\n  position: relative;\n  box-sizing: border-box;\n  align-items: flex-end;\n  margin-top: 16px;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline) {\n  height: 48px;\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  transform: translateY(50%) scaleY(1);\n  transform-origin: center bottom;\n  transition: background-color 180ms cubic-bezier(0.4, 0, 0.2, 1), transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  background-color: rgba(0, 0, 0, 0.12);\n  content: \"\";\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after,\n.mdc-theme--dark .mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth) .mdc-textfield__label {\n  pointer-events: none;\n}\n\n.mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  transform: translateY(100%) scaleY(2);\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after,\n.mdc-theme--dark .mdc-textfield--focused.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--multiline)::after {\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  transform: translateY(100%) scaleY(2);\n  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-textfield--focused .mdc-textfield__label {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--focused .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield--focused .mdc-textfield__label {\n  color: #225688;\n  color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-textfield--dense {\n  margin-top: 12px;\n  margin-bottom: 4px;\n  font-size: .813rem;\n}\n\n.mdc-textfield--dense .mdc-textfield__label--float-above {\n  transform: translateY(calc(-100% - 2px)) scale(0.923, 0.923);\n}\n\n.mdc-textfield--invalid:not(.mdc-textfield--focused)::after, .mdc-textfield--invalid:not(.mdc-textfield--focused).mdc-textfield--upgraded::after {\n  background-color: #d50000;\n}\n\n.mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label {\n  color: #d50000;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid:not(.mdc-textfield--focused)::after, .mdc-textfield--theme-dark.mdc-textfield--invalid:not(.mdc-textfield--focused).mdc-textfield--upgraded::after,\n.mdc-theme--dark .mdc-textfield--invalid:not(.mdc-textfield--focused)::after,\n.mdc-theme--dark .mdc-textfield--invalid:not(.mdc-textfield--focused).mdc-textfield--upgraded::after {\n  background-color: #ff6e6e;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label,\n.mdc-theme--dark .mdc-textfield--invalid:not(.mdc-textfield--focused) .mdc-textfield__label {\n  color: #ff6e6e;\n}\n\n.mdc-textfield--disabled {\n  border-bottom: 1px dotted rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield--disabled::after {\n  display: none;\n}\n\n.mdc-textfield--disabled .mdc-textfield__input {\n  padding-bottom: 7px;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--disabled,\n.mdc-theme--dark .mdc-textfield--disabled {\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--disabled .mdc-textfield__input,\n.mdc-textfield--disabled .mdc-textfield__label,\n.mdc-textfield--disabled + .mdc-textfield-helptext {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--disabled .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--disabled .mdc-textfield__input, .mdc-textfield--theme-dark\n.mdc-textfield--disabled .mdc-textfield__label,\n.mdc-theme--dark\n.mdc-textfield--disabled .mdc-textfield__label {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--disabled + .mdc-textfield-helptext,\n.mdc-theme--dark .mdc-textfield--disabled + .mdc-textfield-helptext {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield--disabled .mdc-textfield__label {\n  bottom: 7px;\n  cursor: default;\n}\n\n.mdc-textfield__input:required + .mdc-textfield__label::after {\n  margin-left: 1px;\n  content: \"*\";\n}\n\n.mdc-textfield--focused .mdc-textfield__input:required + .mdc-textfield__label::after {\n  color: #d50000;\n}\n\n.mdc-textfield--focused .mdc-textfield--theme-dark .mdc-textfield__input:required + .mdc-textfield__label::after, .mdc-textfield--focused\n.mdc-theme--dark .mdc-textfield__input:required + .mdc-textfield__label::after {\n  color: #ff6e6e;\n}\n\n.mdc-textfield--multiline {\n  display: flex;\n  height: initial;\n  transition: none;\n}\n\n.mdc-textfield--multiline::after {\n  content: initial;\n}\n\n.mdc-textfield--multiline .mdc-textfield__input {\n  padding: 4px;\n  transition: border-color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 2px;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--multiline .mdc-textfield__input {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--multiline .mdc-textfield__input:focus {\n  border-color: #225688;\n  border-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #d50000;\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus),\n.mdc-theme--dark .mdc-textfield--multiline .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #ff6e6e;\n}\n\n.mdc-textfield--multiline .mdc-textfield__label {\n  top: 6px;\n  bottom: initial;\n  left: 4px;\n}\n\n[dir=\"rtl\"] .mdc-textfield--multiline .mdc-textfield--multiline .mdc-textfield__label,\n.mdc-textfield--multiline[dir=\"rtl\"] .mdc-textfield--multiline .mdc-textfield__label {\n  right: 4px;\n  left: auto;\n}\n\n.mdc-textfield--multiline .mdc-textfield__label--float-above {\n  transform: translateY(calc(-100% - 6px)) scale(0.923, 0.923);\n}\n\n.mdc-textfield--multiline.mdc-textfield--disabled {\n  border-bottom: none;\n}\n\n.mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input {\n  border: 1px dotted rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield--theme-dark .mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input,\n.mdc-theme--dark .mdc-textfield--multiline.mdc-textfield--disabled .mdc-textfield__input {\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--fullwidth {\n  display: block;\n  width: 100%;\n  box-sizing: border-box;\n  margin: 0;\n  border: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n  outline: none;\n}\n\n.mdc-textfield--fullwidth:not(.mdc-textfield--multiline) {\n  height: 56px;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--multiline {\n  padding: 20px 0 0;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--dense:not(.mdc-textfield--multiline) {\n  height: 48px;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--dense.mdc-textfield--multiline {\n  padding: 16px 0 0;\n}\n\n.mdc-textfield--fullwidth.mdc-textfield--disabled, .mdc-textfield--fullwidth.mdc-textfield--disabled.mdc-textfield--multiline {\n  border-bottom: 1px dotted rgba(0, 0, 0, 0.12);\n}\n\n.mdc-textfield--fullwidth--theme-dark,\n.mdc-theme--dark .mdc-textfield--fullwidth {\n  border-bottom: 1px solid rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--fullwidth--theme-dark.mdc-textfield--disabled, .mdc-textfield--fullwidth--theme-dark.mdc-textfield--disabled.mdc-textfield--multiline,\n.mdc-theme--dark .mdc-textfield--fullwidth.mdc-textfield--disabled,\n.mdc-theme--dark .mdc-textfield--fullwidth.mdc-textfield--disabled.mdc-textfield--multiline {\n  border-bottom: 1px dotted rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--fullwidth .mdc-textfield__input {\n  width: 100%;\n  height: 100%;\n  padding: 0;\n  resize: none;\n  border: none !important;\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded):not(.mdc-textfield--multiline) .mdc-textfield__input {\n  transition: border-bottom-color 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.12);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:focus {\n  border-color: #225688;\n  border-color: var(--mdc-theme-primary, #225688);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  border-style: dotted;\n  border-color: rgba(35, 31, 32, 0.26);\n}\n\n.mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #d50000;\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:not(:focus),\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:not(:focus) {\n  border-color: rgba(255, 255, 255, 0.12);\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled,\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:disabled {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n  border-color: rgba(255, 255, 255, 0.3);\n}\n\n.mdc-textfield--theme-dark:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus),\n.mdc-theme--dark .mdc-textfield:not(.mdc-textfield--upgraded) .mdc-textfield__input:invalid:not(:focus) {\n  border-color: #ff6e6e;\n}\n\n.mdc-textfield-helptext {\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38));\n  margin: 0;\n  transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);\n  font-size: .75rem;\n  opacity: 0;\n  will-change: opacity;\n}\n\n.mdc-textfield-helptext--theme-dark,\n.mdc-theme--dark .mdc-textfield-helptext {\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-textfield + .mdc-textfield-helptext {\n  margin-bottom: 8px;\n}\n\n.mdc-textfield--dense + .mdc-textfield-helptext {\n  margin-bottom: 4px;\n}\n\n.mdc-textfield--focused + .mdc-textfield-helptext:not(.mdc-textfield-helptext--validation-msg) {\n  opacity: 1;\n}\n\n.mdc-textfield-helptext--persistent {\n  transition: none;\n  opacity: 1;\n  will-change: initial;\n}\n\n.mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg {\n  color: #d50000;\n  opacity: 1;\n}\n\n.mdc-textfield--theme-dark.mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg,\n.mdc-theme--dark .mdc-textfield--invalid + .mdc-textfield-helptext--validation-msg {\n  color: #ff6e6e;\n}\n\n.mdc-form-field > .mdc-textfield + label {\n  align-self: flex-start;\n}\n\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n:root {\n  --mdc-theme-primary: #225688;\n  --mdc-theme-accent: #d2aa28;\n  --mdc-theme-background: #fff;\n  --mdc-theme-text-primary-on-primary: white;\n  --mdc-theme-text-secondary-on-primary: rgba(255, 255, 255, 0.7);\n  --mdc-theme-text-hint-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-disabled-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-icon-on-primary: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-primary-on-accent: rgba(0, 0, 0, 0.87);\n  --mdc-theme-text-secondary-on-accent: rgba(0, 0, 0, 0.54);\n  --mdc-theme-text-hint-on-accent: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-disabled-on-accent: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-icon-on-accent: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);\n  --mdc-theme-text-secondary-on-background: rgba(0, 0, 0, 0.54);\n  --mdc-theme-text-hint-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-disabled-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-primary-on-light: rgba(0, 0, 0, 0.87);\n  --mdc-theme-text-secondary-on-light: rgba(0, 0, 0, 0.54);\n  --mdc-theme-text-hint-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.38);\n  --mdc-theme-text-primary-on-dark: white;\n  --mdc-theme-text-secondary-on-dark: rgba(255, 255, 255, 0.7);\n  --mdc-theme-text-hint-on-dark: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-disabled-on-dark: rgba(255, 255, 255, 0.5);\n  --mdc-theme-text-icon-on-dark: rgba(255, 255, 255, 0.5);\n}\n\n/* Special case, so that .mdc-theme--background changes background color, not text color. */\n.mdc-theme--background {\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n}\n\n.mdc-theme--primary {\n  color: #225688 !important;\n  color: var(--mdc-theme-primary, #225688) !important;\n}\n\n.mdc-theme--accent {\n  color: #d2aa28 !important;\n  color: var(--mdc-theme-accent, #d2aa28) !important;\n}\n\n.mdc-theme--text-primary-on-primary {\n  color: white !important;\n  color: var(--mdc-theme-text-primary-on-primary, white) !important;\n}\n\n.mdc-theme--text-secondary-on-primary {\n  color: rgba(255, 255, 255, 0.7) !important;\n  color: var(--mdc-theme-text-secondary-on-primary, rgba(255, 255, 255, 0.7)) !important;\n}\n\n.mdc-theme--text-hint-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-hint-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-disabled-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-disabled-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-icon-on-primary {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-icon-on-primary, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-primary-on-accent {\n  color: rgba(0, 0, 0, 0.87) !important;\n  color: var(--mdc-theme-text-primary-on-accent, rgba(0, 0, 0, 0.87)) !important;\n}\n\n.mdc-theme--text-secondary-on-accent {\n  color: rgba(0, 0, 0, 0.54) !important;\n  color: var(--mdc-theme-text-secondary-on-accent, rgba(0, 0, 0, 0.54)) !important;\n}\n\n.mdc-theme--text-hint-on-accent {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-hint-on-accent, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-disabled-on-accent {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-disabled-on-accent, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-icon-on-accent {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-icon-on-accent, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-primary-on-background {\n  color: rgba(0, 0, 0, 0.87) !important;\n  color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87)) !important;\n}\n\n.mdc-theme--text-secondary-on-background {\n  color: rgba(0, 0, 0, 0.54) !important;\n  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54)) !important;\n}\n\n.mdc-theme--text-hint-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-disabled-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-disabled-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-icon-on-background {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-primary-on-light {\n  color: rgba(0, 0, 0, 0.87) !important;\n  color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.87)) !important;\n}\n\n.mdc-theme--text-secondary-on-light {\n  color: rgba(0, 0, 0, 0.54) !important;\n  color: var(--mdc-theme-text-secondary-on-light, rgba(0, 0, 0, 0.54)) !important;\n}\n\n.mdc-theme--text-hint-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-hint-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-disabled-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-icon-on-light {\n  color: rgba(0, 0, 0, 0.38) !important;\n  color: var(--mdc-theme-text-icon-on-light, rgba(0, 0, 0, 0.38)) !important;\n}\n\n.mdc-theme--text-primary-on-dark {\n  color: white !important;\n  color: var(--mdc-theme-text-primary-on-dark, white) !important;\n}\n\n.mdc-theme--text-secondary-on-dark {\n  color: rgba(255, 255, 255, 0.7) !important;\n  color: var(--mdc-theme-text-secondary-on-dark, rgba(255, 255, 255, 0.7)) !important;\n}\n\n.mdc-theme--text-hint-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-hint-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-disabled-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n.mdc-theme--text-icon-on-dark {\n  color: rgba(255, 255, 255, 0.5) !important;\n  color: var(--mdc-theme-text-icon-on-dark, rgba(255, 255, 255, 0.5)) !important;\n}\n\n/* CSS rules for using primary and accent as background colors. */\n.mdc-theme--primary-bg {\n  background-color: #225688 !important;\n  background-color: var(--mdc-theme-primary, #225688) !important;\n}\n\n.mdc-theme--accent-bg {\n  background-color: #d2aa28 !important;\n  background-color: var(--mdc-theme-accent, #d2aa28) !important;\n}\n\n/**\n * The css property used for elevation. In most cases this should not be changed. It is exposed\n * as a variable for abstraction / easy use when needing to reference the property directly, for\n * example in a `will-change` rule.\n */\n/**\n * The default duration value for elevation transitions.\n */\n/**\n * The default easing value for elevation transitions.\n */\n/**\n * Applies the correct css rules to an element to give it the elevation specified by $z-value.\n * The $z-value must be between 0 and 24.\n */\n/**\n * Returns a string that can be used as the value for a `transition` property for elevation.\n * Calling this function directly is useful in situations where a component needs to transition\n * more than one property.\n *\n * ```scss\n * .foo {\n *   transition: mdc-elevation-transition-rule(), opacity 100ms ease;\n *   will-change: $mdc-elevation-property, opacity;\n * }\n * ```\n */\n/**\n * Applies the correct css rules needed to have an element transition between elevations.\n * This mixin should be applied to elements whose elevation values will change depending on their\n * context (e.g. when active or disabled).\n */\n/**\n * Creates a rule that will be applied when an MDC-Web component is within the context of an RTL layout.\n *\n * Usage Example:\n * ```scss\n * .mdc-foo {\n *   position: absolute;\n *   left: 0;\n *\n *   @include mdc-rtl {\n *     left: auto;\n *     right: 0;\n *   }\n *\n *   &__bar {\n *     margin-left: 4px;\n *     @include mdc-rtl(\".mdc-foo\") {\n *       margin-left: auto;\n *       margin-right: 4px;\n *     }\n *   }\n * }\n *\n * .mdc-foo--mod {\n *   padding-left: 4px;\n *\n *   @include mdc-rtl {\n *     padding-left: auto;\n *     padding-right: 4px;\n *   }\n * }\n * ```\n *\n * Note that this works by checking for [dir=\"rtl\"] on an ancestor element. While this will work\n * in most cases, it will in some cases lead to false negatives, e.g.\n *\n * ```html\n * <html dir=\"rtl\">\n *   <!-- ... -->\n *   <div dir=\"ltr\">\n *     <div class=\"mdc-foo\">Styled incorrectly as RTL!</div>\n *   </div>\n * </html>\n * ```\n *\n * In the future, selectors such as :dir (http://mdn.io/:dir) will help us mitigate this.\n */\n/**\n * Takes a base box-model property - e.g. margin / border / padding - along with a default\n * direction and value, and emits rules which apply the value to the\n * \"<base-property>-<default-direction>\" property by default, but flips the direction\n * when within an RTL context.\n *\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, left, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 8px;\n *     margin-left: 0;\n *   }\n * }\n * ```\n * whereas:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-box(margin, right, 8px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-right: 8px;\n *\n *   @include mdc-rtl {\n *     margin-right: 0;\n *     margin-left: 8px;\n *   }\n * }\n * ```\n *\n * You can also pass a 4th optional $root-selector argument which will be forwarded to `mdc-rtl`,\n * e.g. `@include mdc-rtl-reflexive-box-property(margin, left, 8px, \".mdc-component\")`.\n *\n * Note that this function will always zero out the original value in an RTL context. If you're\n * trying to flip the values, use mdc-rtl-reflexive-property().\n */\n/**\n * Takes a base property and emits rules that assign <base-property>-left to <left-value> and\n * <base-property>-right to <right-value> in a LTR context, and vice versa in a RTL context.\n * For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-property(margin, auto, 12px);\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n * .mdc-foo {\n *   margin-left: auto;\n *   margin-right: 12px;\n *\n *   @include mdc-rtl {\n *     margin-left: 12px;\n *     margin-right: auto;\n *   }\n * }\n * ```\n *\n * A 4th optional $root-selector argument can be given, which will be passed to `mdc-rtl`.\n */\n/**\n * Takes an argument specifying a horizontal position property (either \"left\" or \"right\") as well\n * as a value, and applies that value to the specified position in a LTR context, and flips it in a\n * RTL context. For example:\n *\n * ```scss\n * .mdc-foo {\n *   @include mdc-rtl-reflexive-position(left, 0);\n *   position: absolute;\n * }\n * ```\n * is equivalent to:\n *\n * ```scss\n *  .mdc-foo {\n *    position: absolute;\n *    left: 0;\n *    right: initial;\n *\n *    @include mdc-rtl {\n *      right: 0;\n *      left: initial;\n *    }\n *  }\n * ```\n * An optional third $root-selector argument may also be given, which is passed to `mdc-rtl`.\n */\n/*\n  Precomputed linear color channel values, for use in contrast calculations.\n  See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n\n  Algorithm, for c in 0 to 255:\n  f(c) {\n    c = c / 255;\n    return c < 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);\n  }\n\n  This lookup table is needed since there is no `pow` in SASS.\n*/\n/**\n * Calculate the luminance for a color.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Calculate the contrast ratio between two colors.\n * See https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests\n */\n/**\n * Determine whether to use dark or light text on top of given color.\n * Returns \"dark\" for dark text and \"light\" for light text.\n */\n/*\n  Main theme colors.\n  If you're a user customizing your color scheme in SASS, these are probably the only variables you need to change.\n*/\n/* Indigo 500 */\n/* Pink A200 */\n/* White */\n/* Which set of text colors to use for each main theme color (light or dark) */\n/* Text colors according to light vs dark and text type */\n/* Primary text colors for each of the theme colors */\n/**\n * Applies the correct theme color style to the specified property.\n * $property is typically color or background-color, but can be any CSS property that accepts color values.\n * $style should be one of the map keys in $mdc-theme-property-values (_variables.scss).\n */\n/**\n * Creates a rule to be used in MDC-Web components for dark theming, and applies the provided contents.\n * Should provide the $root-selector option if applied to anything other than the root selector.\n * When used with a modifier class, provide a second argument of `true` for the $compound parameter\n * to specify that this should be attached as a compound class.\n *\n * Usage example:\n *\n * ```scss\n * .mdc-foo {\n *   color: black;\n *\n *   @include mdc-theme-dark {\n *     color: white;\n *   }\n *\n *   &__bar {\n *     background: black;\n *\n *     @include mdc-theme-dark(\".mdc-foo\") {\n *       background: white;\n *     }\n *   }\n * }\n *\n * .mdc-foo--disabled {\n *   opacity: .38;\n *\n *   @include mdc-theme-dark(\".mdc-foo\", true) {\n *     opacity: .5;\n *   }\n * }\n * ```\n */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/**\n * Applies styles to the different types of icons that can exist in toolbars.\n * Both .mdc-toolbar__icon and .mdc-toolbar__icon--menu share all styles except for\n * horizontal padding.\n */\n.mdc-toolbar {\n  display: flex;\n  position: relative;\n  flex-direction: column;\n  justify-content: space-between;\n  width: 100%;\n  box-sizing: border-box;\n  background-color: #225688;\n  background-color: var(--mdc-theme-primary, #225688);\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-toolbar__row {\n  display: flex;\n  position: relative;\n  align-items: center;\n  width: 100%;\n  height: auto;\n  min-height: 64px;\n  box-sizing: border-box;\n}\n\n@media (max-width: 959px) and (orientation: landscape) {\n  .mdc-toolbar__row {\n    min-height: 48px;\n  }\n}\n\n@media (max-width: 599px) {\n  .mdc-toolbar__row {\n    min-height: 56px;\n  }\n}\n\n.mdc-toolbar__section {\n  display: inline-flex;\n  flex: 1;\n  align-items: flex-start;\n  justify-content: center;\n  min-width: 0;\n  height: 100%;\n  z-index: 1;\n}\n\n.mdc-toolbar__section--align-start {\n  justify-content: flex-start;\n  order: -1;\n}\n\n.mdc-toolbar__section--align-end {\n  justify-content: flex-end;\n  order: 1;\n}\n\n.mdc-toolbar__title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n  align-self: center;\n  margin: 0;\n  margin-left: 16px;\n  padding: 16px 0;\n  line-height: 1.5rem;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  overflow: hidden;\n  z-index: 1;\n}\n\n.mdc-toolbar__icon {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 16px 8px;\n  border: none;\n  background-color: inherit;\n  color: inherit;\n  text-decoration: none;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-toolbar__icon--menu {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 16px;\n  border: none;\n  background-color: inherit;\n  color: inherit;\n  text-decoration: none;\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-toolbar--fixed {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 1;\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-toolbar--flexible {\n  --mdc-toolbar-ratio-to-extend-flexible: 4;\n}\n\n.mdc-toolbar--flexible .mdc-toolbar__row:first-child {\n  height: 256px;\n  height: calc(64px * var(--mdc-toolbar-ratio-to-extend-flexible, 4));\n}\n\n@media (max-width: 599px) {\n  .mdc-toolbar--flexible .mdc-toolbar__row:first-child {\n    height: 224px;\n    height: calc(56px * var(--mdc-toolbar-ratio-to-extend-flexible, 4));\n  }\n}\n\n.mdc-toolbar--flexible .mdc-toolbar__row:first-child::after {\n  position: absolute;\n  content: \"\";\n}\n\n.mdc-toolbar--flexible-default-behavior .mdc-toolbar__title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.125rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2.5rem;\n  align-self: flex-end;\n  line-height: 1.5rem;\n}\n\n.mdc-toolbar--flexible-default-behavior .mdc-toolbar__row:first-child::after {\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  transition: opacity .2s ease;\n  opacity: 1;\n}\n\n.mdc-toolbar--flexible-default-behavior.mdc-toolbar--flexible-space-minimized .mdc-toolbar__row:first-child::after {\n  opacity: 0;\n}\n\n.mdc-toolbar--flexible-default-behavior.mdc-toolbar--flexible-space-minimized .mdc-toolbar__title {\n  font-weight: 500;\n}\n\n.mdc-toolbar--waterfall.mdc-toolbar--fixed {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n  will-change: box-shadow;\n}\n\n.mdc-toolbar--waterfall.mdc-toolbar--fixed.mdc-toolbar--flexible-space-minimized {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-toolbar--waterfall.mdc-toolbar--fixed.mdc-toolbar--fixed-lastrow-only.mdc-toolbar--flexible-space-minimized {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-toolbar--waterfall.mdc-toolbar--fixed.mdc-toolbar--fixed-lastrow-only.mdc-toolbar--fixed-at-last-row {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-toolbar-fixed-adjust {\n  margin-top: 64px;\n}\n\n@media (max-width: 599px) {\n  .mdc-toolbar-fixed-adjust {\n    margin-top: 56px;\n  }\n}\n\n.mdc-toolbar__section--shrink-to-fit {\n  flex: none;\n}\n\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n/* TODO(sgomes): Figure out what to do about desktop font sizes. */\n/* TODO(sgomes): Figure out what to do about i18n and i18n font sizes. */\n.mdc-typography {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n}\n\n.mdc-typography--display4 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 7rem;\n  font-weight: 300;\n  letter-spacing: -0.04em;\n  line-height: 7rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display4 {\n  margin: -1rem 0 3.5rem -0.085em;\n}\n\n.mdc-typography--display3 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 3.5rem;\n  font-weight: 400;\n  letter-spacing: -0.02em;\n  line-height: 3.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display3 {\n  margin: -8px 0 64px -0.07em;\n}\n\n.mdc-typography--display2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.813rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 3rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display2 {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n.mdc-typography--display1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.125rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--display1 {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n.mdc-typography--headline {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  line-height: 2rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--headline {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n.mdc-typography--title {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  line-height: 2rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--title {\n  margin: -0.5rem 0 1rem -0.05em;\n}\n\n.mdc-typography--subheading2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.75rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--subheading2 {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n.mdc-typography--subheading1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.938rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--subheading1 {\n  margin: -0.313rem 0 0.813rem -0.06em;\n}\n\n.mdc-typography--body2 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  line-height: 1.5rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--body2 {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n.mdc-typography--body1 {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  line-height: 1.25rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--body1 {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n.mdc-typography--caption {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.75rem;\n  font-weight: 400;\n  letter-spacing: 0.08em;\n  line-height: 1.25rem;\n}\n\n.mdc-typography--adjust-margin.mdc-typography--caption {\n  margin: -0.5rem 0 1rem -0.04em;\n}\n\n/* COLORS */\n.romajs-color-no {\n  color: #802900;\n}\n\n.romajs-color-yes {\n  color: #1b8c64;\n}\n\n/* Ensure layout covers the entire screen. */\nhtml {\n  height: 100%;\n}\n\n/* Place drawer and content side by side. */\nbody {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n  height: 100%;\n  width: 100%;\n}\n\n#romajs > div {\n  display: flex;\n  flex-direction: row;\n}\n\n/* Stack toolbar and main on top of each other. */\n.romajs-content {\n  display: inline-flex;\n  flex-direction: column;\n  flex-grow: 1;\n  height: 100%;\n  box-sizing: border-box;\n  margin: 130px 0 0 0;\n}\n\n.romajs-main {\n  padding-left: 16px;\n}\n\n/* TOOLBAR */\n.romajs-toolbar .mdc-toolbar__section--align-end .material-icons {\n  padding-right: 20px;\n  cursor: pointer;\n}\n\n/* SECONDARY TOOLBAR */\n.romajs-toolbar2 {\n  padding: 10px 20px 20px 30px;\n}\n\n.romajs-toolbar2 .mdl-chip {\n  margin-right: 10px;\n}\n\n.romajs-toolbar2 .romajs-itemtype-selected {\n  background-color: #d2aa28;\n}\n\n/* SEARCHBAR */\n.romajs-searchbar .mdl-chip__action {\n  margin: 0 0 10px 0;\n}\n\n/* ITEMS */\n.romajs-itemlist .mdc-list-item__text {\n  padding-right: 20px;\n  width: 85%;\n}\n\n.romajs-itemlist .mdc-list-item__end-detail {\n  margin-right: 15px;\n  width: 10%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n/* CARDS */\n.romajs-card {\n  max-height: 300px;\n  min-height: 300px;\n  justify-content: flex-start;\n}\n\n.romajs-card .mdc-card__supporting-text {\n  overflow-y: auto;\n  margin-bottom: 24px;\n}\n\n.romajs-card .mdc-card__title--large {\n  padding-top: 3px;\n}\n\n.romajs-card h1 {\n  float: left;\n}\n\n.romajs-card .mdc-form-field {\n  float: right;\n}\n\n.romajs-card .romajs-elementIdent {\n  padding-top: 20px;\n}\n", ""]);
 
 // exports
 exports.locals = {
+	"mdl-chip": "mdl-chip",
+	"mdl-chip__text": "mdl-chip__text",
+	"mdl-chip__action": "mdl-chip__action",
+	"mdl-chip__contact": "mdl-chip__contact",
+	"mdl-chip--deletable": "mdl-chip--deletable",
+	"mdl-chip--contact": "mdl-chip--contact",
 	"mdc-animation-linear-out-slow-in": "mdc-animation-linear-out-slow-in",
 	"mdc-animation-fast-out-slow-in": "mdc-animation-fast-out-slow-in",
 	"mdc-animation-fast-out-linear-in": "mdc-animation-fast-out-linear-in",
@@ -4348,6 +3271,7 @@ exports.locals = {
 	"mdc-checkbox__checkmark": "mdc-checkbox__checkmark",
 	"mdc-checkbox__checkmark__path": "mdc-checkbox__checkmark__path",
 	"mdc-checkbox__mixedmark": "mdc-checkbox__mixedmark",
+	"mdc-checkbox--disabled": "mdc-checkbox--disabled",
 	"mdc-checkbox--upgraded": "mdc-checkbox--upgraded",
 	"mdc-checkbox--anim-unchecked-checked": "mdc-checkbox--anim-unchecked-checked",
 	"mdc-checkbox--anim-unchecked-indeterminate": "mdc-checkbox--anim-unchecked-indeterminate",
@@ -4360,15 +3284,17 @@ exports.locals = {
 	"mdc-checkbox--anim-checked-indeterminate": "mdc-checkbox--anim-checked-indeterminate",
 	"mdc-checkbox--anim-indeterminate-checked": "mdc-checkbox--anim-indeterminate-checked",
 	"mdc-dialog": "mdc-dialog",
+	"mdc-dialog__backdrop": "mdc-dialog__backdrop",
 	"mdc-dialog__surface": "mdc-dialog__surface",
 	"mdc-dialog--theme-dark": "mdc-dialog--theme-dark",
-	"mdc-dialog__backdrop": "mdc-dialog__backdrop",
 	"mdc-dialog__header": "mdc-dialog__header",
 	"mdc-dialog__header__empty": "mdc-dialog__header__empty",
 	"mdc-dialog__header__title": "mdc-dialog__header__title",
 	"mdc-dialog__body": "mdc-dialog__body",
 	"mdc-dialog__body--scrollable": "mdc-dialog__body--scrollable",
 	"mdc-dialog__footer": "mdc-dialog__footer",
+	"mdc-dialog__footer__button": "mdc-dialog__footer__button",
+	"mdc-dialog--animating": "mdc-dialog--animating",
 	"mdc-dialog--open": "mdc-dialog--open",
 	"mdc-dialog-scroll-lock": "mdc-dialog-scroll-lock",
 	"mdc-persistent-drawer": "mdc-persistent-drawer",
@@ -4407,6 +3333,7 @@ exports.locals = {
 	"mdc-temporary-drawer__footer": "mdc-temporary-drawer__footer",
 	"mdc-temporary-drawer--animating": "mdc-temporary-drawer--animating",
 	"mdc-temporary-drawer--open": "mdc-temporary-drawer--open",
+	"mdc-drawer-scroll-lock": "mdc-drawer-scroll-lock",
 	"mdc-elevation--z0": "mdc-elevation--z0",
 	"mdc-elevation--z1": "mdc-elevation--z1",
 	"mdc-elevation--z2": "mdc-elevation--z2",
@@ -4465,6 +3392,7 @@ exports.locals = {
 	"mdc-icon-toggle--accent": "mdc-icon-toggle--accent",
 	"mdc-icon-toggle--disabled": "mdc-icon-toggle--disabled",
 	"mdc-layout-grid": "mdc-layout-grid",
+	"mdc-layout-grid__inner": "mdc-layout-grid__inner",
 	"mdc-layout-grid__cell": "mdc-layout-grid__cell",
 	"mdc-layout-grid__cell--span-1": "mdc-layout-grid__cell--span-1",
 	"mdc-layout-grid__cell--span-1-desktop": "mdc-layout-grid__cell--span-1-desktop",
@@ -4553,6 +3481,7 @@ exports.locals = {
 	"mdc-simple-menu--open-from-bottom-left": "mdc-simple-menu--open-from-bottom-left",
 	"mdc-simple-menu--open-from-bottom-right": "mdc-simple-menu--open-from-bottom-right",
 	"mdc-simple-menu--selected": "mdc-simple-menu--selected",
+	"mdc-select--theme-dark": "mdc-select--theme-dark",
 	"mdc-menu-anchor": "mdc-menu-anchor",
 	"mdc-radio": "mdc-radio",
 	"mdc-radio__background": "mdc-radio__background",
@@ -4565,7 +3494,6 @@ exports.locals = {
 	"mdc-ripple-surface--primary": "mdc-ripple-surface--primary",
 	"mdc-ripple-surface--accent": "mdc-ripple-surface--accent",
 	"mdc-select": "mdc-select",
-	"mdc-select--theme-dark": "mdc-select--theme-dark",
 	"mdc-select__menu": "mdc-select__menu",
 	"mdc-select__selected-text": "mdc-select__selected-text",
 	"mdc-select--open": "mdc-select--open",
@@ -4640,7 +3568,15 @@ exports.locals = {
 	"mdc-toolbar__section--align-start": "mdc-toolbar__section--align-start",
 	"mdc-toolbar__section--align-end": "mdc-toolbar__section--align-end",
 	"mdc-toolbar__title": "mdc-toolbar__title",
+	"mdc-toolbar__icon": "mdc-toolbar__icon",
+	"mdc-toolbar__icon--menu": "mdc-toolbar__icon--menu",
 	"mdc-toolbar--fixed": "mdc-toolbar--fixed",
+	"mdc-toolbar--flexible": "mdc-toolbar--flexible",
+	"mdc-toolbar--flexible-default-behavior": "mdc-toolbar--flexible-default-behavior",
+	"mdc-toolbar--flexible-space-minimized": "mdc-toolbar--flexible-space-minimized",
+	"mdc-toolbar--waterfall": "mdc-toolbar--waterfall",
+	"mdc-toolbar--fixed-lastrow-only": "mdc-toolbar--fixed-lastrow-only",
+	"mdc-toolbar--fixed-at-last-row": "mdc-toolbar--fixed-at-last-row",
 	"mdc-toolbar-fixed-adjust": "mdc-toolbar-fixed-adjust",
 	"mdc-toolbar__section--shrink-to-fit": "mdc-toolbar__section--shrink-to-fit",
 	"mdc-typography": "mdc-typography",
@@ -4656,12 +3592,17 @@ exports.locals = {
 	"mdc-typography--body2": "mdc-typography--body2",
 	"mdc-typography--body1": "mdc-typography--body1",
 	"mdc-typography--caption": "mdc-typography--caption",
+	"romajs-color-no": "romajs-color-no",
+	"romajs-color-yes": "romajs-color-yes",
 	"romajs": "romajs",
-	"romajs-menu": "romajs-menu",
 	"romajs-content": "romajs-content",
 	"romajs-main": "romajs-main",
 	"romajs-toolbar": "romajs-toolbar",
 	"material-icons": "material-icons",
+	"romajs-toolbar2": "romajs-toolbar2",
+	"romajs-itemtype-selected": "romajs-itemtype-selected",
+	"romajs-searchbar": "romajs-searchbar",
+	"romajs-itemlist": "romajs-itemlist",
 	"romajs-card": "romajs-card",
 	"romajs-elementIdent": "romajs-elementIdent",
 	"mdc-ripple-fg-radius-in": "mdc-ripple-fg-radius-in",
@@ -4680,9 +3621,9 @@ exports.locals = {
 /***/ }),
 
 /***/ "./node_modules/css-loader/lib/css-base.js":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {/*
+/*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
@@ -4738,7 +3679,7 @@ function cssWithMappingToString(item, useSourceMap) {
 		return content;
 	}
 
-	if (useSourceMap) {
+	if (useSourceMap && typeof btoa === 'function') {
 		var sourceMapping = toComment(cssMapping);
 		var sourceURLs = cssMapping.sources.map(function (source) {
 			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
@@ -4752,13 +3693,13 @@ function cssWithMappingToString(item, useSourceMap) {
 
 // Adapted from convert-source-map (MIT)
 function toComment(sourceMap) {
-  var base64 = new Buffer(JSON.stringify(sourceMap)).toString('base64');
-  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
-  return '/*# ' + data + ' */';
+	return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -5732,15 +4673,19 @@ function isUndefined(arg) {
 /***/ "./node_modules/global/window.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
-    module.exports = window;
+/* WEBPACK VAR INJECTION */(function(global) {var win;
+
+if (typeof window !== "undefined") {
+    win = window;
 } else if (typeof global !== "undefined") {
-    module.exports = global;
+    win = global;
 } else if (typeof self !== "undefined"){
-    module.exports = self;
+    win = self;
 } else {
-    module.exports = {};
+    win = {};
 }
+
+module.exports = win;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
@@ -12014,9 +10959,8 @@ var EElistenerCount = function (emitter, type) {
 var Stream = __webpack_require__("./node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
-var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__("./node_modules/buffer-shims/index.js");
+var Buffer = __webpack_require__("./node_modules/safe-buffer/browser.js").Buffer;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -12149,7 +11093,7 @@ Readable.prototype.push = function (chunk, encoding) {
   if (!state.objectMode && typeof chunk === 'string') {
     encoding = encoding || state.defaultEncoding;
     if (encoding !== state.encoding) {
-      chunk = bufferShim.from(chunk, encoding);
+      chunk = Buffer.from(chunk, encoding);
       encoding = '';
     }
   }
@@ -12469,7 +11413,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
 
   var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
 
-  var endFn = doEnd ? onend : cleanup;
+  var endFn = doEnd ? onend : unpipe;
   if (state.endEmitted) processNextTick(endFn);else src.once('end', endFn);
 
   dest.on('unpipe', onunpipe);
@@ -12502,7 +11446,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
     dest.removeListener('error', onerror);
     dest.removeListener('unpipe', onunpipe);
     src.removeListener('end', onend);
-    src.removeListener('end', cleanup);
+    src.removeListener('end', unpipe);
     src.removeListener('data', ondata);
 
     cleanedUp = true;
@@ -12859,7 +11803,7 @@ function copyFromBufferString(n, list) {
 // This function is designed to be inlinable, so please take care when making
 // changes to the function body.
 function copyFromBuffer(n, list) {
-  var ret = bufferShim.allocUnsafe(n);
+  var ret = Buffer.allocUnsafe(n);
   var p = list.head;
   var c = 1;
   p.data.copy(ret);
@@ -13153,9 +12097,8 @@ var internalUtil = {
 var Stream = __webpack_require__("./node_modules/readable-stream/lib/internal/streams/stream-browser.js");
 /*</replacement>*/
 
-var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__("./node_modules/buffer-shims/index.js");
+var Buffer = __webpack_require__("./node_modules/safe-buffer/browser.js").Buffer;
 /*</replacement>*/
 
 util.inherits(Writable, Stream);
@@ -13411,7 +12354,7 @@ Writable.prototype.setDefaultEncoding = function setDefaultEncoding(encoding) {
 
 function decodeChunk(state, chunk, encoding) {
   if (!state.objectMode && state.decodeStrings !== false && typeof chunk === 'string') {
-    chunk = bufferShim.from(chunk, encoding);
+    chunk = Buffer.from(chunk, encoding);
   }
   return chunk;
 }
@@ -13670,9 +12613,9 @@ function CorkedRequest(state) {
 "use strict";
 
 
-var Buffer = __webpack_require__("./node_modules/buffer/index.js").Buffer;
 /*<replacement>*/
-var bufferShim = __webpack_require__("./node_modules/buffer-shims/index.js");
+
+var Buffer = __webpack_require__("./node_modules/safe-buffer/browser.js").Buffer;
 /*</replacement>*/
 
 module.exports = BufferList;
@@ -13720,9 +12663,9 @@ BufferList.prototype.join = function (s) {
 };
 
 BufferList.prototype.concat = function (n) {
-  if (this.length === 0) return bufferShim.alloc(0);
+  if (this.length === 0) return Buffer.alloc(0);
   if (this.length === 1) return this.head.data;
-  var ret = bufferShim.allocUnsafe(n >>> 0);
+  var ret = Buffer.allocUnsafe(n >>> 0);
   var p = this.head;
   var i = 0;
   while (p) {
@@ -13785,7 +12728,7 @@ module.exports = __webpack_require__("./node_modules/readable-stream/lib/_stream
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(global) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -13793,6 +12736,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.__RewireAPI__ = exports.__ResetDependency__ = exports.__set__ = exports.__Rewire__ = exports.__GetDependency__ = exports.__get__ = exports.RedBoxError = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -13822,6 +12767,8 @@ var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
 var _lib = __webpack_require__("./node_modules/redbox-react/lib/lib.js");
 
+var _sourcemappedStacktrace = __webpack_require__("./node_modules/sourcemapped-stacktrace/dist/sourcemapped-stacktrace.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13833,13 +12780,112 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RedBoxError = exports.RedBoxError = function (_get__2) {
   _inherits(RedBoxError, _get__2);
 
-  function RedBoxError() {
+  function RedBoxError(props) {
     _classCallCheck(this, RedBoxError);
 
-    return _possibleConstructorReturn(this, (RedBoxError.__proto__ || Object.getPrototypeOf(RedBoxError)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (RedBoxError.__proto__ || Object.getPrototypeOf(RedBoxError)).call(this, props));
+
+    _this.state = {
+      error: null,
+      mapped: false
+    };
+
+    _this.mapOnConstruction(props.error);
+    return _this;
   }
 
+  // State is used to store the error mapped to the source map.
+
+
   _createClass(RedBoxError, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!this.state.mapped) this.mapError(this.props.error);
+    }
+
+    // Try to map the error when the component gets constructed, this is possible
+    // in some cases like evals.
+
+  }, {
+    key: 'mapOnConstruction',
+    value: function mapOnConstruction(error) {
+      var stackLines = error.stack.split('\n');
+
+      // There's no stack, only the error message.
+      if (stackLines.length < 2) {
+        this.state = { error: error, mapped: true };
+        return;
+      }
+
+      // Using the “eval” setting on webpack already gives the correct location.
+      var isWebpackEval = stackLines[1].search(/\(webpack:\/{3}/) !== -1;
+      if (isWebpackEval) {
+        // No changes are needed here.
+        this.state = { error: error, mapped: true };
+        return;
+      }
+
+      // Other eval follow a specific pattern and can be easily parsed.
+      var isEval = stackLines[1].search(/\(eval at/) !== -1;
+      if (!isEval) {
+        // mapping will be deferred until `componentDidMount`
+        this.state = { error: error, mapped: false };
+        return;
+      }
+
+      // The first line is the error message.
+      var fixedLines = [stackLines.shift()];
+      // The rest needs to be fixed.
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = stackLines[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var stackLine = _step.value;
+
+          var evalStackLine = stackLine.match(/(.+)\(eval at (.+) \(.+?\), .+(\:[0-9]+\:[0-9]+)\)/);
+          if (evalStackLine) {
+            var _evalStackLine = _slicedToArray(evalStackLine, 4),
+                atSomething = _evalStackLine[1],
+                file = _evalStackLine[2],
+                rowColumn = _evalStackLine[3];
+
+            fixedLines.push(atSomething + ' (' + file + rowColumn + ')');
+          } else {
+            // TODO: When stack frames of different types are detected, try to load the additional source maps
+            fixedLines.push(stackLine);
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      error.stack = fixedLines.join('\n');
+      this.state = { error: error, mapped: true };
+    }
+  }, {
+    key: 'mapError',
+    value: function mapError(error) {
+      var _this2 = this;
+
+      _get__('mapStackTrace')(error.stack, function (mappedStack) {
+        error.stack = mappedStack.join('\n');
+        _this2.setState({ error: error, mapped: true });
+      });
+    }
+  }, {
     key: 'renderFrames',
     value: function renderFrames(frames) {
       var _props = this.props,
@@ -13890,9 +12936,10 @@ var RedBoxError = exports.RedBoxError = function (_get__2) {
   }, {
     key: 'render',
     value: function render() {
-      var _props2 = this.props,
-          error = _props2.error,
-          className = _props2.className;
+      // The error is received as a property to initialize state.error, which may
+      // be updated when it is mapped to the source map.
+      var error = this.state.error;
+      var className = this.props.className;
 
       var _get__4 = _get__('assign')({}, _get__('style'), this.props.style),
           redbox = _get__4.redbox,
@@ -14012,7 +13059,73 @@ RedBox.propTypes = {
 RedBox.displayName = 'RedBox';
 exports.default = RedBox;
 
-var _RewiredData__ = Object.create(null);
+function _getGlobalObject() {
+  try {
+    if (!!global) {
+      return global;
+    }
+  } catch (e) {
+    try {
+      if (!!window) {
+        return window;
+      }
+    } catch (e) {
+      return this;
+    }
+  }
+}
+
+;
+var _RewireModuleId__ = null;
+
+function _getRewireModuleId__() {
+  if (_RewireModuleId__ === null) {
+    var globalVariable = _getGlobalObject();
+
+    if (!globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__) {
+      globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__ = 0;
+    }
+
+    _RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;
+  }
+
+  return _RewireModuleId__;
+}
+
+function _getRewireRegistry__() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__) {
+    theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+  }
+
+  return __$$GLOBAL_REWIRE_REGISTRY__;
+}
+
+function _getRewiredData__() {
+  var moduleId = _getRewireModuleId__();
+
+  var registry = _getRewireRegistry__();
+
+  var rewireData = registry[moduleId];
+
+  if (!rewireData) {
+    registry[moduleId] = Object.create(null);
+    rewireData = registry[moduleId];
+  }
+
+  return rewireData;
+}
+
+(function registerResetAll() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable['__rewire_reset_all__']) {
+    theGlobalVariable['__rewire_reset_all__'] = function () {
+      theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+    };
+  }
+})();
 
 var INTENTIONAL_UNDEFINED = '__INTENTIONAL_UNDEFINED__';
 var _RewireAPI__ = {};
@@ -14036,10 +13149,12 @@ var _RewireAPI__ = {};
 })();
 
 function _get__(variableName) {
-  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
     return _get_original__(variableName);
   } else {
-    var value = _RewiredData__[variableName];
+    var value = rewireData[variableName];
 
     if (value === INTENTIONAL_UNDEFINED) {
       return undefined;
@@ -14053,6 +13168,9 @@ function _get_original__(variableName) {
   switch (variableName) {
     case 'PropTypes':
       return _propTypes2.default;
+
+    case 'mapStackTrace':
+      return _sourcemappedStacktrace.mapStackTrace;
 
     case 'assign':
       return _objectAssign2.default;
@@ -14089,10 +13207,12 @@ function _get_original__(variableName) {
 }
 
 function _assign__(variableName, value) {
-  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
     return _set_original__(variableName, value);
   } else {
-    return _RewiredData__[variableName] = value;
+    return rewireData[variableName] = value;
   }
 }
 
@@ -14113,15 +13233,17 @@ function _update_operation__(operation, variableName, prefix) {
 }
 
 function _set__(variableName, value) {
+  var rewireData = _getRewiredData__();
+
   if ((typeof variableName === 'undefined' ? 'undefined' : _typeof(variableName)) === 'object') {
     Object.keys(variableName).forEach(function (name) {
-      _RewiredData__[name] = variableName[name];
+      rewireData[name] = variableName[name];
     });
   } else {
     if (value === undefined) {
-      _RewiredData__[variableName] = INTENTIONAL_UNDEFINED;
+      rewireData[variableName] = INTENTIONAL_UNDEFINED;
     } else {
-      _RewiredData__[variableName] = value;
+      rewireData[variableName] = value;
     }
 
     return function () {
@@ -14131,23 +13253,33 @@ function _set__(variableName, value) {
 }
 
 function _reset__(variableName) {
-  delete _RewiredData__[variableName];
+  var rewireData = _getRewiredData__();
+
+  delete rewireData[variableName];
+
+  if (Object.keys(rewireData).length == 0) {
+    delete _getRewireRegistry__()[_getRewireModuleId__];
+  }
+
+  ;
 }
 
 function _with__(object) {
+  var rewireData = _getRewiredData__();
+
   var rewiredVariableNames = Object.keys(object);
   var previousValues = {};
 
   function reset() {
     rewiredVariableNames.forEach(function (variableName) {
-      _RewiredData__[variableName] = previousValues[variableName];
+      rewireData[variableName] = previousValues[variableName];
     });
   }
 
   return function (callback) {
     rewiredVariableNames.forEach(function (variableName) {
-      previousValues[variableName] = _RewiredData__[variableName];
-      _RewiredData__[variableName] = object[variableName];
+      previousValues[variableName] = rewireData[variableName];
+      rewireData[variableName] = object[variableName];
     });
     var result = callback();
 
@@ -14188,6 +13320,7 @@ exports.__Rewire__ = _set__;
 exports.__set__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = _RewireAPI__;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -14195,7 +13328,7 @@ exports.__RewireAPI__ = _RewireAPI__;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(global) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -14270,7 +13403,73 @@ var makeLinkText = exports.makeLinkText = function makeLinkText(filename, line, 
   return text;
 };
 
-var _RewiredData__ = Object.create(null);
+function _getGlobalObject() {
+  try {
+    if (!!global) {
+      return global;
+    }
+  } catch (e) {
+    try {
+      if (!!window) {
+        return window;
+      }
+    } catch (e) {
+      return this;
+    }
+  }
+}
+
+;
+var _RewireModuleId__ = null;
+
+function _getRewireModuleId__() {
+  if (_RewireModuleId__ === null) {
+    var globalVariable = _getGlobalObject();
+
+    if (!globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__) {
+      globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__ = 0;
+    }
+
+    _RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;
+  }
+
+  return _RewireModuleId__;
+}
+
+function _getRewireRegistry__() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__) {
+    theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+  }
+
+  return __$$GLOBAL_REWIRE_REGISTRY__;
+}
+
+function _getRewiredData__() {
+  var moduleId = _getRewireModuleId__();
+
+  var registry = _getRewireRegistry__();
+
+  var rewireData = registry[moduleId];
+
+  if (!rewireData) {
+    registry[moduleId] = Object.create(null);
+    rewireData = registry[moduleId];
+  }
+
+  return rewireData;
+}
+
+(function registerResetAll() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable['__rewire_reset_all__']) {
+    theGlobalVariable['__rewire_reset_all__'] = function () {
+      theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+    };
+  }
+})();
 
 var INTENTIONAL_UNDEFINED = '__INTENTIONAL_UNDEFINED__';
 var _RewireAPI__ = {};
@@ -14294,10 +13493,12 @@ var _RewireAPI__ = {};
 })();
 
 function _get__(variableName) {
-  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
     return _get_original__(variableName);
   } else {
-    var value = _RewiredData__[variableName];
+    var value = rewireData[variableName];
 
     if (value === INTENTIONAL_UNDEFINED) {
       return undefined;
@@ -14320,10 +13521,12 @@ function _get_original__(variableName) {
 }
 
 function _assign__(variableName, value) {
-  if (_RewiredData__ === undefined || _RewiredData__[variableName] === undefined) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
     return _set_original__(variableName, value);
   } else {
-    return _RewiredData__[variableName] = value;
+    return rewireData[variableName] = value;
   }
 }
 
@@ -14344,15 +13547,17 @@ function _update_operation__(operation, variableName, prefix) {
 }
 
 function _set__(variableName, value) {
+  var rewireData = _getRewiredData__();
+
   if ((typeof variableName === 'undefined' ? 'undefined' : _typeof(variableName)) === 'object') {
     Object.keys(variableName).forEach(function (name) {
-      _RewiredData__[name] = variableName[name];
+      rewireData[name] = variableName[name];
     });
   } else {
     if (value === undefined) {
-      _RewiredData__[variableName] = INTENTIONAL_UNDEFINED;
+      rewireData[variableName] = INTENTIONAL_UNDEFINED;
     } else {
-      _RewiredData__[variableName] = value;
+      rewireData[variableName] = value;
     }
 
     return function () {
@@ -14362,23 +13567,33 @@ function _set__(variableName, value) {
 }
 
 function _reset__(variableName) {
-  delete _RewiredData__[variableName];
+  var rewireData = _getRewiredData__();
+
+  delete rewireData[variableName];
+
+  if (Object.keys(rewireData).length == 0) {
+    delete _getRewireRegistry__()[_getRewireModuleId__];
+  }
+
+  ;
 }
 
 function _with__(object) {
+  var rewireData = _getRewiredData__();
+
   var rewiredVariableNames = Object.keys(object);
   var previousValues = {};
 
   function reset() {
     rewiredVariableNames.forEach(function (variableName) {
-      _RewiredData__[variableName] = previousValues[variableName];
+      rewireData[variableName] = previousValues[variableName];
     });
   }
 
   return function (callback) {
     rewiredVariableNames.forEach(function (variableName) {
-      previousValues[variableName] = _RewiredData__[variableName];
-      _RewiredData__[variableName] = object[variableName];
+      previousValues[variableName] = rewireData[variableName];
+      rewireData[variableName] = object[variableName];
     });
     var result = callback();
 
@@ -14399,6 +13614,7 @@ exports.__set__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = _RewireAPI__;
 exports.default = _RewireAPI__;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -15050,6 +14266,14 @@ function createStructuredSelector(selectors) {
     }, {});
   });
 }
+
+/***/ }),
+
+/***/ "./node_modules/safe-buffer/browser.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("./node_modules/buffer/index.js")
+
 
 /***/ }),
 
@@ -17107,6 +16331,2405 @@ exports.default = saveAs;
 
 /***/ }),
 
+/***/ "./node_modules/sourcemapped-stacktrace/dist/sourcemapped-stacktrace.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["sourceMappedStackTrace"] = factory();
+	else
+		root["sourceMappedStackTrace"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	 * sourcemapped-stacktrace.js
+	 * created by James Salter <iteration@gmail.com> (2014)
+	 *
+	 * https://github.com/novocaine/sourcemapped-stacktrace
+	 *
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	/*global define */
+
+	// note we only include source-map-consumer, not the whole source-map library,
+	// which includes gear for generating source maps that we don't need
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function(source_map_consumer) {
+
+	  var global_mapForUri = {};
+
+	  /**
+	   * Re-map entries in a stacktrace using sourcemaps if available.
+	   *
+	   * @param {Array} stack - Array of strings from the browser's stack
+	   *                        representation. Currently only Chrome
+	   *                        format is supported.
+	   * @param {function} done - Callback invoked with the transformed stacktrace
+	   *                          (an Array of Strings) passed as the first
+	   *                          argument
+	   * @param {Object} [opts] - Optional options object.
+	   * @param {Function} [opts.filter] - Filter function applied to each stackTrace line.
+	   *                                   Lines which do not pass the filter won't be processesd.
+	   * @param {boolean} [opts.cacheGlobally] - Whether to cache sourcemaps globally across multiple calls.
+	   */
+	  var mapStackTrace = function(stack, done, opts) {
+	    var lines;
+	    var line;
+	    var mapForUri = {};
+	    var rows = {};
+	    var fields;
+	    var uri;
+	    var expected_fields;
+	    var regex;
+
+	    var fetcher = new Fetcher(function() {
+	      var result = processSourceMaps(lines, rows, fetcher.mapForUri);
+	      done(result);
+	    }, opts);
+
+	    if (isChrome()) {
+	      regex = /^ +at.+\((.*):([0-9]+):([0-9]+)/;
+	      expected_fields = 4;
+	      // (skip first line containing exception message)
+	      skip_lines = 1;
+	    } else if (isFirefox()) {
+	      regex = /@(.*):([0-9]+):([0-9]+)/;
+	      expected_fields = 4;
+	      skip_lines = 0;
+	    } else {
+	      throw new Error("unknown browser :(");
+	    }
+
+	    lines = stack.split("\n").slice(skip_lines);
+
+	    for (var i=0; i < lines.length; i++) {
+	      line = lines[i];
+	      if ( opts && opts.filter && !opts.filter(line) ) continue;
+	      
+	      fields = line.match(regex);
+	      if (fields && fields.length === expected_fields) {
+	        rows[i] = fields;
+	        uri = fields[1];
+	        if (!uri.match(/<anonymous>/)) {
+	          fetcher.fetchScript(uri);
+	        }
+	      }
+	    }
+
+	    // if opts.cacheGlobally set, all maps could have been cached already,
+	    // thus we need to call done callback right away
+	    if ( fetcher.sem === 0 ) {
+	      fetcher.done(fetcher.mapForUri);
+	    }
+	  };
+
+	  var isChrome = function() {
+	    return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+	  };
+
+	  var isFirefox = function() {
+	    return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+	  };
+	  var Fetcher = function(done, opts) {
+	    this.sem = 0;
+	    this.mapForUri = opts && opts.cacheGlobally ? global_mapForUri : {};
+	    this.done = done;
+	  };
+
+	  Fetcher.prototype.fetchScript = function(uri) {
+	    if (!(uri in this.mapForUri)) {
+	      this.sem++;
+	      this.mapForUri[uri] = null;
+	    } else {
+	      return;
+	    }
+
+	    var xhr = createXMLHTTPObject();
+	    var that = this;
+	    xhr.onreadystatechange = function(e) {
+	      that.onScriptLoad.call(that, e, uri);
+	    };
+	    xhr.open("GET", uri, true);
+	    xhr.send();
+	  };
+
+	  var absUrlRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+
+	  Fetcher.prototype.onScriptLoad = function(e, uri) {
+	    if (e.target.readyState !== 4) {
+	      return;
+	    }
+
+	    if (e.target.status === 200 ||
+	      (uri.slice(0, 7) === "file://" && e.target.status === 0))
+	    {
+	      // find .map in file.
+	      //
+	      // attempt to find it at the very end of the file, but tolerate trailing
+	      // whitespace inserted by some packers.
+	      var match = e.target.responseText.match("//# [s]ourceMappingURL=(.*)[\\s]*$", "m");
+	      if (match && match.length === 2) {
+	        // get the map
+	        var mapUri = match[1];
+
+	        var embeddedSourceMap = mapUri.match("data:application/json;(charset=[^;]+;)?base64,(.*)");
+
+	        if (embeddedSourceMap && embeddedSourceMap[2]) {
+	          this.mapForUri[uri] = new source_map_consumer.SourceMapConsumer(atob(embeddedSourceMap[2]));
+	          this.done(this.mapForUri);
+	        } else {
+	          if (!absUrlRegex.test(mapUri)) {
+	            // relative url; according to sourcemaps spec is 'source origin'
+	            var origin;
+	            var lastSlash = uri.lastIndexOf('/');
+	            if (lastSlash !== -1) {
+	              origin = uri.slice(0, lastSlash + 1);
+	              mapUri = origin + mapUri;
+	              // note if lastSlash === -1, actual script uri has no slash
+	              // somehow, so no way to use it as a prefix... we give up and try
+	              // as absolute
+	            }
+	          }
+
+	          var xhrMap = createXMLHTTPObject();
+	          var that = this;
+	          xhrMap.onreadystatechange = function() {
+	            if (xhrMap.readyState === 4) {
+	              that.sem--;
+	              if (xhrMap.status === 200 ||
+	                (mapUri.slice(0, 7) === "file://" && xhrMap.status === 0)) {
+	                that.mapForUri[uri] = new source_map_consumer.SourceMapConsumer(xhrMap.responseText);
+	              }
+	              if (that.sem === 0) {
+	                that.done(that.mapForUri);
+	              }
+	            }
+	          };
+
+	          xhrMap.open("GET", mapUri, true);
+	          xhrMap.send();
+	        }
+	      } else {
+	        // no map
+	        this.sem--;
+	      }
+	    } else {
+	      // HTTP error fetching uri of the script
+	      this.sem--;
+	    }
+
+	    if (this.sem === 0) {
+	      this.done(this.mapForUri);
+	    }
+	  };
+
+	  var processSourceMaps = function(lines, rows, mapForUri) {
+	    var result = [];
+	    var map;
+	    for (var i=0; i < lines.length; i++) {
+	      var row = rows[i];
+	      if (row) {
+	        var uri = row[1];
+	        var line = parseInt(row[2], 10);
+	        var column = parseInt(row[3], 10);
+	        map = mapForUri[uri];
+
+	        if (map) {
+	          // we think we have a map for that uri. call source-map library
+	          var origPos = map.originalPositionFor(
+	            { line: line, column: column });
+	          result.push(formatOriginalPosition(origPos.source,
+	            origPos.line, origPos.column, origPos.name || origName(lines[i])));
+	        } else {
+	          // we can't find a map for that url, but we parsed the row.
+	          // reformat unchanged line for consistency with the sourcemapped
+	          // lines.
+	          result.push(formatOriginalPosition(uri, line, column, origName(lines[i])));
+	        }
+	      } else {
+	        // we weren't able to parse the row, push back what we were given
+	        result.push(lines[i]);
+	      }
+	    }
+
+	    return result;
+	  };
+
+	  function origName(origLine) {
+	    var match = String(origLine).match(isChrome() ?
+	      / +at +([^ ]*).*/ :
+	      /([^@]*)@.*/);
+	    return match && match[1];
+	  }
+
+	  var formatOriginalPosition = function(source, line, column, name) {
+	    // mimic chrome's format
+	    return "    at " + (name ? name : "(unknown)") +
+	      " (" + source + ":" + line + ":" + column + ")";
+	  };
+
+	  // xmlhttprequest boilerplate
+	  var XMLHttpFactories = [
+		function () {return new XMLHttpRequest();},
+		function () {return new ActiveXObject("Msxml2.XMLHTTP");},
+		function () {return new ActiveXObject("Msxml3.XMLHTTP");},
+		function () {return new ActiveXObject("Microsoft.XMLHTTP");}
+	  ];
+
+	  function createXMLHTTPObject() {
+	      var xmlhttp = false;
+	      for (var i=0;i<XMLHttpFactories.length;i++) {
+	          try {
+	              xmlhttp = XMLHttpFactories[i]();
+	          }
+	          catch (e) {
+	              continue;
+	          }
+	          break;
+	      }
+	      return xmlhttp;
+	  }
+
+	  return {
+	    mapStackTrace: mapStackTrace
+	  }
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	var util = __webpack_require__(2);
+	var binarySearch = __webpack_require__(3);
+	var ArraySet = __webpack_require__(4).ArraySet;
+	var base64VLQ = __webpack_require__(5);
+	var quickSort = __webpack_require__(7).quickSort;
+
+	function SourceMapConsumer(aSourceMap) {
+	  var sourceMap = aSourceMap;
+	  if (typeof aSourceMap === 'string') {
+	    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
+	  }
+
+	  return sourceMap.sections != null
+	    ? new IndexedSourceMapConsumer(sourceMap)
+	    : new BasicSourceMapConsumer(sourceMap);
+	}
+
+	SourceMapConsumer.fromSourceMap = function(aSourceMap) {
+	  return BasicSourceMapConsumer.fromSourceMap(aSourceMap);
+	}
+
+	/**
+	 * The version of the source mapping spec that we are consuming.
+	 */
+	SourceMapConsumer.prototype._version = 3;
+
+	// `__generatedMappings` and `__originalMappings` are arrays that hold the
+	// parsed mapping coordinates from the source map's "mappings" attribute. They
+	// are lazily instantiated, accessed via the `_generatedMappings` and
+	// `_originalMappings` getters respectively, and we only parse the mappings
+	// and create these arrays once queried for a source location. We jump through
+	// these hoops because there can be many thousands of mappings, and parsing
+	// them is expensive, so we only want to do it if we must.
+	//
+	// Each object in the arrays is of the form:
+	//
+	//     {
+	//       generatedLine: The line number in the generated code,
+	//       generatedColumn: The column number in the generated code,
+	//       source: The path to the original source file that generated this
+	//               chunk of code,
+	//       originalLine: The line number in the original source that
+	//                     corresponds to this chunk of generated code,
+	//       originalColumn: The column number in the original source that
+	//                       corresponds to this chunk of generated code,
+	//       name: The name of the original symbol which generated this chunk of
+	//             code.
+	//     }
+	//
+	// All properties except for `generatedLine` and `generatedColumn` can be
+	// `null`.
+	//
+	// `_generatedMappings` is ordered by the generated positions.
+	//
+	// `_originalMappings` is ordered by the original positions.
+
+	SourceMapConsumer.prototype.__generatedMappings = null;
+	Object.defineProperty(SourceMapConsumer.prototype, '_generatedMappings', {
+	  get: function () {
+	    if (!this.__generatedMappings) {
+	      this._parseMappings(this._mappings, this.sourceRoot);
+	    }
+
+	    return this.__generatedMappings;
+	  }
+	});
+
+	SourceMapConsumer.prototype.__originalMappings = null;
+	Object.defineProperty(SourceMapConsumer.prototype, '_originalMappings', {
+	  get: function () {
+	    if (!this.__originalMappings) {
+	      this._parseMappings(this._mappings, this.sourceRoot);
+	    }
+
+	    return this.__originalMappings;
+	  }
+	});
+
+	SourceMapConsumer.prototype._charIsMappingSeparator =
+	  function SourceMapConsumer_charIsMappingSeparator(aStr, index) {
+	    var c = aStr.charAt(index);
+	    return c === ";" || c === ",";
+	  };
+
+	/**
+	 * Parse the mappings in a string in to a data structure which we can easily
+	 * query (the ordered arrays in the `this.__generatedMappings` and
+	 * `this.__originalMappings` properties).
+	 */
+	SourceMapConsumer.prototype._parseMappings =
+	  function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+	    throw new Error("Subclasses must implement _parseMappings");
+	  };
+
+	SourceMapConsumer.GENERATED_ORDER = 1;
+	SourceMapConsumer.ORIGINAL_ORDER = 2;
+
+	SourceMapConsumer.GREATEST_LOWER_BOUND = 1;
+	SourceMapConsumer.LEAST_UPPER_BOUND = 2;
+
+	/**
+	 * Iterate over each mapping between an original source/line/column and a
+	 * generated line/column in this source map.
+	 *
+	 * @param Function aCallback
+	 *        The function that is called with each mapping.
+	 * @param Object aContext
+	 *        Optional. If specified, this object will be the value of `this` every
+	 *        time that `aCallback` is called.
+	 * @param aOrder
+	 *        Either `SourceMapConsumer.GENERATED_ORDER` or
+	 *        `SourceMapConsumer.ORIGINAL_ORDER`. Specifies whether you want to
+	 *        iterate over the mappings sorted by the generated file's line/column
+	 *        order or the original's source/line/column order, respectively. Defaults to
+	 *        `SourceMapConsumer.GENERATED_ORDER`.
+	 */
+	SourceMapConsumer.prototype.eachMapping =
+	  function SourceMapConsumer_eachMapping(aCallback, aContext, aOrder) {
+	    var context = aContext || null;
+	    var order = aOrder || SourceMapConsumer.GENERATED_ORDER;
+
+	    var mappings;
+	    switch (order) {
+	    case SourceMapConsumer.GENERATED_ORDER:
+	      mappings = this._generatedMappings;
+	      break;
+	    case SourceMapConsumer.ORIGINAL_ORDER:
+	      mappings = this._originalMappings;
+	      break;
+	    default:
+	      throw new Error("Unknown order of iteration.");
+	    }
+
+	    var sourceRoot = this.sourceRoot;
+	    mappings.map(function (mapping) {
+	      var source = mapping.source === null ? null : this._sources.at(mapping.source);
+	      if (source != null && sourceRoot != null) {
+	        source = util.join(sourceRoot, source);
+	      }
+	      return {
+	        source: source,
+	        generatedLine: mapping.generatedLine,
+	        generatedColumn: mapping.generatedColumn,
+	        originalLine: mapping.originalLine,
+	        originalColumn: mapping.originalColumn,
+	        name: mapping.name === null ? null : this._names.at(mapping.name)
+	      };
+	    }, this).forEach(aCallback, context);
+	  };
+
+	/**
+	 * Returns all generated line and column information for the original source,
+	 * line, and column provided. If no column is provided, returns all mappings
+	 * corresponding to a either the line we are searching for or the next
+	 * closest line that has any mappings. Otherwise, returns all mappings
+	 * corresponding to the given line and either the column we are searching for
+	 * or the next closest column that has any offsets.
+	 *
+	 * The only argument is an object with the following properties:
+	 *
+	 *   - source: The filename of the original source.
+	 *   - line: The line number in the original source.
+	 *   - column: Optional. the column number in the original source.
+	 *
+	 * and an array of objects is returned, each with the following properties:
+	 *
+	 *   - line: The line number in the generated source, or null.
+	 *   - column: The column number in the generated source, or null.
+	 */
+	SourceMapConsumer.prototype.allGeneratedPositionsFor =
+	  function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
+	    var line = util.getArg(aArgs, 'line');
+
+	    // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
+	    // returns the index of the closest mapping less than the needle. By
+	    // setting needle.originalColumn to 0, we thus find the last mapping for
+	    // the given line, provided such a mapping exists.
+	    var needle = {
+	      source: util.getArg(aArgs, 'source'),
+	      originalLine: line,
+	      originalColumn: util.getArg(aArgs, 'column', 0)
+	    };
+
+	    if (this.sourceRoot != null) {
+	      needle.source = util.relative(this.sourceRoot, needle.source);
+	    }
+	    if (!this._sources.has(needle.source)) {
+	      return [];
+	    }
+	    needle.source = this._sources.indexOf(needle.source);
+
+	    var mappings = [];
+
+	    var index = this._findMapping(needle,
+	                                  this._originalMappings,
+	                                  "originalLine",
+	                                  "originalColumn",
+	                                  util.compareByOriginalPositions,
+	                                  binarySearch.LEAST_UPPER_BOUND);
+	    if (index >= 0) {
+	      var mapping = this._originalMappings[index];
+
+	      if (aArgs.column === undefined) {
+	        var originalLine = mapping.originalLine;
+
+	        // Iterate until either we run out of mappings, or we run into
+	        // a mapping for a different line than the one we found. Since
+	        // mappings are sorted, this is guaranteed to find all mappings for
+	        // the line we found.
+	        while (mapping && mapping.originalLine === originalLine) {
+	          mappings.push({
+	            line: util.getArg(mapping, 'generatedLine', null),
+	            column: util.getArg(mapping, 'generatedColumn', null),
+	            lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+	          });
+
+	          mapping = this._originalMappings[++index];
+	        }
+	      } else {
+	        var originalColumn = mapping.originalColumn;
+
+	        // Iterate until either we run out of mappings, or we run into
+	        // a mapping for a different line than the one we were searching for.
+	        // Since mappings are sorted, this is guaranteed to find all mappings for
+	        // the line we are searching for.
+	        while (mapping &&
+	               mapping.originalLine === line &&
+	               mapping.originalColumn == originalColumn) {
+	          mappings.push({
+	            line: util.getArg(mapping, 'generatedLine', null),
+	            column: util.getArg(mapping, 'generatedColumn', null),
+	            lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+	          });
+
+	          mapping = this._originalMappings[++index];
+	        }
+	      }
+	    }
+
+	    return mappings;
+	  };
+
+	exports.SourceMapConsumer = SourceMapConsumer;
+
+	/**
+	 * A BasicSourceMapConsumer instance represents a parsed source map which we can
+	 * query for information about the original file positions by giving it a file
+	 * position in the generated source.
+	 *
+	 * The only parameter is the raw source map (either as a JSON string, or
+	 * already parsed to an object). According to the spec, source maps have the
+	 * following attributes:
+	 *
+	 *   - version: Which version of the source map spec this map is following.
+	 *   - sources: An array of URLs to the original source files.
+	 *   - names: An array of identifiers which can be referrenced by individual mappings.
+	 *   - sourceRoot: Optional. The URL root from which all sources are relative.
+	 *   - sourcesContent: Optional. An array of contents of the original source files.
+	 *   - mappings: A string of base64 VLQs which contain the actual mappings.
+	 *   - file: Optional. The generated file this source map is associated with.
+	 *
+	 * Here is an example source map, taken from the source map spec[0]:
+	 *
+	 *     {
+	 *       version : 3,
+	 *       file: "out.js",
+	 *       sourceRoot : "",
+	 *       sources: ["foo.js", "bar.js"],
+	 *       names: ["src", "maps", "are", "fun"],
+	 *       mappings: "AA,AB;;ABCDE;"
+	 *     }
+	 *
+	 * [0]: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit?pli=1#
+	 */
+	function BasicSourceMapConsumer(aSourceMap) {
+	  var sourceMap = aSourceMap;
+	  if (typeof aSourceMap === 'string') {
+	    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
+	  }
+
+	  var version = util.getArg(sourceMap, 'version');
+	  var sources = util.getArg(sourceMap, 'sources');
+	  // Sass 3.3 leaves out the 'names' array, so we deviate from the spec (which
+	  // requires the array) to play nice here.
+	  var names = util.getArg(sourceMap, 'names', []);
+	  var sourceRoot = util.getArg(sourceMap, 'sourceRoot', null);
+	  var sourcesContent = util.getArg(sourceMap, 'sourcesContent', null);
+	  var mappings = util.getArg(sourceMap, 'mappings');
+	  var file = util.getArg(sourceMap, 'file', null);
+
+	  // Once again, Sass deviates from the spec and supplies the version as a
+	  // string rather than a number, so we use loose equality checking here.
+	  if (version != this._version) {
+	    throw new Error('Unsupported version: ' + version);
+	  }
+
+	  sources = sources
+	    .map(String)
+	    // Some source maps produce relative source paths like "./foo.js" instead of
+	    // "foo.js".  Normalize these first so that future comparisons will succeed.
+	    // See bugzil.la/1090768.
+	    .map(util.normalize)
+	    // Always ensure that absolute sources are internally stored relative to
+	    // the source root, if the source root is absolute. Not doing this would
+	    // be particularly problematic when the source root is a prefix of the
+	    // source (valid, but why??). See github issue #199 and bugzil.la/1188982.
+	    .map(function (source) {
+	      return sourceRoot && util.isAbsolute(sourceRoot) && util.isAbsolute(source)
+	        ? util.relative(sourceRoot, source)
+	        : source;
+	    });
+
+	  // Pass `true` below to allow duplicate names and sources. While source maps
+	  // are intended to be compressed and deduplicated, the TypeScript compiler
+	  // sometimes generates source maps with duplicates in them. See Github issue
+	  // #72 and bugzil.la/889492.
+	  this._names = ArraySet.fromArray(names.map(String), true);
+	  this._sources = ArraySet.fromArray(sources, true);
+
+	  this.sourceRoot = sourceRoot;
+	  this.sourcesContent = sourcesContent;
+	  this._mappings = mappings;
+	  this.file = file;
+	}
+
+	BasicSourceMapConsumer.prototype = Object.create(SourceMapConsumer.prototype);
+	BasicSourceMapConsumer.prototype.consumer = SourceMapConsumer;
+
+	/**
+	 * Create a BasicSourceMapConsumer from a SourceMapGenerator.
+	 *
+	 * @param SourceMapGenerator aSourceMap
+	 *        The source map that will be consumed.
+	 * @returns BasicSourceMapConsumer
+	 */
+	BasicSourceMapConsumer.fromSourceMap =
+	  function SourceMapConsumer_fromSourceMap(aSourceMap) {
+	    var smc = Object.create(BasicSourceMapConsumer.prototype);
+
+	    var names = smc._names = ArraySet.fromArray(aSourceMap._names.toArray(), true);
+	    var sources = smc._sources = ArraySet.fromArray(aSourceMap._sources.toArray(), true);
+	    smc.sourceRoot = aSourceMap._sourceRoot;
+	    smc.sourcesContent = aSourceMap._generateSourcesContent(smc._sources.toArray(),
+	                                                            smc.sourceRoot);
+	    smc.file = aSourceMap._file;
+
+	    // Because we are modifying the entries (by converting string sources and
+	    // names to indices into the sources and names ArraySets), we have to make
+	    // a copy of the entry or else bad things happen. Shared mutable state
+	    // strikes again! See github issue #191.
+
+	    var generatedMappings = aSourceMap._mappings.toArray().slice();
+	    var destGeneratedMappings = smc.__generatedMappings = [];
+	    var destOriginalMappings = smc.__originalMappings = [];
+
+	    for (var i = 0, length = generatedMappings.length; i < length; i++) {
+	      var srcMapping = generatedMappings[i];
+	      var destMapping = new Mapping;
+	      destMapping.generatedLine = srcMapping.generatedLine;
+	      destMapping.generatedColumn = srcMapping.generatedColumn;
+
+	      if (srcMapping.source) {
+	        destMapping.source = sources.indexOf(srcMapping.source);
+	        destMapping.originalLine = srcMapping.originalLine;
+	        destMapping.originalColumn = srcMapping.originalColumn;
+
+	        if (srcMapping.name) {
+	          destMapping.name = names.indexOf(srcMapping.name);
+	        }
+
+	        destOriginalMappings.push(destMapping);
+	      }
+
+	      destGeneratedMappings.push(destMapping);
+	    }
+
+	    quickSort(smc.__originalMappings, util.compareByOriginalPositions);
+
+	    return smc;
+	  };
+
+	/**
+	 * The version of the source mapping spec that we are consuming.
+	 */
+	BasicSourceMapConsumer.prototype._version = 3;
+
+	/**
+	 * The list of original sources.
+	 */
+	Object.defineProperty(BasicSourceMapConsumer.prototype, 'sources', {
+	  get: function () {
+	    return this._sources.toArray().map(function (s) {
+	      return this.sourceRoot != null ? util.join(this.sourceRoot, s) : s;
+	    }, this);
+	  }
+	});
+
+	/**
+	 * Provide the JIT with a nice shape / hidden class.
+	 */
+	function Mapping() {
+	  this.generatedLine = 0;
+	  this.generatedColumn = 0;
+	  this.source = null;
+	  this.originalLine = null;
+	  this.originalColumn = null;
+	  this.name = null;
+	}
+
+	/**
+	 * Parse the mappings in a string in to a data structure which we can easily
+	 * query (the ordered arrays in the `this.__generatedMappings` and
+	 * `this.__originalMappings` properties).
+	 */
+	BasicSourceMapConsumer.prototype._parseMappings =
+	  function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+	    var generatedLine = 1;
+	    var previousGeneratedColumn = 0;
+	    var previousOriginalLine = 0;
+	    var previousOriginalColumn = 0;
+	    var previousSource = 0;
+	    var previousName = 0;
+	    var length = aStr.length;
+	    var index = 0;
+	    var cachedSegments = {};
+	    var temp = {};
+	    var originalMappings = [];
+	    var generatedMappings = [];
+	    var mapping, str, segment, end, value;
+
+	    while (index < length) {
+	      if (aStr.charAt(index) === ';') {
+	        generatedLine++;
+	        index++;
+	        previousGeneratedColumn = 0;
+	      }
+	      else if (aStr.charAt(index) === ',') {
+	        index++;
+	      }
+	      else {
+	        mapping = new Mapping();
+	        mapping.generatedLine = generatedLine;
+
+	        // Because each offset is encoded relative to the previous one,
+	        // many segments often have the same encoding. We can exploit this
+	        // fact by caching the parsed variable length fields of each segment,
+	        // allowing us to avoid a second parse if we encounter the same
+	        // segment again.
+	        for (end = index; end < length; end++) {
+	          if (this._charIsMappingSeparator(aStr, end)) {
+	            break;
+	          }
+	        }
+	        str = aStr.slice(index, end);
+
+	        segment = cachedSegments[str];
+	        if (segment) {
+	          index += str.length;
+	        } else {
+	          segment = [];
+	          while (index < end) {
+	            base64VLQ.decode(aStr, index, temp);
+	            value = temp.value;
+	            index = temp.rest;
+	            segment.push(value);
+	          }
+
+	          if (segment.length === 2) {
+	            throw new Error('Found a source, but no line and column');
+	          }
+
+	          if (segment.length === 3) {
+	            throw new Error('Found a source and line, but no column');
+	          }
+
+	          cachedSegments[str] = segment;
+	        }
+
+	        // Generated column.
+	        mapping.generatedColumn = previousGeneratedColumn + segment[0];
+	        previousGeneratedColumn = mapping.generatedColumn;
+
+	        if (segment.length > 1) {
+	          // Original source.
+	          mapping.source = previousSource + segment[1];
+	          previousSource += segment[1];
+
+	          // Original line.
+	          mapping.originalLine = previousOriginalLine + segment[2];
+	          previousOriginalLine = mapping.originalLine;
+	          // Lines are stored 0-based
+	          mapping.originalLine += 1;
+
+	          // Original column.
+	          mapping.originalColumn = previousOriginalColumn + segment[3];
+	          previousOriginalColumn = mapping.originalColumn;
+
+	          if (segment.length > 4) {
+	            // Original name.
+	            mapping.name = previousName + segment[4];
+	            previousName += segment[4];
+	          }
+	        }
+
+	        generatedMappings.push(mapping);
+	        if (typeof mapping.originalLine === 'number') {
+	          originalMappings.push(mapping);
+	        }
+	      }
+	    }
+
+	    quickSort(generatedMappings, util.compareByGeneratedPositionsDeflated);
+	    this.__generatedMappings = generatedMappings;
+
+	    quickSort(originalMappings, util.compareByOriginalPositions);
+	    this.__originalMappings = originalMappings;
+	  };
+
+	/**
+	 * Find the mapping that best matches the hypothetical "needle" mapping that
+	 * we are searching for in the given "haystack" of mappings.
+	 */
+	BasicSourceMapConsumer.prototype._findMapping =
+	  function SourceMapConsumer_findMapping(aNeedle, aMappings, aLineName,
+	                                         aColumnName, aComparator, aBias) {
+	    // To return the position we are searching for, we must first find the
+	    // mapping for the given position and then return the opposite position it
+	    // points to. Because the mappings are sorted, we can use binary search to
+	    // find the best mapping.
+
+	    if (aNeedle[aLineName] <= 0) {
+	      throw new TypeError('Line must be greater than or equal to 1, got '
+	                          + aNeedle[aLineName]);
+	    }
+	    if (aNeedle[aColumnName] < 0) {
+	      throw new TypeError('Column must be greater than or equal to 0, got '
+	                          + aNeedle[aColumnName]);
+	    }
+
+	    return binarySearch.search(aNeedle, aMappings, aComparator, aBias);
+	  };
+
+	/**
+	 * Compute the last column for each generated mapping. The last column is
+	 * inclusive.
+	 */
+	BasicSourceMapConsumer.prototype.computeColumnSpans =
+	  function SourceMapConsumer_computeColumnSpans() {
+	    for (var index = 0; index < this._generatedMappings.length; ++index) {
+	      var mapping = this._generatedMappings[index];
+
+	      // Mappings do not contain a field for the last generated columnt. We
+	      // can come up with an optimistic estimate, however, by assuming that
+	      // mappings are contiguous (i.e. given two consecutive mappings, the
+	      // first mapping ends where the second one starts).
+	      if (index + 1 < this._generatedMappings.length) {
+	        var nextMapping = this._generatedMappings[index + 1];
+
+	        if (mapping.generatedLine === nextMapping.generatedLine) {
+	          mapping.lastGeneratedColumn = nextMapping.generatedColumn - 1;
+	          continue;
+	        }
+	      }
+
+	      // The last mapping for each line spans the entire line.
+	      mapping.lastGeneratedColumn = Infinity;
+	    }
+	  };
+
+	/**
+	 * Returns the original source, line, and column information for the generated
+	 * source's line and column positions provided. The only argument is an object
+	 * with the following properties:
+	 *
+	 *   - line: The line number in the generated source.
+	 *   - column: The column number in the generated source.
+	 *   - bias: Either 'SourceMapConsumer.GREATEST_LOWER_BOUND' or
+	 *     'SourceMapConsumer.LEAST_UPPER_BOUND'. Specifies whether to return the
+	 *     closest element that is smaller than or greater than the one we are
+	 *     searching for, respectively, if the exact element cannot be found.
+	 *     Defaults to 'SourceMapConsumer.GREATEST_LOWER_BOUND'.
+	 *
+	 * and an object is returned with the following properties:
+	 *
+	 *   - source: The original source file, or null.
+	 *   - line: The line number in the original source, or null.
+	 *   - column: The column number in the original source, or null.
+	 *   - name: The original identifier, or null.
+	 */
+	BasicSourceMapConsumer.prototype.originalPositionFor =
+	  function SourceMapConsumer_originalPositionFor(aArgs) {
+	    var needle = {
+	      generatedLine: util.getArg(aArgs, 'line'),
+	      generatedColumn: util.getArg(aArgs, 'column')
+	    };
+
+	    var index = this._findMapping(
+	      needle,
+	      this._generatedMappings,
+	      "generatedLine",
+	      "generatedColumn",
+	      util.compareByGeneratedPositionsDeflated,
+	      util.getArg(aArgs, 'bias', SourceMapConsumer.GREATEST_LOWER_BOUND)
+	    );
+
+	    if (index >= 0) {
+	      var mapping = this._generatedMappings[index];
+
+	      if (mapping.generatedLine === needle.generatedLine) {
+	        var source = util.getArg(mapping, 'source', null);
+	        if (source !== null) {
+	          source = this._sources.at(source);
+	          if (this.sourceRoot != null) {
+	            source = util.join(this.sourceRoot, source);
+	          }
+	        }
+	        var name = util.getArg(mapping, 'name', null);
+	        if (name !== null) {
+	          name = this._names.at(name);
+	        }
+	        return {
+	          source: source,
+	          line: util.getArg(mapping, 'originalLine', null),
+	          column: util.getArg(mapping, 'originalColumn', null),
+	          name: name
+	        };
+	      }
+	    }
+
+	    return {
+	      source: null,
+	      line: null,
+	      column: null,
+	      name: null
+	    };
+	  };
+
+	/**
+	 * Return true if we have the source content for every source in the source
+	 * map, false otherwise.
+	 */
+	BasicSourceMapConsumer.prototype.hasContentsOfAllSources =
+	  function BasicSourceMapConsumer_hasContentsOfAllSources() {
+	    if (!this.sourcesContent) {
+	      return false;
+	    }
+	    return this.sourcesContent.length >= this._sources.size() &&
+	      !this.sourcesContent.some(function (sc) { return sc == null; });
+	  };
+
+	/**
+	 * Returns the original source content. The only argument is the url of the
+	 * original source file. Returns null if no original source content is
+	 * available.
+	 */
+	BasicSourceMapConsumer.prototype.sourceContentFor =
+	  function SourceMapConsumer_sourceContentFor(aSource, nullOnMissing) {
+	    if (!this.sourcesContent) {
+	      return null;
+	    }
+
+	    if (this.sourceRoot != null) {
+	      aSource = util.relative(this.sourceRoot, aSource);
+	    }
+
+	    if (this._sources.has(aSource)) {
+	      return this.sourcesContent[this._sources.indexOf(aSource)];
+	    }
+
+	    var url;
+	    if (this.sourceRoot != null
+	        && (url = util.urlParse(this.sourceRoot))) {
+	      // XXX: file:// URIs and absolute paths lead to unexpected behavior for
+	      // many users. We can help them out when they expect file:// URIs to
+	      // behave like it would if they were running a local HTTP server. See
+	      // https://bugzilla.mozilla.org/show_bug.cgi?id=885597.
+	      var fileUriAbsPath = aSource.replace(/^file:\/\//, "");
+	      if (url.scheme == "file"
+	          && this._sources.has(fileUriAbsPath)) {
+	        return this.sourcesContent[this._sources.indexOf(fileUriAbsPath)]
+	      }
+
+	      if ((!url.path || url.path == "/")
+	          && this._sources.has("/" + aSource)) {
+	        return this.sourcesContent[this._sources.indexOf("/" + aSource)];
+	      }
+	    }
+
+	    // This function is used recursively from
+	    // IndexedSourceMapConsumer.prototype.sourceContentFor. In that case, we
+	    // don't want to throw if we can't find the source - we just want to
+	    // return null, so we provide a flag to exit gracefully.
+	    if (nullOnMissing) {
+	      return null;
+	    }
+	    else {
+	      throw new Error('"' + aSource + '" is not in the SourceMap.');
+	    }
+	  };
+
+	/**
+	 * Returns the generated line and column information for the original source,
+	 * line, and column positions provided. The only argument is an object with
+	 * the following properties:
+	 *
+	 *   - source: The filename of the original source.
+	 *   - line: The line number in the original source.
+	 *   - column: The column number in the original source.
+	 *   - bias: Either 'SourceMapConsumer.GREATEST_LOWER_BOUND' or
+	 *     'SourceMapConsumer.LEAST_UPPER_BOUND'. Specifies whether to return the
+	 *     closest element that is smaller than or greater than the one we are
+	 *     searching for, respectively, if the exact element cannot be found.
+	 *     Defaults to 'SourceMapConsumer.GREATEST_LOWER_BOUND'.
+	 *
+	 * and an object is returned with the following properties:
+	 *
+	 *   - line: The line number in the generated source, or null.
+	 *   - column: The column number in the generated source, or null.
+	 */
+	BasicSourceMapConsumer.prototype.generatedPositionFor =
+	  function SourceMapConsumer_generatedPositionFor(aArgs) {
+	    var source = util.getArg(aArgs, 'source');
+	    if (this.sourceRoot != null) {
+	      source = util.relative(this.sourceRoot, source);
+	    }
+	    if (!this._sources.has(source)) {
+	      return {
+	        line: null,
+	        column: null,
+	        lastColumn: null
+	      };
+	    }
+	    source = this._sources.indexOf(source);
+
+	    var needle = {
+	      source: source,
+	      originalLine: util.getArg(aArgs, 'line'),
+	      originalColumn: util.getArg(aArgs, 'column')
+	    };
+
+	    var index = this._findMapping(
+	      needle,
+	      this._originalMappings,
+	      "originalLine",
+	      "originalColumn",
+	      util.compareByOriginalPositions,
+	      util.getArg(aArgs, 'bias', SourceMapConsumer.GREATEST_LOWER_BOUND)
+	    );
+
+	    if (index >= 0) {
+	      var mapping = this._originalMappings[index];
+
+	      if (mapping.source === needle.source) {
+	        return {
+	          line: util.getArg(mapping, 'generatedLine', null),
+	          column: util.getArg(mapping, 'generatedColumn', null),
+	          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+	        };
+	      }
+	    }
+
+	    return {
+	      line: null,
+	      column: null,
+	      lastColumn: null
+	    };
+	  };
+
+	exports.BasicSourceMapConsumer = BasicSourceMapConsumer;
+
+	/**
+	 * An IndexedSourceMapConsumer instance represents a parsed source map which
+	 * we can query for information. It differs from BasicSourceMapConsumer in
+	 * that it takes "indexed" source maps (i.e. ones with a "sections" field) as
+	 * input.
+	 *
+	 * The only parameter is a raw source map (either as a JSON string, or already
+	 * parsed to an object). According to the spec for indexed source maps, they
+	 * have the following attributes:
+	 *
+	 *   - version: Which version of the source map spec this map is following.
+	 *   - file: Optional. The generated file this source map is associated with.
+	 *   - sections: A list of section definitions.
+	 *
+	 * Each value under the "sections" field has two fields:
+	 *   - offset: The offset into the original specified at which this section
+	 *       begins to apply, defined as an object with a "line" and "column"
+	 *       field.
+	 *   - map: A source map definition. This source map could also be indexed,
+	 *       but doesn't have to be.
+	 *
+	 * Instead of the "map" field, it's also possible to have a "url" field
+	 * specifying a URL to retrieve a source map from, but that's currently
+	 * unsupported.
+	 *
+	 * Here's an example source map, taken from the source map spec[0], but
+	 * modified to omit a section which uses the "url" field.
+	 *
+	 *  {
+	 *    version : 3,
+	 *    file: "app.js",
+	 *    sections: [{
+	 *      offset: {line:100, column:10},
+	 *      map: {
+	 *        version : 3,
+	 *        file: "section.js",
+	 *        sources: ["foo.js", "bar.js"],
+	 *        names: ["src", "maps", "are", "fun"],
+	 *        mappings: "AAAA,E;;ABCDE;"
+	 *      }
+	 *    }],
+	 *  }
+	 *
+	 * [0]: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#heading=h.535es3xeprgt
+	 */
+	function IndexedSourceMapConsumer(aSourceMap) {
+	  var sourceMap = aSourceMap;
+	  if (typeof aSourceMap === 'string') {
+	    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
+	  }
+
+	  var version = util.getArg(sourceMap, 'version');
+	  var sections = util.getArg(sourceMap, 'sections');
+
+	  if (version != this._version) {
+	    throw new Error('Unsupported version: ' + version);
+	  }
+
+	  this._sources = new ArraySet();
+	  this._names = new ArraySet();
+
+	  var lastOffset = {
+	    line: -1,
+	    column: 0
+	  };
+	  this._sections = sections.map(function (s) {
+	    if (s.url) {
+	      // The url field will require support for asynchronicity.
+	      // See https://github.com/mozilla/source-map/issues/16
+	      throw new Error('Support for url field in sections not implemented.');
+	    }
+	    var offset = util.getArg(s, 'offset');
+	    var offsetLine = util.getArg(offset, 'line');
+	    var offsetColumn = util.getArg(offset, 'column');
+
+	    if (offsetLine < lastOffset.line ||
+	        (offsetLine === lastOffset.line && offsetColumn < lastOffset.column)) {
+	      throw new Error('Section offsets must be ordered and non-overlapping.');
+	    }
+	    lastOffset = offset;
+
+	    return {
+	      generatedOffset: {
+	        // The offset fields are 0-based, but we use 1-based indices when
+	        // encoding/decoding from VLQ.
+	        generatedLine: offsetLine + 1,
+	        generatedColumn: offsetColumn + 1
+	      },
+	      consumer: new SourceMapConsumer(util.getArg(s, 'map'))
+	    }
+	  });
+	}
+
+	IndexedSourceMapConsumer.prototype = Object.create(SourceMapConsumer.prototype);
+	IndexedSourceMapConsumer.prototype.constructor = SourceMapConsumer;
+
+	/**
+	 * The version of the source mapping spec that we are consuming.
+	 */
+	IndexedSourceMapConsumer.prototype._version = 3;
+
+	/**
+	 * The list of original sources.
+	 */
+	Object.defineProperty(IndexedSourceMapConsumer.prototype, 'sources', {
+	  get: function () {
+	    var sources = [];
+	    for (var i = 0; i < this._sections.length; i++) {
+	      for (var j = 0; j < this._sections[i].consumer.sources.length; j++) {
+	        sources.push(this._sections[i].consumer.sources[j]);
+	      }
+	    }
+	    return sources;
+	  }
+	});
+
+	/**
+	 * Returns the original source, line, and column information for the generated
+	 * source's line and column positions provided. The only argument is an object
+	 * with the following properties:
+	 *
+	 *   - line: The line number in the generated source.
+	 *   - column: The column number in the generated source.
+	 *
+	 * and an object is returned with the following properties:
+	 *
+	 *   - source: The original source file, or null.
+	 *   - line: The line number in the original source, or null.
+	 *   - column: The column number in the original source, or null.
+	 *   - name: The original identifier, or null.
+	 */
+	IndexedSourceMapConsumer.prototype.originalPositionFor =
+	  function IndexedSourceMapConsumer_originalPositionFor(aArgs) {
+	    var needle = {
+	      generatedLine: util.getArg(aArgs, 'line'),
+	      generatedColumn: util.getArg(aArgs, 'column')
+	    };
+
+	    // Find the section containing the generated position we're trying to map
+	    // to an original position.
+	    var sectionIndex = binarySearch.search(needle, this._sections,
+	      function(needle, section) {
+	        var cmp = needle.generatedLine - section.generatedOffset.generatedLine;
+	        if (cmp) {
+	          return cmp;
+	        }
+
+	        return (needle.generatedColumn -
+	                section.generatedOffset.generatedColumn);
+	      });
+	    var section = this._sections[sectionIndex];
+
+	    if (!section) {
+	      return {
+	        source: null,
+	        line: null,
+	        column: null,
+	        name: null
+	      };
+	    }
+
+	    return section.consumer.originalPositionFor({
+	      line: needle.generatedLine -
+	        (section.generatedOffset.generatedLine - 1),
+	      column: needle.generatedColumn -
+	        (section.generatedOffset.generatedLine === needle.generatedLine
+	         ? section.generatedOffset.generatedColumn - 1
+	         : 0),
+	      bias: aArgs.bias
+	    });
+	  };
+
+	/**
+	 * Return true if we have the source content for every source in the source
+	 * map, false otherwise.
+	 */
+	IndexedSourceMapConsumer.prototype.hasContentsOfAllSources =
+	  function IndexedSourceMapConsumer_hasContentsOfAllSources() {
+	    return this._sections.every(function (s) {
+	      return s.consumer.hasContentsOfAllSources();
+	    });
+	  };
+
+	/**
+	 * Returns the original source content. The only argument is the url of the
+	 * original source file. Returns null if no original source content is
+	 * available.
+	 */
+	IndexedSourceMapConsumer.prototype.sourceContentFor =
+	  function IndexedSourceMapConsumer_sourceContentFor(aSource, nullOnMissing) {
+	    for (var i = 0; i < this._sections.length; i++) {
+	      var section = this._sections[i];
+
+	      var content = section.consumer.sourceContentFor(aSource, true);
+	      if (content) {
+	        return content;
+	      }
+	    }
+	    if (nullOnMissing) {
+	      return null;
+	    }
+	    else {
+	      throw new Error('"' + aSource + '" is not in the SourceMap.');
+	    }
+	  };
+
+	/**
+	 * Returns the generated line and column information for the original source,
+	 * line, and column positions provided. The only argument is an object with
+	 * the following properties:
+	 *
+	 *   - source: The filename of the original source.
+	 *   - line: The line number in the original source.
+	 *   - column: The column number in the original source.
+	 *
+	 * and an object is returned with the following properties:
+	 *
+	 *   - line: The line number in the generated source, or null.
+	 *   - column: The column number in the generated source, or null.
+	 */
+	IndexedSourceMapConsumer.prototype.generatedPositionFor =
+	  function IndexedSourceMapConsumer_generatedPositionFor(aArgs) {
+	    for (var i = 0; i < this._sections.length; i++) {
+	      var section = this._sections[i];
+
+	      // Only consider this section if the requested source is in the list of
+	      // sources of the consumer.
+	      if (section.consumer.sources.indexOf(util.getArg(aArgs, 'source')) === -1) {
+	        continue;
+	      }
+	      var generatedPosition = section.consumer.generatedPositionFor(aArgs);
+	      if (generatedPosition) {
+	        var ret = {
+	          line: generatedPosition.line +
+	            (section.generatedOffset.generatedLine - 1),
+	          column: generatedPosition.column +
+	            (section.generatedOffset.generatedLine === generatedPosition.line
+	             ? section.generatedOffset.generatedColumn - 1
+	             : 0)
+	        };
+	        return ret;
+	      }
+	    }
+
+	    return {
+	      line: null,
+	      column: null
+	    };
+	  };
+
+	/**
+	 * Parse the mappings in a string in to a data structure which we can easily
+	 * query (the ordered arrays in the `this.__generatedMappings` and
+	 * `this.__originalMappings` properties).
+	 */
+	IndexedSourceMapConsumer.prototype._parseMappings =
+	  function IndexedSourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+	    this.__generatedMappings = [];
+	    this.__originalMappings = [];
+	    for (var i = 0; i < this._sections.length; i++) {
+	      var section = this._sections[i];
+	      var sectionMappings = section.consumer._generatedMappings;
+	      for (var j = 0; j < sectionMappings.length; j++) {
+	        var mapping = sectionMappings[j];
+
+	        var source = section.consumer._sources.at(mapping.source);
+	        if (section.consumer.sourceRoot !== null) {
+	          source = util.join(section.consumer.sourceRoot, source);
+	        }
+	        this._sources.add(source);
+	        source = this._sources.indexOf(source);
+
+	        var name = section.consumer._names.at(mapping.name);
+	        this._names.add(name);
+	        name = this._names.indexOf(name);
+
+	        // The mappings coming from the consumer for the section have
+	        // generated positions relative to the start of the section, so we
+	        // need to offset them to be relative to the start of the concatenated
+	        // generated file.
+	        var adjustedMapping = {
+	          source: source,
+	          generatedLine: mapping.generatedLine +
+	            (section.generatedOffset.generatedLine - 1),
+	          generatedColumn: mapping.generatedColumn +
+	            (section.generatedOffset.generatedLine === mapping.generatedLine
+	            ? section.generatedOffset.generatedColumn - 1
+	            : 0),
+	          originalLine: mapping.originalLine,
+	          originalColumn: mapping.originalColumn,
+	          name: name
+	        };
+
+	        this.__generatedMappings.push(adjustedMapping);
+	        if (typeof adjustedMapping.originalLine === 'number') {
+	          this.__originalMappings.push(adjustedMapping);
+	        }
+	      }
+	    }
+
+	    quickSort(this.__generatedMappings, util.compareByGeneratedPositionsDeflated);
+	    quickSort(this.__originalMappings, util.compareByOriginalPositions);
+	  };
+
+	exports.IndexedSourceMapConsumer = IndexedSourceMapConsumer;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	/**
+	 * This is a helper function for getting values from parameter/options
+	 * objects.
+	 *
+	 * @param args The object we are extracting values from
+	 * @param name The name of the property we are getting.
+	 * @param defaultValue An optional value to return if the property is missing
+	 * from the object. If this is not specified and the property is missing, an
+	 * error will be thrown.
+	 */
+	function getArg(aArgs, aName, aDefaultValue) {
+	  if (aName in aArgs) {
+	    return aArgs[aName];
+	  } else if (arguments.length === 3) {
+	    return aDefaultValue;
+	  } else {
+	    throw new Error('"' + aName + '" is a required argument.');
+	  }
+	}
+	exports.getArg = getArg;
+
+	var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.]*)(?::(\d+))?(\S*)$/;
+	var dataUrlRegexp = /^data:.+\,.+$/;
+
+	function urlParse(aUrl) {
+	  var match = aUrl.match(urlRegexp);
+	  if (!match) {
+	    return null;
+	  }
+	  return {
+	    scheme: match[1],
+	    auth: match[2],
+	    host: match[3],
+	    port: match[4],
+	    path: match[5]
+	  };
+	}
+	exports.urlParse = urlParse;
+
+	function urlGenerate(aParsedUrl) {
+	  var url = '';
+	  if (aParsedUrl.scheme) {
+	    url += aParsedUrl.scheme + ':';
+	  }
+	  url += '//';
+	  if (aParsedUrl.auth) {
+	    url += aParsedUrl.auth + '@';
+	  }
+	  if (aParsedUrl.host) {
+	    url += aParsedUrl.host;
+	  }
+	  if (aParsedUrl.port) {
+	    url += ":" + aParsedUrl.port
+	  }
+	  if (aParsedUrl.path) {
+	    url += aParsedUrl.path;
+	  }
+	  return url;
+	}
+	exports.urlGenerate = urlGenerate;
+
+	/**
+	 * Normalizes a path, or the path portion of a URL:
+	 *
+	 * - Replaces consecutive slashes with one slash.
+	 * - Removes unnecessary '.' parts.
+	 * - Removes unnecessary '<dir>/..' parts.
+	 *
+	 * Based on code in the Node.js 'path' core module.
+	 *
+	 * @param aPath The path or url to normalize.
+	 */
+	function normalize(aPath) {
+	  var path = aPath;
+	  var url = urlParse(aPath);
+	  if (url) {
+	    if (!url.path) {
+	      return aPath;
+	    }
+	    path = url.path;
+	  }
+	  var isAbsolute = exports.isAbsolute(path);
+
+	  var parts = path.split(/\/+/);
+	  for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
+	    part = parts[i];
+	    if (part === '.') {
+	      parts.splice(i, 1);
+	    } else if (part === '..') {
+	      up++;
+	    } else if (up > 0) {
+	      if (part === '') {
+	        // The first part is blank if the path is absolute. Trying to go
+	        // above the root is a no-op. Therefore we can remove all '..' parts
+	        // directly after the root.
+	        parts.splice(i + 1, up);
+	        up = 0;
+	      } else {
+	        parts.splice(i, 2);
+	        up--;
+	      }
+	    }
+	  }
+	  path = parts.join('/');
+
+	  if (path === '') {
+	    path = isAbsolute ? '/' : '.';
+	  }
+
+	  if (url) {
+	    url.path = path;
+	    return urlGenerate(url);
+	  }
+	  return path;
+	}
+	exports.normalize = normalize;
+
+	/**
+	 * Joins two paths/URLs.
+	 *
+	 * @param aRoot The root path or URL.
+	 * @param aPath The path or URL to be joined with the root.
+	 *
+	 * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
+	 *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
+	 *   first.
+	 * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
+	 *   is updated with the result and aRoot is returned. Otherwise the result
+	 *   is returned.
+	 *   - If aPath is absolute, the result is aPath.
+	 *   - Otherwise the two paths are joined with a slash.
+	 * - Joining for example 'http://' and 'www.example.com' is also supported.
+	 */
+	function join(aRoot, aPath) {
+	  if (aRoot === "") {
+	    aRoot = ".";
+	  }
+	  if (aPath === "") {
+	    aPath = ".";
+	  }
+	  var aPathUrl = urlParse(aPath);
+	  var aRootUrl = urlParse(aRoot);
+	  if (aRootUrl) {
+	    aRoot = aRootUrl.path || '/';
+	  }
+
+	  // `join(foo, '//www.example.org')`
+	  if (aPathUrl && !aPathUrl.scheme) {
+	    if (aRootUrl) {
+	      aPathUrl.scheme = aRootUrl.scheme;
+	    }
+	    return urlGenerate(aPathUrl);
+	  }
+
+	  if (aPathUrl || aPath.match(dataUrlRegexp)) {
+	    return aPath;
+	  }
+
+	  // `join('http://', 'www.example.com')`
+	  if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
+	    aRootUrl.host = aPath;
+	    return urlGenerate(aRootUrl);
+	  }
+
+	  var joined = aPath.charAt(0) === '/'
+	    ? aPath
+	    : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
+
+	  if (aRootUrl) {
+	    aRootUrl.path = joined;
+	    return urlGenerate(aRootUrl);
+	  }
+	  return joined;
+	}
+	exports.join = join;
+
+	exports.isAbsolute = function (aPath) {
+	  return aPath.charAt(0) === '/' || !!aPath.match(urlRegexp);
+	};
+
+	/**
+	 * Make a path relative to a URL or another path.
+	 *
+	 * @param aRoot The root path or URL.
+	 * @param aPath The path or URL to be made relative to aRoot.
+	 */
+	function relative(aRoot, aPath) {
+	  if (aRoot === "") {
+	    aRoot = ".";
+	  }
+
+	  aRoot = aRoot.replace(/\/$/, '');
+
+	  // It is possible for the path to be above the root. In this case, simply
+	  // checking whether the root is a prefix of the path won't work. Instead, we
+	  // need to remove components from the root one by one, until either we find
+	  // a prefix that fits, or we run out of components to remove.
+	  var level = 0;
+	  while (aPath.indexOf(aRoot + '/') !== 0) {
+	    var index = aRoot.lastIndexOf("/");
+	    if (index < 0) {
+	      return aPath;
+	    }
+
+	    // If the only part of the root that is left is the scheme (i.e. http://,
+	    // file:///, etc.), one or more slashes (/), or simply nothing at all, we
+	    // have exhausted all components, so the path is not relative to the root.
+	    aRoot = aRoot.slice(0, index);
+	    if (aRoot.match(/^([^\/]+:\/)?\/*$/)) {
+	      return aPath;
+	    }
+
+	    ++level;
+	  }
+
+	  // Make sure we add a "../" for each component we removed from the root.
+	  return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
+	}
+	exports.relative = relative;
+
+	var supportsNullProto = (function () {
+	  var obj = Object.create(null);
+	  return !('__proto__' in obj);
+	}());
+
+	function identity (s) {
+	  return s;
+	}
+
+	/**
+	 * Because behavior goes wacky when you set `__proto__` on objects, we
+	 * have to prefix all the strings in our set with an arbitrary character.
+	 *
+	 * See https://github.com/mozilla/source-map/pull/31 and
+	 * https://github.com/mozilla/source-map/issues/30
+	 *
+	 * @param String aStr
+	 */
+	function toSetString(aStr) {
+	  if (isProtoString(aStr)) {
+	    return '$' + aStr;
+	  }
+
+	  return aStr;
+	}
+	exports.toSetString = supportsNullProto ? identity : toSetString;
+
+	function fromSetString(aStr) {
+	  if (isProtoString(aStr)) {
+	    return aStr.slice(1);
+	  }
+
+	  return aStr;
+	}
+	exports.fromSetString = supportsNullProto ? identity : fromSetString;
+
+	function isProtoString(s) {
+	  if (!s) {
+	    return false;
+	  }
+
+	  var length = s.length;
+
+	  if (length < 9 /* "__proto__".length */) {
+	    return false;
+	  }
+
+	  if (s.charCodeAt(length - 1) !== 95  /* '_' */ ||
+	      s.charCodeAt(length - 2) !== 95  /* '_' */ ||
+	      s.charCodeAt(length - 3) !== 111 /* 'o' */ ||
+	      s.charCodeAt(length - 4) !== 116 /* 't' */ ||
+	      s.charCodeAt(length - 5) !== 111 /* 'o' */ ||
+	      s.charCodeAt(length - 6) !== 114 /* 'r' */ ||
+	      s.charCodeAt(length - 7) !== 112 /* 'p' */ ||
+	      s.charCodeAt(length - 8) !== 95  /* '_' */ ||
+	      s.charCodeAt(length - 9) !== 95  /* '_' */) {
+	    return false;
+	  }
+
+	  for (var i = length - 10; i >= 0; i--) {
+	    if (s.charCodeAt(i) !== 36 /* '$' */) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * Comparator between two mappings where the original positions are compared.
+	 *
+	 * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+	 * mappings with the same original source/line/column, but different generated
+	 * line and column the same. Useful when searching for a mapping with a
+	 * stubbed out mapping.
+	 */
+	function compareByOriginalPositions(mappingA, mappingB, onlyCompareOriginal) {
+	  var cmp = mappingA.source - mappingB.source;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalLine - mappingB.originalLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalColumn - mappingB.originalColumn;
+	  if (cmp !== 0 || onlyCompareOriginal) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.generatedLine - mappingB.generatedLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  return mappingA.name - mappingB.name;
+	}
+	exports.compareByOriginalPositions = compareByOriginalPositions;
+
+	/**
+	 * Comparator between two mappings with deflated source and name indices where
+	 * the generated positions are compared.
+	 *
+	 * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+	 * mappings with the same generated line and column, but different
+	 * source/name/original line and column the same. Useful when searching for a
+	 * mapping with a stubbed out mapping.
+	 */
+	function compareByGeneratedPositionsDeflated(mappingA, mappingB, onlyCompareGenerated) {
+	  var cmp = mappingA.generatedLine - mappingB.generatedLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+	  if (cmp !== 0 || onlyCompareGenerated) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.source - mappingB.source;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalLine - mappingB.originalLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalColumn - mappingB.originalColumn;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  return mappingA.name - mappingB.name;
+	}
+	exports.compareByGeneratedPositionsDeflated = compareByGeneratedPositionsDeflated;
+
+	function strcmp(aStr1, aStr2) {
+	  if (aStr1 === aStr2) {
+	    return 0;
+	  }
+
+	  if (aStr1 > aStr2) {
+	    return 1;
+	  }
+
+	  return -1;
+	}
+
+	/**
+	 * Comparator between two mappings with inflated source and name strings where
+	 * the generated positions are compared.
+	 */
+	function compareByGeneratedPositionsInflated(mappingA, mappingB) {
+	  var cmp = mappingA.generatedLine - mappingB.generatedLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = strcmp(mappingA.source, mappingB.source);
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalLine - mappingB.originalLine;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  cmp = mappingA.originalColumn - mappingB.originalColumn;
+	  if (cmp !== 0) {
+	    return cmp;
+	  }
+
+	  return strcmp(mappingA.name, mappingB.name);
+	}
+	exports.compareByGeneratedPositionsInflated = compareByGeneratedPositionsInflated;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	exports.GREATEST_LOWER_BOUND = 1;
+	exports.LEAST_UPPER_BOUND = 2;
+
+	/**
+	 * Recursive implementation of binary search.
+	 *
+	 * @param aLow Indices here and lower do not contain the needle.
+	 * @param aHigh Indices here and higher do not contain the needle.
+	 * @param aNeedle The element being searched for.
+	 * @param aHaystack The non-empty array being searched.
+	 * @param aCompare Function which takes two elements and returns -1, 0, or 1.
+	 * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+	 *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+	 *     closest element that is smaller than or greater than the one we are
+	 *     searching for, respectively, if the exact element cannot be found.
+	 */
+	function recursiveSearch(aLow, aHigh, aNeedle, aHaystack, aCompare, aBias) {
+	  // This function terminates when one of the following is true:
+	  //
+	  //   1. We find the exact element we are looking for.
+	  //
+	  //   2. We did not find the exact element, but we can return the index of
+	  //      the next-closest element.
+	  //
+	  //   3. We did not find the exact element, and there is no next-closest
+	  //      element than the one we are searching for, so we return -1.
+	  var mid = Math.floor((aHigh - aLow) / 2) + aLow;
+	  var cmp = aCompare(aNeedle, aHaystack[mid], true);
+	  if (cmp === 0) {
+	    // Found the element we are looking for.
+	    return mid;
+	  }
+	  else if (cmp > 0) {
+	    // Our needle is greater than aHaystack[mid].
+	    if (aHigh - mid > 1) {
+	      // The element is in the upper half.
+	      return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
+	    }
+
+	    // The exact needle element was not found in this haystack. Determine if
+	    // we are in termination case (3) or (2) and return the appropriate thing.
+	    if (aBias == exports.LEAST_UPPER_BOUND) {
+	      return aHigh < aHaystack.length ? aHigh : -1;
+	    } else {
+	      return mid;
+	    }
+	  }
+	  else {
+	    // Our needle is less than aHaystack[mid].
+	    if (mid - aLow > 1) {
+	      // The element is in the lower half.
+	      return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
+	    }
+
+	    // we are in termination case (3) or (2) and return the appropriate thing.
+	    if (aBias == exports.LEAST_UPPER_BOUND) {
+	      return mid;
+	    } else {
+	      return aLow < 0 ? -1 : aLow;
+	    }
+	  }
+	}
+
+	/**
+	 * This is an implementation of binary search which will always try and return
+	 * the index of the closest element if there is no exact hit. This is because
+	 * mappings between original and generated line/col pairs are single points,
+	 * and there is an implicit region between each of them, so a miss just means
+	 * that you aren't on the very start of a region.
+	 *
+	 * @param aNeedle The element you are looking for.
+	 * @param aHaystack The array that is being searched.
+	 * @param aCompare A function which takes the needle and an element in the
+	 *     array and returns -1, 0, or 1 depending on whether the needle is less
+	 *     than, equal to, or greater than the element, respectively.
+	 * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+	 *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+	 *     closest element that is smaller than or greater than the one we are
+	 *     searching for, respectively, if the exact element cannot be found.
+	 *     Defaults to 'binarySearch.GREATEST_LOWER_BOUND'.
+	 */
+	exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
+	  if (aHaystack.length === 0) {
+	    return -1;
+	  }
+
+	  var index = recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack,
+	                              aCompare, aBias || exports.GREATEST_LOWER_BOUND);
+	  if (index < 0) {
+	    return -1;
+	  }
+
+	  // We have found either the exact element, or the next-closest element than
+	  // the one we are searching for. However, there may be more than one such
+	  // element. Make sure we always return the smallest of these.
+	  while (index - 1 >= 0) {
+	    if (aCompare(aHaystack[index], aHaystack[index - 1], true) !== 0) {
+	      break;
+	    }
+	    --index;
+	  }
+
+	  return index;
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	var util = __webpack_require__(2);
+	var has = Object.prototype.hasOwnProperty;
+
+	/**
+	 * A data structure which is a combination of an array and a set. Adding a new
+	 * member is O(1), testing for membership is O(1), and finding the index of an
+	 * element is O(1). Removing elements from the set is not supported. Only
+	 * strings are supported for membership.
+	 */
+	function ArraySet() {
+	  this._array = [];
+	  this._set = Object.create(null);
+	}
+
+	/**
+	 * Static method for creating ArraySet instances from an existing array.
+	 */
+	ArraySet.fromArray = function ArraySet_fromArray(aArray, aAllowDuplicates) {
+	  var set = new ArraySet();
+	  for (var i = 0, len = aArray.length; i < len; i++) {
+	    set.add(aArray[i], aAllowDuplicates);
+	  }
+	  return set;
+	};
+
+	/**
+	 * Return how many unique items are in this ArraySet. If duplicates have been
+	 * added, than those do not count towards the size.
+	 *
+	 * @returns Number
+	 */
+	ArraySet.prototype.size = function ArraySet_size() {
+	  return Object.getOwnPropertyNames(this._set).length;
+	};
+
+	/**
+	 * Add the given string to this set.
+	 *
+	 * @param String aStr
+	 */
+	ArraySet.prototype.add = function ArraySet_add(aStr, aAllowDuplicates) {
+	  var sStr = util.toSetString(aStr);
+	  var isDuplicate = has.call(this._set, sStr);
+	  var idx = this._array.length;
+	  if (!isDuplicate || aAllowDuplicates) {
+	    this._array.push(aStr);
+	  }
+	  if (!isDuplicate) {
+	    this._set[sStr] = idx;
+	  }
+	};
+
+	/**
+	 * Is the given string a member of this set?
+	 *
+	 * @param String aStr
+	 */
+	ArraySet.prototype.has = function ArraySet_has(aStr) {
+	  var sStr = util.toSetString(aStr);
+	  return has.call(this._set, sStr);
+	};
+
+	/**
+	 * What is the index of the given string in the array?
+	 *
+	 * @param String aStr
+	 */
+	ArraySet.prototype.indexOf = function ArraySet_indexOf(aStr) {
+	  var sStr = util.toSetString(aStr);
+	  if (has.call(this._set, sStr)) {
+	    return this._set[sStr];
+	  }
+	  throw new Error('"' + aStr + '" is not in the set.');
+	};
+
+	/**
+	 * What is the element at the given index?
+	 *
+	 * @param Number aIdx
+	 */
+	ArraySet.prototype.at = function ArraySet_at(aIdx) {
+	  if (aIdx >= 0 && aIdx < this._array.length) {
+	    return this._array[aIdx];
+	  }
+	  throw new Error('No element indexed by ' + aIdx);
+	};
+
+	/**
+	 * Returns the array representation of this set (which has the proper indices
+	 * indicated by indexOf). Note that this is a copy of the internal array used
+	 * for storing the members so that no one can mess with internal state.
+	 */
+	ArraySet.prototype.toArray = function ArraySet_toArray() {
+	  return this._array.slice();
+	};
+
+	exports.ArraySet = ArraySet;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 *
+	 * Based on the Base 64 VLQ implementation in Closure Compiler:
+	 * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
+	 *
+	 * Copyright 2011 The Closure Compiler Authors. All rights reserved.
+	 * Redistribution and use in source and binary forms, with or without
+	 * modification, are permitted provided that the following conditions are
+	 * met:
+	 *
+	 *  * Redistributions of source code must retain the above copyright
+	 *    notice, this list of conditions and the following disclaimer.
+	 *  * Redistributions in binary form must reproduce the above
+	 *    copyright notice, this list of conditions and the following
+	 *    disclaimer in the documentation and/or other materials provided
+	 *    with the distribution.
+	 *  * Neither the name of Google Inc. nor the names of its
+	 *    contributors may be used to endorse or promote products derived
+	 *    from this software without specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+	 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+	 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+	 * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+	 * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+	 * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+	 * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+	 * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+	 * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+	 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	 */
+
+	var base64 = __webpack_require__(6);
+
+	// A single base 64 digit can contain 6 bits of data. For the base 64 variable
+	// length quantities we use in the source map spec, the first bit is the sign,
+	// the next four bits are the actual value, and the 6th bit is the
+	// continuation bit. The continuation bit tells us whether there are more
+	// digits in this value following this digit.
+	//
+	//   Continuation
+	//   |    Sign
+	//   |    |
+	//   V    V
+	//   101011
+
+	var VLQ_BASE_SHIFT = 5;
+
+	// binary: 100000
+	var VLQ_BASE = 1 << VLQ_BASE_SHIFT;
+
+	// binary: 011111
+	var VLQ_BASE_MASK = VLQ_BASE - 1;
+
+	// binary: 100000
+	var VLQ_CONTINUATION_BIT = VLQ_BASE;
+
+	/**
+	 * Converts from a two-complement value to a value where the sign bit is
+	 * placed in the least significant bit.  For example, as decimals:
+	 *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
+	 *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
+	 */
+	function toVLQSigned(aValue) {
+	  return aValue < 0
+	    ? ((-aValue) << 1) + 1
+	    : (aValue << 1) + 0;
+	}
+
+	/**
+	 * Converts to a two-complement value from a value where the sign bit is
+	 * placed in the least significant bit.  For example, as decimals:
+	 *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
+	 *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
+	 */
+	function fromVLQSigned(aValue) {
+	  var isNegative = (aValue & 1) === 1;
+	  var shifted = aValue >> 1;
+	  return isNegative
+	    ? -shifted
+	    : shifted;
+	}
+
+	/**
+	 * Returns the base 64 VLQ encoded value.
+	 */
+	exports.encode = function base64VLQ_encode(aValue) {
+	  var encoded = "";
+	  var digit;
+
+	  var vlq = toVLQSigned(aValue);
+
+	  do {
+	    digit = vlq & VLQ_BASE_MASK;
+	    vlq >>>= VLQ_BASE_SHIFT;
+	    if (vlq > 0) {
+	      // There are still more digits in this value, so we must make sure the
+	      // continuation bit is marked.
+	      digit |= VLQ_CONTINUATION_BIT;
+	    }
+	    encoded += base64.encode(digit);
+	  } while (vlq > 0);
+
+	  return encoded;
+	};
+
+	/**
+	 * Decodes the next base 64 VLQ value from the given string and returns the
+	 * value and the rest of the string via the out parameter.
+	 */
+	exports.decode = function base64VLQ_decode(aStr, aIndex, aOutParam) {
+	  var strLen = aStr.length;
+	  var result = 0;
+	  var shift = 0;
+	  var continuation, digit;
+
+	  do {
+	    if (aIndex >= strLen) {
+	      throw new Error("Expected more digits in base 64 VLQ value.");
+	    }
+
+	    digit = base64.decode(aStr.charCodeAt(aIndex++));
+	    if (digit === -1) {
+	      throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
+	    }
+
+	    continuation = !!(digit & VLQ_CONTINUATION_BIT);
+	    digit &= VLQ_BASE_MASK;
+	    result = result + (digit << shift);
+	    shift += VLQ_BASE_SHIFT;
+	  } while (continuation);
+
+	  aOutParam.value = fromVLQSigned(result);
+	  aOutParam.rest = aIndex;
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	var intToCharMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+
+	/**
+	 * Encode an integer in the range of 0 to 63 to a single base 64 digit.
+	 */
+	exports.encode = function (number) {
+	  if (0 <= number && number < intToCharMap.length) {
+	    return intToCharMap[number];
+	  }
+	  throw new TypeError("Must be between 0 and 63: " + number);
+	};
+
+	/**
+	 * Decode a single base 64 character code digit to an integer. Returns -1 on
+	 * failure.
+	 */
+	exports.decode = function (charCode) {
+	  var bigA = 65;     // 'A'
+	  var bigZ = 90;     // 'Z'
+
+	  var littleA = 97;  // 'a'
+	  var littleZ = 122; // 'z'
+
+	  var zero = 48;     // '0'
+	  var nine = 57;     // '9'
+
+	  var plus = 43;     // '+'
+	  var slash = 47;    // '/'
+
+	  var littleOffset = 26;
+	  var numberOffset = 52;
+
+	  // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	  if (bigA <= charCode && charCode <= bigZ) {
+	    return (charCode - bigA);
+	  }
+
+	  // 26 - 51: abcdefghijklmnopqrstuvwxyz
+	  if (littleA <= charCode && charCode <= littleZ) {
+	    return (charCode - littleA + littleOffset);
+	  }
+
+	  // 52 - 61: 0123456789
+	  if (zero <= charCode && charCode <= nine) {
+	    return (charCode - zero + numberOffset);
+	  }
+
+	  // 62: +
+	  if (charCode == plus) {
+	    return 62;
+	  }
+
+	  // 63: /
+	  if (charCode == slash) {
+	    return 63;
+	  }
+
+	  // Invalid base64 digit.
+	  return -1;
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	/* -*- Mode: js; js-indent-level: 2; -*- */
+	/*
+	 * Copyright 2011 Mozilla Foundation and contributors
+	 * Licensed under the New BSD license. See LICENSE or:
+	 * http://opensource.org/licenses/BSD-3-Clause
+	 */
+
+	// It turns out that some (most?) JavaScript engines don't self-host
+	// `Array.prototype.sort`. This makes sense because C++ will likely remain
+	// faster than JS when doing raw CPU-intensive sorting. However, when using a
+	// custom comparator function, calling back and forth between the VM's C++ and
+	// JIT'd JS is rather slow *and* loses JIT type information, resulting in
+	// worse generated code for the comparator function than would be optimal. In
+	// fact, when sorting with a comparator, these costs outweigh the benefits of
+	// sorting in C++. By using our own JS-implemented Quick Sort (below), we get
+	// a ~3500ms mean speed-up in `bench/bench.html`.
+
+	/**
+	 * Swap the elements indexed by `x` and `y` in the array `ary`.
+	 *
+	 * @param {Array} ary
+	 *        The array.
+	 * @param {Number} x
+	 *        The index of the first item.
+	 * @param {Number} y
+	 *        The index of the second item.
+	 */
+	function swap(ary, x, y) {
+	  var temp = ary[x];
+	  ary[x] = ary[y];
+	  ary[y] = temp;
+	}
+
+	/**
+	 * Returns a random integer within the range `low .. high` inclusive.
+	 *
+	 * @param {Number} low
+	 *        The lower bound on the range.
+	 * @param {Number} high
+	 *        The upper bound on the range.
+	 */
+	function randomIntInRange(low, high) {
+	  return Math.round(low + (Math.random() * (high - low)));
+	}
+
+	/**
+	 * The Quick Sort algorithm.
+	 *
+	 * @param {Array} ary
+	 *        An array to sort.
+	 * @param {function} comparator
+	 *        Function to use to compare two items.
+	 * @param {Number} p
+	 *        Start index of the array
+	 * @param {Number} r
+	 *        End index of the array
+	 */
+	function doQuickSort(ary, comparator, p, r) {
+	  // If our lower bound is less than our upper bound, we (1) partition the
+	  // array into two pieces and (2) recurse on each half. If it is not, this is
+	  // the empty array and our base case.
+
+	  if (p < r) {
+	    // (1) Partitioning.
+	    //
+	    // The partitioning chooses a pivot between `p` and `r` and moves all
+	    // elements that are less than or equal to the pivot to the before it, and
+	    // all the elements that are greater than it after it. The effect is that
+	    // once partition is done, the pivot is in the exact place it will be when
+	    // the array is put in sorted order, and it will not need to be moved
+	    // again. This runs in O(n) time.
+
+	    // Always choose a random pivot so that an input array which is reverse
+	    // sorted does not cause O(n^2) running time.
+	    var pivotIndex = randomIntInRange(p, r);
+	    var i = p - 1;
+
+	    swap(ary, pivotIndex, r);
+	    var pivot = ary[r];
+
+	    // Immediately after `j` is incremented in this loop, the following hold
+	    // true:
+	    //
+	    //   * Every element in `ary[p .. i]` is less than or equal to the pivot.
+	    //
+	    //   * Every element in `ary[i+1 .. j-1]` is greater than the pivot.
+	    for (var j = p; j < r; j++) {
+	      if (comparator(ary[j], pivot) <= 0) {
+	        i += 1;
+	        swap(ary, i, j);
+	      }
+	    }
+
+	    swap(ary, i + 1, j);
+	    var q = i + 1;
+
+	    // (2) Recurse on each half.
+
+	    doQuickSort(ary, comparator, p, q - 1);
+	    doQuickSort(ary, comparator, q + 1, r);
+	  }
+	}
+
+	/**
+	 * Sort the given array in-place with the given comparator function.
+	 *
+	 * @param {Array} ary
+	 *        An array to sort.
+	 * @param {function} comparator
+	 *        Function to use to compare two items.
+	 */
+	exports.quickSort = function (ary, comparator) {
+	  doQuickSort(ary, comparator, 0, ary.length - 1);
+	};
+
+
+/***/ }
+/******/ ])
+});
+;
+
+/***/ }),
+
 /***/ "./node_modules/squash-xml-json/lib/flatten-xml.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18268,7 +19891,7 @@ function config (name) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -18276,7 +19899,62 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 
+var _oddOperations = __webpack_require__("./reducers/oddOperations.js");
+
+var _interface = __webpack_require__("./reducers/interface.js");
+
+var romajsApp = (0, _redux.combineReducers)({
+  selectedOdd: _oddOperations.selectedOdd,
+  odd: _oddOperations.odd,
+  ui: _interface.ui
+});
+
+exports.default = romajsApp;
+
+/***/ }),
+
+/***/ "./reducers/interface.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ui = ui;
+
+var _interface = __webpack_require__("./actions/interface.js");
+
+function ui() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _interface.SET_FILTER_TERM:
+      return Object.assign({}, state, { filterTerm: action.term });
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./reducers/oddOperations.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.selectedOdd = selectedOdd;
+exports.odd = odd;
+
 var _actions = __webpack_require__("./actions/index.js");
+
+var _selectors = __webpack_require__("./selectors/index.js");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -18334,13 +20012,13 @@ function odd() {
     case _actions.REQUEST_P5:
       return Object.assign({}, state, p5(state[action.odd], action));
     case _actions.INCLUDE_MODULES:
-      currentModules = getCurrentModules(state);
+      currentModules = getCurrentModules(state
       // Find modules that need inclusion
-      var modulesToInclude = action.modules.filter(function (x) {
+      );var modulesToInclude = action.modules.filter(function (x) {
         return currentModules.indexOf(x) == -1;
-      });
+      }
       // Create elements
-      odd = state.customization.json;
+      );odd = state.customization.json;
 
       // find (first) schemaSpec first, then loop on modules to include
       var _iteratorNormalCompletion = true;
@@ -18614,14 +20292,22 @@ function odd() {
             } else {
               // otherwise add to @except
               var _excludes = new Set((_node3["@"].except || "").split(" "));
+              _excludes.delete("");
               var except = new Set([].concat(_toConsumableArray(_excludes), _toConsumableArray(new Set(action.elements))));
-              _node3["@"].except = Array.from(except).join(" ");
+              _node3["@"].except = Array.from(except).join(" "
+              // remove module if all elements are excluded
+              );var all_els = (0, _selectors.getElementsForModule)(state, { module: action.module });
+              if (all_els.length == except.size) {
+                var _parent2 = odd[_node3.parent];
+                _parent2.children.splice(_parent2.children.indexOf(_node_id3), 1);
+                delete odd[_node_id3];
+              }
             }
           }
           // remove matching elementRefs is present
           else if (_node3.name == "elementRef" && action.elements.indexOf(_node3["@"].key) > -1) {
-              var _parent2 = odd[_node3.parent];
-              _parent2.children.splice(_parent2.children.indexOf(_node_id3), 1);
+              var _parent3 = odd[_node3.parent];
+              _parent3.children.splice(_parent3.children.indexOf(_node_id3), 1);
               delete odd[_node_id3];
             }
             // finally look for a matching elementSpec
@@ -18726,13 +20412,6 @@ function p5() {
       return state;
   }
 }
-
-var romajsApp = (0, _redux.combineReducers)({
-  selectedOdd: selectedOdd,
-  odd: odd
-});
-
-exports.default = romajsApp;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
@@ -18780,10 +20459,10 @@ var _reselect = __webpack_require__("./node_modules/reselect/lib/index.js");
 var _squashXmlJson = __webpack_require__("./node_modules/squash-xml-json/lib/squash-xml-json.js");
 
 var getCustomization = function getCustomization(state) {
-  return state.odd.customization.json;
+  return state.customization.json;
 };
 var getLocalSourceElements = function getLocalSourceElements(state) {
-  return state.odd.localsource.json.members;
+  return state.localsource.json.members;
 };
 
 var getElementsForModule = exports.getElementsForModule = function getElementsForModule(state, params) {
@@ -18852,7 +20531,7 @@ var getElementsForModule = exports.getElementsForModule = function getElementsFo
         if (excludedElements.indexOf(member.ident) > -1) {
           selected = false;
         }
-        var element = Object.assign({}, member, { selected: selected });
+        var element = Object.assign({}, member, params.props, { selected: selected });
         acc.push(element);
       }
       return acc;
@@ -18875,4 +20554,4 @@ exports.default = getElementsForModule;
 /***/ })
 
 },["./index.js"]);
-//# sourceMappingURL=app-14b7798caf24cdf5292e.js.map
+//# sourceMappingURL=app-1902aff69206c82cbbc3.js.map

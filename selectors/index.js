@@ -52,7 +52,7 @@ export const getElementsForModule = (state, params) => {
           selected = false
         }
         let element = Object.assign({}, member,
-          {selected: selected}
+          params.props, {selected: selected}
         )
         acc.push(element)
       }

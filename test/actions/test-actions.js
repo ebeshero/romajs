@@ -4,6 +4,7 @@ import express from 'express'
 import fs from 'fs'
 import expect from 'expect'
 import * as actions from '../../actions'
+import {setFilterTerm} from '../../actions/interface'
 import {flattenXML, hydrateXML} from 'squash-xml-json'
 
 const middlewares = [ thunk ]
@@ -140,34 +141,44 @@ describe('Module actions', () => {
 
 });
 
-describe('Element actions', () => {
-  it('changeElement should pass changes to an element', () =>{
-    expect(actions.changeElement(
-      "p",
-      {
-        namespace: "",
-        alias: "",
-        desc: "",
-        classes: [],
-        examples: [],
-        content: [],
-        constraints: [],
-        content: {},
-        attributes: []
-      }
-    )).toEqual({
-      type: 'SAVE_ELEMENT_CHANGES',
-      changes: {
-        namespace: "",
-        alias: "",
-        desc: "",
-        classes: [],
-        examples: [],
-        content: [],
-        constraints: [],
-        content: {},
-        attributes: []
-      }
+// describe('Element actions', () => {
+//   it('changeElement should pass changes to an element', () =>{
+//     expect(actions.changeElement(
+//       "p",
+//       {
+//         namespace: "",
+//         alias: "",
+//         desc: "",
+//         classes: [],
+//         examples: [],
+//         content: [],
+//         constraints: [],
+//         content: {},
+//         attributes: []
+//       }
+//     )).toEqual({
+//       type: 'SAVE_ELEMENT_CHANGES',
+//       changes: {
+//         namespace: "",
+//         alias: "",
+//         desc: "",
+//         classes: [],
+//         examples: [],
+//         content: [],
+//         constraints: [],
+//         content: {},
+//         attributes: []
+//       }
+//     })
+//   });
+// });
+
+/* INTERFACE ACTIONS */
+describe('Interface actions', () => {
+  it('setFilterTerm should pass a string for components to filter ODD items', () =>{
+    expect(setFilterTerm('p')).toEqual({
+      type: 'SET_FILTER_TERM',
+      term: 'p'
     })
-  });
-});
+  })
+})

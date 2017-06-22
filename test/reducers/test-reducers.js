@@ -3,32 +3,42 @@ import {flattenXML, hydrateXML} from 'squash-xml-json';
 import fs from 'fs'
 import romajsApp from '../../reducers'
 
+var initialState = { selectedOdd: '', odd: {}, ui: {} }
+
 describe('Input ODD reducers', () => {
   it('should handle initial state', () => {
     expect(
       romajsApp(undefined, {})
-    ).toEqual({ selectedOdd: '', odd: {} })
+    ).toEqual(initialState)
   })
 
   it('should handle SELECT_ODD', () => {
+    let state = Object.assign({}, initialState,
+      {selectedOdd: './static/fakeData/bare.odd'}
+    )
     expect(
       romajsApp({}, {
         type: 'SELECT_ODD',
         odd_url: './static/fakeData/bare.odd'
       })
     ).toEqual({
+        ui: {},
         selectedOdd: './static/fakeData/bare.odd',
         odd: {}
       })
   });
 
   it('should handle REQUEST_ODD', () => {
+    let state = Object.assign({}, initialState,
+      {selectedOdd: './static/fakeData/bare.odd'}
+    )
     expect(
-      romajsApp({ odd: {}, selectedOdd: './static/fakeData/bare.odd' }, {
+      romajsApp(state, {
         type: 'REQUEST_ODD',
         odd: './static/fakeData/bare.odd'
       })
     ).toEqual({
+       ui: {},
        odd: { customization: { isFetching: true } },
        selectedOdd: './static/fakeData/bare.odd'
      })
@@ -37,10 +47,11 @@ describe('Input ODD reducers', () => {
   it('should handle RECEIVE_ODD', () => {
     let xml = '<TEI><teiHeader/><text><body><schemaSpec></schemaSpec></body></text></TEI>'
     let json = flattenXML(xml)
-    let state = romajsApp({
-       odd: {customization: { isFetching: true } },
-       selectedOdd: './static/fakeData/bare.odd'
-    }, {
+    let newState = Object.assign({}, initialState,
+      {selectedOdd: './static/fakeData/bare.odd',
+      odd: {customization: { isFetching: true } }}
+    )
+    let state = romajsApp(newState, {
       type: 'RECEIVE_ODD',
       xml: xml,
       json: json
@@ -59,11 +70,12 @@ describe('Input ODD reducers', () => {
 
   it('should handle REQUEST_P5', () => {
     expect(
-      romajsApp({ odd: {}, selectedOdd: ''}, {
+      romajsApp(initialState, {
         type: 'REQUEST_P5',
         url: 'http://localhost:3000/static/fakeData/p5subset.json'
       })
     ).toEqual({
+       ui: {},
        selectedOdd: '',
        odd: { localsource: { isFetching: true } }
     })
@@ -437,6 +449,19 @@ describe('ODD modules operation reducers', () => {
     }, [])
 
     expect(moduleRefs[0]["@"]).toEqual({ key: 'core', except: 'p list' })
+  })
+
+})
+
+describe('Interface operation reducers', () => {
+
+  it('should handle SET_FILTER_TERM', () => {
+    let state = romajsApp(initialState, {
+      type: 'SET_FILTER_TERM',
+      term: 'p'
+    })
+
+    expect(state.ui.filterTerm).toEqual('p')
   })
 
 })

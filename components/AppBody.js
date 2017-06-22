@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Component } from 'react'
 import FullItemList from '../containers/FullItemList'
+import FilterSearch from '../containers/FilterSearch'
 
 // import * as Drawer from '@material/drawer';
 
@@ -39,14 +40,7 @@ class AppBody extends Component {
             </span>
           </section>
           <section className="mdc-toolbar__section mdc-toolbar__section--align-end">
-            <span className="mdl-chip mdl-chip--deletable romajs-searchbar">
-                <span className="mdl-chip__text">
-                  <div className="mdc-textfield">
-                    <input type="text" className="mdc-textfield__input" id="search-textfield" placeholder="search"/>
-                  </div>
-                </span>
-                <button type="button" className="mdl-chip__action"><i className="material-icons">search</i></button>
-            </span>
+            <FilterSearch/>
           </section>
         </div>
       </header>

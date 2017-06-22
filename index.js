@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
-import { selectOdd, fetchOdd, fetchP5, parseOdd, includeModules } from './actions'
+// import { selectOdd, fetchOdd, fetchP5, parseOdd, includeModules } from './actions'
 import romajsApp from './reducers'
 import App from './containers/App'
 import {hydrateXML} from 'squash-xml-json';

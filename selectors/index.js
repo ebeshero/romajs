@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 import {flattenXML, hydrateXML} from 'squash-xml-json';
 
-const getCustomization = (state) => state.odd.customization.json
-const getLocalSourceElements = (state) => state.odd.localsource.json.members
+const getCustomization = (state) => state.customization.json
+const getLocalSourceElements = (state) => state.localsource.json.members
 
 export const getElementsForModule = (state, params) => {
   let sel = createSelector([getCustomization, getLocalSourceElements],

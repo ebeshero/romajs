@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 
       let elements = []
       for (let module of modules){
-        elements = elements.concat(getElementsForModule(state,
+        elements = elements.concat(getElementsForModule(state.odd,
           {module: module.ident, module_selected: module.selected,
             props: {visible: true}
           }))

@@ -11,7 +11,7 @@ const mapStateToProps = (state, params) => {
       let odd = state.odd.customization.json
 
       return {
-        elements: getElementsForModule(state, params)
+        elements: getElementsForModule(state.odd, params)
       }
     }
     else return {elements: []}

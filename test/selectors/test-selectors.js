@@ -19,7 +19,7 @@ describe('Selector: getElementsForModule', (done) => {
        selectedOdd: ''
     }
 
-    let elements = selectors.getElementsForModule(state, {module: "core", module_selected: true})
+    let elements = selectors.getElementsForModule(state.odd, {module: "core", module_selected: true})
     let deselected = elements.filter((el)=>{
       return !el.selected
     })
@@ -39,7 +39,7 @@ describe('Selector: getElementsForModule', (done) => {
        selectedOdd: ''
     }
 
-    let elements = selectors.getElementsForModule(state, {module: "core", module_selected: true})
+    let elements = selectors.getElementsForModule(state.odd, {module: "core", module_selected: true})
     let selected = elements.filter((el)=>{
       return el.selected
     })
@@ -59,7 +59,7 @@ describe('Selector: getElementsForModule', (done) => {
        selectedOdd: ''
     }
 
-    let elements = selectors.getElementsForModule(state, {module: "core", module_selected: true})
+    let elements = selectors.getElementsForModule(state.odd, {module: "core", module_selected: true})
     let deselected = elements.filter((el)=>{
       return !el.selected
     })
@@ -80,7 +80,7 @@ describe('Selector: getElementsForModule', (done) => {
        selectedOdd: ''
     }
 
-    let elements = selectors.getElementsForModule(state, {module: "core", module_selected: false})
+    let elements = selectors.getElementsForModule(state.odd, {module: "core", module_selected: false})
     let deselected = elements.filter((el)=>{
       return !el.selected
     })
@@ -101,7 +101,7 @@ describe('Selector: getElementsForModule', (done) => {
        selectedOdd: ''
     }
 
-    let elements = selectors.getElementsForModule(state, {module: "msdescription", module_selected: true})
+    let elements = selectors.getElementsForModule(state.odd, {module: "msdescription", module_selected: true})
     let deselected = elements.filter((el)=>{
       return el.selected
     })

@@ -2,6 +2,7 @@ import {
   SELECT_ODD, REQUEST_ODD, RECEIVE_ODD, PARSE_ODD, REQUEST_P5, RECEIVE_P5,
   INCLUDE_MODULES, EXCLUDE_MODULES, INCLUDE_ELEMENTS, EXCLUDE_ELEMENTS
 } from '../actions'
+import {getElementsForModule} from '../selectors'
 
 // Helper functions
 let getCurrentModules = function(state='') {
@@ -206,8 +207,16 @@ export function odd(state = {}, action) {
             else {
               // otherwise add to @except
               let excludes = new Set((node["@"].except || "").split(" "))
+              excludes.delete("")
               let except = new Set([...excludes, ...new Set(action.elements)])
               node["@"].except = Array.from(except).join(" ")
+              // remove module if all elements are excluded
+              let all_els = getElementsForModule(state, {module: action.module})
+              if (all_els.length == except.size) {
+                let parent = odd[node.parent]
+                parent.children.splice(parent.children.indexOf(node_id), 1)
+                delete odd[node_id]
+              }
             }
           }
           // remove matching elementRefs is present

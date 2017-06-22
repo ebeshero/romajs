@@ -356,8 +356,10 @@ describe('ODD modules operation reducers', () => {
     let data = `<schemaSpec><moduleRef key="core" except="p"/></schemaSpec>`
     let json = flattenXML(data)
     let state = romajsApp({
-      odd: { customization: { json: json } },
-       selectedOdd: ''
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
     }, {
       type: 'EXCLUDE_ELEMENTS',
       elements: ['abbr', 'list'],
@@ -373,6 +375,34 @@ describe('ODD modules operation reducers', () => {
         done();
       }
     }
+  })
+
+  it('should handle EXCLUDE_ELEMENTS (@except - all elements)', () => {
+    let data = `<schemaSpec><moduleRef key="tei"/>
+                  <moduleRef key="gaiji" except="char charDecl charName charProp
+                    g glyph glyphName localName mapping"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'EXCLUDE_ELEMENTS',
+      elements: ['unicodeName', 'value'],
+      module: "gaiji"
+    })
+
+    let odd = state.odd.customization.json
+
+    let modules = Object.keys(odd).reduce((acc, node_id) => {
+      if (odd[node_id].name == "moduleRef") {
+        acc.push(node_id)
+      }
+      return acc
+    }, [])
+
+    expect(modules.length).toEqual(1)
   })
 
   it('should handle EXCLUDE_ELEMENTS (elementRef)', (done) => {
@@ -432,8 +462,10 @@ describe('ODD modules operation reducers', () => {
     let data = `<schemaSpec><moduleRef key="core" except="p list"/></schemaSpec>`
     let json = flattenXML(data)
     let state = romajsApp({
-       odd: { customization: { json : json } },
-       selectedOdd: ''
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
     }, {
       type: 'EXCLUDE_ELEMENTS',
       elements: ['p', 'list'],

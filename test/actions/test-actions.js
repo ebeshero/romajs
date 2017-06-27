@@ -27,7 +27,7 @@ describe('I/O ODD actions', () => {
   it('selectOdd should store the URL of an input ODD', () =>{
     expect(actions.selectOdd('./static/fakeData/bare.odd')).toEqual({
       type: 'SELECT_ODD',
-      odd_url: './static/fakeData/bare.odd'
+      oddUrl: './static/fakeData/bare.odd'
     })
   });
 

@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux';
-import { selectedOdd, odd } from  './oddOperations'
+import { combineReducers } from 'redux'
+import { selectedOdd, processOdd } from  './oddOperations'
 import { ui } from  './interface'
 
 const romajsApp = combineReducers({
   selectedOdd,
-  odd,
+  odd: processOdd,
   ui
 })
 
-export default romajsApp;
+export default romajsApp

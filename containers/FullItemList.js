@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import { includeElements, excludeElements,
-         includeModules, excludeModules } from '../actions'
+import { includeElements, excludeElements } from '../actions'
 import ItemList from '../components/ItemList'
 import getElementsForModule from '../selectors'
 
@@ -13,23 +12,21 @@ An Item is anything that has a @ident in ODD and belongs to a module. Namely:
 */
 
 const mapStateToProps = (state) => {
-
   if (state.odd.customization && state.odd.localsource) {
     if (!state.odd.localsource.isFetching) {
-      let odd = state.odd.customization.json
+      const odd = state.odd.customization.json
 
       // If a filterTerm is set, use it to filter results
-      let filter = state.ui.filterTerm ? state.ui.filterTerm : false
-      let visible = true
+      const filter = state.ui.filterTerm ? state.ui.filterTerm : false
 
-      let selectedModules = Object.keys(odd).reduce((acc, node_id)=>{
-        if (odd[node_id].name == "moduleRef") {
-          acc.push(odd[node_id]["@"]["key"])
+      const selectedModules = Object.keys(odd).reduce((acc, nodeId)=>{
+        if (odd[nodeId].name === 'moduleRef') {
+          acc.push(odd[nodeId]['@'].key)
         }
         return acc
       }, [])
 
-      let modules = state.odd.localsource.json.modules.map(module => {
+      const modules = state.odd.localsource.json.modules.map(module => {
         let selected = false
         if (selectedModules.indexOf(module.ident) > -1) {
           selected = true
@@ -40,7 +37,7 @@ const mapStateToProps = (state) => {
       })
 
       let elements = []
-      for (let module of modules){
+      for (const module of modules) {
         elements = elements.concat(getElementsForModule(state.odd,
           {module: module.ident, module_selected: module.selected,
             props: {visible: true}
@@ -50,10 +47,9 @@ const mapStateToProps = (state) => {
       // When filtering, determine whether elements are visible
       if (filter) {
         elements = elements.map(el => {
-          if (el.ident.toLowerCase().match(filter.toLowerCase())){
+          if (el.ident.toLowerCase().match(filter.toLowerCase())) {
             el.visible = true
-          }
-          else {
+          } else {
             el.visible = false
           }
           return el
@@ -61,18 +57,18 @@ const mapStateToProps = (state) => {
       }
 
       // Finally, sort alphabetically
-      elements.sort(function(a,b) {return (a.ident.toLowerCase() > b.ident.toLowerCase()) ? 1
-                                       : ((b.ident.toLowerCase() > a.ident.toLowerCase()) ? -1 : 0)} )
+      elements.sort((a, b) => {
+        if (a.ident.toLowerCase() > b.ident.toLowerCase()) {
+          return 1
+        } else {
+          return (b.ident.toLowerCase() > a.ident.toLowerCase()) ? -1 : 0
+        }
+      })
 
       return {elements}
-
-    }
-    else return {elements: []}
-
-  }
-  else return {elements: []}
+    } else return {elements: []}
+  } else return {elements: []}
   // else return {elements: [], classes: [], datatypes: [], macros: []}
-
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -80,8 +76,7 @@ const mapDispatchToProps = (dispatch) => {
     onItemChange: (name, module, selected) => {
       if (selected) {
         dispatch(excludeElements([name], module))
-      }
-      else {
+      } else {
         dispatch(includeElements([name], module))
       }
     }

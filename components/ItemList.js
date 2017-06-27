@@ -5,12 +5,13 @@ const ItemList = ({ elements, onItemChange }) => (
   <ul className="mdc-list mdc-list--two-line romajs-itemlist">
     {elements.map(element => {
       if (element.visible) {
-        return <Item
-        key={element.ident}
-        {...element}
-        onChange={() => onItemChange(element.ident, element.module, element.selected)}
-        />
+        return (<Item
+          key={element.ident}
+          {...element}
+          onChange={() => onItemChange(element.ident, element.module, element.selected)}
+        />)
       }
+      return ''
     }
     )}
   </ul>

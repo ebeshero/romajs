@@ -19,7 +19,7 @@ describe('Input ODD reducers', () => {
     expect(
       romajsApp({}, {
         type: 'SELECT_ODD',
-        odd_url: './static/fakeData/bare.odd'
+        oddUrl: './static/fakeData/bare.odd'
       })
     ).toEqual({
         ui: {},

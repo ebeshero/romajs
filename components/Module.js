@@ -17,4 +17,8 @@ Module.propTypes = {
   ident: PropTypes.string.isRequired
 }
 
+Icon.propTypes = {
+  selected: PropTypes.bool.isRequired
+}
+
 export default Module

@@ -2,10 +2,6 @@ import { connect } from 'react-redux'
 import { setFilterTerm } from '../actions/interface'
 import FilterSearchBar from '../components/FilterSearchBar'
 
-const mapStateToProps = (state) => {
-  return {}
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onInputChange: (term) => {
@@ -15,7 +11,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const FilterSearch = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(FilterSearchBar)
 

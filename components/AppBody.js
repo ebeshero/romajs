@@ -7,12 +7,22 @@ import FilterSearch from '../containers/FilterSearch'
 
 class AppBody extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
   }
 
-  render () {
-    return <div>
+  componentDidMount() {
+    // Use Drawer.MDCFoundation for greater control
+    // var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
+    // drawr.open = true;
+    // // This should be handled more natively:
+    // document.querySelector('.romajs-menu').addEventListener('click', function() {
+    //   drawr.open = !drawr.open;
+    // });
+  }
+
+  render() {
+    return (<div>
       <header className="mdc-toolbar mdc-elevation--z4 mdc-toolbar--fixed romajs-toolbar">
         <div className="mdc-toolbar__row">
           <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
@@ -49,23 +59,15 @@ class AppBody extends Component {
           <FullItemList/>
         </main>
       </div>
-    </div>
+    </div>)
   }
-
-  componentDidMount() {
-    // Use Drawer.MDCFoundation for greater control
-    // var drawr = new Drawer.MDCPersistentDrawer(document.querySelector('.mdc-persistent-drawer'));
-    // drawr.open = true;
-    // // This should be handled more natively:
-    // document.querySelector('.romajs-menu').addEventListener('click', function() {
-    //   drawr.open = !drawr.open;
-    // });
-   }
 
 }
 
 AppBody.propTypes = {
-  onUploadClick: PropTypes.func.isRequired
+  onUploadClick: PropTypes.func.isRequired,
+  onDownloadClick: PropTypes.func.isRequired,
+  odd: PropTypes.object
 }
 
 export default AppBody

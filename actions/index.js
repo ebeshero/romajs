@@ -1,45 +1,55 @@
-import fetch from 'isomorphic-fetch';
-import {flattenXML, hydrateXML} from 'squash-xml-json';
+import fetch from 'isomorphic-fetch'
+import {flattenXML} from 'squash-xml-json'
 
-export const REQUEST_ODD = 'REQUEST_ODD';
-export const RECEIVE_ODD = 'RECEIVE_ODD';
-export const PARSE_ODD = 'PARSE_ODD';
-export const SELECT_ODD = 'SELECT_ODD';
-export const REQUEST_P5 = 'REQUEST_P5';
-export const RECEIVE_P5 = 'RECEIVE_P5';
-// export const REQUEST_OXGARAGE_TRANSFORM = 'REQUEST_OXGARAGE_TRANSFORM';
-// export const RECEIVE_FROM_OXGARAGE = 'RECEIVE_FROM_OXGARAGE';
-// export const SET_COMPILED_ODD = 'SET_COMPILED_ODD';
+export const REQUEST_ODD = 'REQUEST_ODD'
+export const RECEIVE_ODD = 'RECEIVE_ODD'
+export const PARSE_ODD = 'PARSE_ODD'
+export const SELECT_ODD = 'SELECT_ODD'
+export const REQUEST_P5 = 'REQUEST_P5'
+export const RECEIVE_P5 = 'RECEIVE_P5'
+// export const REQUEST_OXGARAGE_TRANSFORM = 'REQUEST_OXGARAGE_TRANSFORM'
+// export const RECEIVE_FROM_OXGARAGE = 'RECEIVE_FROM_OXGARAGE'
+// export const SET_COMPILED_ODD = 'SET_COMPILED_ODD'
 
 // Modules operations
-export const INCLUDE_MODULES = 'INCLUDE_MODULES';
-export const EXCLUDE_MODULES = 'EXCLUDE_MODULES';
-export const INCLUDE_ELEMENTS = 'INCLUDE_ELEMENTS';
-export const EXCLUDE_ELEMENTS = 'EXCLUDE_ELEMENTS';
+export const INCLUDE_MODULES = 'INCLUDE_MODULES'
+export const EXCLUDE_MODULES = 'EXCLUDE_MODULES'
+export const INCLUDE_ELEMENTS = 'INCLUDE_ELEMENTS'
+export const EXCLUDE_ELEMENTS = 'EXCLUDE_ELEMENTS'
 
 // Element operations
-export const SAVE_ELEMENT_CHANGES = 'SAVE_ELEMENT_CHANGES';
-export const CREATE_ELEMENT = 'CREATE_ELEMENT';
+export const SAVE_ELEMENT_CHANGES = 'SAVE_ELEMENT_CHANGES'
+export const CREATE_ELEMENT = 'CREATE_ELEMENT'
+
+// Attribute operations
+export const CREATE_ATTRIBUTE = 'CREATE_ATTRIBUTE'
+export const CHANGE_ATTRIBUTE = 'CHANGE_ATTRIBUTE'
+export const DELETE_ATTRIBUTE = 'DELETE_ATTRIBUTE'
+
+// Constrain operations
+export const CREATE_CONSTRAIN = 'CREATE_CONSTRAIN'
+export const CHANGE_CONSTRAIN = 'CHANGE_CONSTRAIN'
+export const DELETE_CONSTRAIN = 'DELETE_CONSTRAIN'
 
 // Attribute class operations
-export const CHANGE_ATT_CLASS = 'CHANGE_ATT_CLASS';
-export const CREATE_ATT_CLASS = 'CREATE_ATT_CLASS';
-export const DELETE_ATT_CLASS = 'DELETE_ATT_CLASS';
+export const CHANGE_ATT_CLASS = 'CHANGE_ATT_CLASS'
+export const CREATE_ATT_CLASS = 'CREATE_ATT_CLASS'
+export const DELETE_ATT_CLASS = 'DELETE_ATT_CLASS'
 
 // Model class operations
-export const CHANGE_MODEL_CLASS = 'CHANGE_MODEL_CLASS';
-export const CREATE_MODEL_CLASS = 'CREATE_MODEL_CLASS';
-export const DELETE_MODEL_CLASS = 'DELETE_MODEL_CLASS';
+export const CHANGE_MODEL_CLASS = 'CHANGE_MODEL_CLASS'
+export const CREATE_MODEL_CLASS = 'CREATE_MODEL_CLASS'
+export const DELETE_MODEL_CLASS = 'DELETE_MODEL_CLASS'
 
 // Dataypes operations
-export const CHANGE_DATATYPE = 'CHANGE_DATATYPE';
-export const CREATE_DATATYPE = 'CREATE_DATATYPE';
-export const DELETE_DATATYPE = 'DELETE_DATATYPE';
+export const CHANGE_DATATYPE = 'CHANGE_DATATYPE'
+export const CREATE_DATATYPE = 'CREATE_DATATYPE'
+export const DELETE_DATATYPE = 'DELETE_DATATYPE'
 
-export function selectOdd(odd_url) {
+export function selectOdd(oddUrl) {
   return {
     type: SELECT_ODD,
-    odd_url
+    oddUrl
   }
 }
 
@@ -74,7 +84,7 @@ function requestP5(url) {
   }
 }
 
-function receiveP5(json){
+function receiveP5(json) {
   return {
     type: RECEIVE_P5,
     json,
@@ -128,17 +138,17 @@ export function createElement(element, properties) {
   }
 }
 
-export function createAttribute(element, attribute_properties) {
+export function createAttribute(element, attributeProperties) {
   return {
     type: CREATE_ATTRIBUTE,
-    attribute_properties
+    attributeProperties
   }
 }
 
-export function changeAttribute(element, attribute_properties) {
+export function changeAttribute(element, attributeProperties) {
   return {
     type: CHANGE_ATTRIBUTE,
-    attribute_properties
+    attributeProperties
   }
 }
 
@@ -196,13 +206,13 @@ export function deleteConstrain(element, constrain) {
 //   }
 // }
 
-/**********
+/** ********
  * thunks *
- **********/
+ ******** **/
 export function fetchOdd(odd) {
   return dispatch => {
     dispatch(requestOdd(odd))
-    return new Promise((res, rej)=>{
+    return new Promise((res)=>{
       fetch(odd)
         .then(response => response.text())
         .then((xml) => {
@@ -223,9 +233,9 @@ export function fetchP5(url) {
 
 // export function postToOxGarage(input, endpoint) {
 //   return dispatch => {
-//     dispatch(requestOxGarageTransform(input, endpoint));
-//     let fd = new FormData();
-//     fd.append("fileToConvert", new Blob([input], {"type":"application\/octet-stream"}), 'file.odd');
+//     dispatch(requestOxGarageTransform(input, endpoint))
+//     let fd = new FormData()
+//     fd.append("fileToConvert", new Blob([input], {"type":"application\/octet-stream"}), 'file.odd')
 //     return new Promise((res, rej)=>{
 //       fetch(endpoint, {
 //           mode: 'cors',

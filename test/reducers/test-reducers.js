@@ -1,5 +1,5 @@
 import expect from 'expect'
-import {flattenXML, hydrateXML} from 'squash-xml-json';
+import {flattenXML, hydrateXML} from 'squash-xml-json'
 import fs from 'fs'
 import romajsApp from '../../reducers'
 
@@ -481,6 +481,92 @@ describe('ODD modules operation reducers', () => {
     }, [])
 
     expect(moduleRefs[0]["@"]).toEqual({ key: 'core', except: 'p list' })
+  })
+
+})
+
+describe('Element operation reducers', () => {
+
+  it('should handle UPDATE_ELEMENT_ALTIDENT', () => {
+    let data = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_ALTIDENT',
+      element: 'p',
+      altIdent: 'para'
+    })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == 'elementSpec') {
+        let altid = odd[node_id].children[0]
+        let textnode = odd[altid].children[0]
+        expect(odd[textnode].t ).toEqual('para')
+        break
+      }
+    }
+
+
+  })
+
+  it('should handle UPDATE_ELEMENT_ALTIDENT (elementSpec)', () => {
+    let data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"/></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_ALTIDENT',
+      element: 'p',
+      altIdent: 'para'
+    })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == 'elementSpec') {
+        let altid = odd[node_id].children[0]
+        let textnode = odd[altid].children[0]
+        expect(odd[textnode].t ).toEqual('para')
+        break
+      }
+    }
+
+  })
+
+  it('should handle UPDATE_ELEMENT_ALTIDENT (elementSpec/altIdent)', () => {
+    let data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"><altIdent>poo</altIdent></elementSpec></schemaSpec>`
+    let json = flattenXML(data)
+    let state = romajsApp({
+      odd: {
+        customization: { json : json },
+        localsource: { json : P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_ALTIDENT',
+      element: 'p',
+      altIdent: 'para'
+    })
+
+    let odd = state.odd.customization.json
+
+    for (let node_id of Object.keys(odd)) {
+      if (odd[node_id].name == 'elementSpec') {
+        let altid = odd[node_id].children[0]
+        let textnode = odd[altid].children[0]
+        expect(odd[textnode].t ).toEqual('para')
+        break
+      }
+    }
+
   })
 
 })

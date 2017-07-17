@@ -17,10 +17,6 @@ export const EXCLUDE_MODULES = 'EXCLUDE_MODULES'
 export const INCLUDE_ELEMENTS = 'INCLUDE_ELEMENTS'
 export const EXCLUDE_ELEMENTS = 'EXCLUDE_ELEMENTS'
 
-// Element operations
-export const SAVE_ELEMENT_CHANGES = 'SAVE_ELEMENT_CHANGES'
-export const CREATE_ELEMENT = 'CREATE_ELEMENT'
-
 // Attribute operations
 export const CREATE_ATTRIBUTE = 'CREATE_ATTRIBUTE'
 export const CHANGE_ATTRIBUTE = 'CHANGE_ATTRIBUTE'
@@ -119,22 +115,6 @@ export function excludeElements(elements, module) {
   return {
     type: EXCLUDE_ELEMENTS,
     elements, module
-  }
-}
-
-/* ELEMENTS OPERATIONS */
-
-export function changeElement(element, changes) {
-  return {
-    type: SAVE_ELEMENT_CHANGES,
-    changes
-  }
-}
-
-export function createElement(element, properties) {
-  return {
-    type: CREATE_ELEMENT,
-    properties
   }
 }
 

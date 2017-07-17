@@ -2,7 +2,12 @@ import {
   SELECT_ODD, REQUEST_ODD, RECEIVE_ODD, PARSE_ODD, REQUEST_P5, RECEIVE_P5,
   INCLUDE_MODULES, EXCLUDE_MODULES, INCLUDE_ELEMENTS, EXCLUDE_ELEMENTS
 } from '../actions'
+import {
+  UPDATE_ELEMENT_ALTIDENT, UPDATE_ELEMENT_GLOSS, UPDATE_ELEMENT_DESC
+} from '../actions/elements'
 import {getElementsForModule} from '../selectors'
+import {prependFragmentTo, appendFragmentTo} from '../utils/xmljson'
+import {flattenXML} from 'squash-xml-json'
 
 // Helper functions
 function getCurrentModules(state = '') {
@@ -14,18 +19,6 @@ function getCurrentModules(state = '') {
     }
     return acc
   }, [])
-}
-
-function generateUUID() {
-  let d = new Date().getTime()
-  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
-    d += performance.now() // use high-precision timer if available
-  }
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (d + Math.random() * 16) % 16 | 0
-    d = Math.floor(d / 16)
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
-  })
 }
 
 export function selectedOdd(state = '', action) {
@@ -134,17 +127,7 @@ export function processOdd(state = {}, action) {
 
       for (const module of modulesToInclude) {
         // Create a new node and add to parent
-        const id = '>e' + generateUUID()
-        const newNode = {
-          name: 'moduleRef',
-          '@': {
-            key: module
-          },
-          parent: schemaSpec,
-          children: []
-        }
-        custom[id] = newNode
-        custom[schemaSpec].children.unshift(id)
+        prependFragmentTo(custom, schemaSpec, flattenXML(`<moduleRef key="${module}"/>`))
       }
       // Update state
       if (modulesToInclude.length > 0) {
@@ -218,19 +201,9 @@ export function processOdd(state = {}, action) {
       }
 
       if (!matchingMR) {
-        // create new moduleref
-        const id = '>e' + generateUUID()
-        const newNode = {
-          name: 'moduleRef',
-          '@': {
-            key: action.module,
-            include: action.elements.join(' ')
-          },
-          parent: schemaSpec,
-          children: []
-        }
-        custom[id] = newNode
-        custom[schemaSpec].children.unshift(id)
+        // create new moduleref)
+        prependFragmentTo(custom, schemaSpec,
+          flattenXML(`<moduleRef key="${action.module}" include="${action.elements.join(' ')}"/>`))
       }
 
       // Update state
@@ -292,6 +265,45 @@ export function processOdd(state = {}, action) {
       return Object.assign({}, state,
         updateOdd(state[customization], custom)
       )
+
+    // ELEMENTS
+
+    case UPDATE_ELEMENT_ALTIDENT:
+      custom = state.customization.json
+      let hasElementSpec = false
+      for (const nodeId of Object.keys(custom)) {
+        const node = custom[nodeId]
+        // Update elementSpec
+        if (node.name === 'elementSpec' && node['@'].ident === action.element) {
+          hasElementSpec = true
+          node.children = node.children.reduce((acc, child) => {
+            if (custom[child].name === 'altIdent') {
+              delete custom[child]
+            } else {
+              acc.push(child)
+            }
+            return acc
+          }, [])
+          appendFragmentTo(custom, node.id,
+            flattenXML(`<altIdent>${action.altIdent}</altIdent>`))
+          break
+        }
+      }
+      // Create elementSpec
+      if (!hasElementSpec) {
+        schemaSpec = ''
+        // find (first) schemaSpec first, then loop on modules to include
+        for (const nodeId of Object.keys(custom)) {
+          const node = custom[nodeId]
+          if (node.name === 'schemaSpec' && !schemaSpec) {
+            schemaSpec = nodeId
+            break
+          }
+        }
+        appendFragmentTo(custom, schemaSpec,
+          flattenXML(`<elementSpec ident="${action.element}"><altIdent>${action.altIdent}</altIdent></elementSpec>`))
+      }
+
     default:
       return state
   }

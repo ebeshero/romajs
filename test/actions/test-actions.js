@@ -4,6 +4,7 @@ import express from 'express'
 import fs from 'fs'
 import expect from 'expect'
 import * as actions from '../../actions'
+import * as elementActions from '../../actions/elements'
 import {setFilterTerm} from '../../actions/interface'
 import {flattenXML, hydrateXML} from 'squash-xml-json'
 
@@ -141,37 +142,30 @@ describe('Module actions', () => {
 
 });
 
-// describe('Element actions', () => {
-//   it('changeElement should pass changes to an element', () =>{
-//     expect(actions.changeElement(
-//       "p",
-//       {
-//         namespace: "",
-//         alias: "",
-//         desc: "",
-//         classes: [],
-//         examples: [],
-//         content: [],
-//         constraints: [],
-//         content: {},
-//         attributes: []
-//       }
-//     )).toEqual({
-//       type: 'SAVE_ELEMENT_CHANGES',
-//       changes: {
-//         namespace: "",
-//         alias: "",
-//         desc: "",
-//         classes: [],
-//         examples: [],
-//         content: [],
-//         constraints: [],
-//         content: {},
-//         attributes: []
-//       }
-//     })
-//   });
-// });
+// POSSIBLE ELEMENTS PROPS: {
+//   namespace: "",
+//   alias: "",
+//   desc: "",
+//   classes: [],
+//   examples: [],
+//   content: [],
+//   constraints: [],
+//   content: {},
+//   attributes: []
+// }
+
+describe('Element actions', () => {
+  it('updateElementAltident should pass altIdent changes to an element', () =>{
+    expect(elementActions.updateElementAltident(
+      'p',
+      'para'
+    )).toEqual({
+      type: 'UPDATE_ELEMENT_ALTIDENT',
+      element: 'p',
+      altIdent: 'para'
+    })
+  });
+});
 
 /* INTERFACE ACTIONS */
 describe('Interface actions', () => {

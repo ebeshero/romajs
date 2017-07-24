@@ -1,16 +1,16 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store'
-import fs from 'fs'
-import { shallow, mount } from 'enzyme';
-import expect, { spyOn, createSpy } from 'expect'
-import {flattenXML, hydrateXML} from 'squash-xml-json'
-
-import * as containers from '../../containers'
-import * as components from '../../components'
-
-const mockStore = configureMockStore()
-// 
+// import React from 'react'
+// import { Provider } from 'react-redux'
+// import configureMockStore from 'redux-mock-store'
+// import fs from 'fs'
+// import { shallow, mount } from 'enzyme'
+// import expect, { spyOn, createSpy } from 'expect'
+// import {flattenXML, hydrateXML} from 'squash-xml-json'
+//
+// import * as containers from '../../containers'
+// import * as components from '../../components'
+//
+// const mockStore = configureMockStore()
+//
 // describe('Component: <Module />', () => {
 //
 //     const onClick = expect.createSpy();

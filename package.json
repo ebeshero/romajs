@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Javascript implementation of Roma in React-Redux",
   "scripts": {
-    "test": "mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
+    "test": "npm run eslint && mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
     "start": "webpack-dashboard -t 'React-Redux Boilerplate' -- webpack-dev-server --colors --no-info",
     "build": "rm -rf ./build && NODE_ENV=\"production\" webpack",
@@ -11,7 +11,8 @@
     "lint": "eslint ./source/js ./webpack.config.js -f table --ext .js --ext .jsx || true",
     "preview": "NODE_ENV=\"production\" ./node_modules/webpack-dashboard/bin/webpack-dashboard.js -t 'Preview Mode - React-Redux Boilerplate' -- ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "hook-add": "prepush install",
-    "hook-remove": "prepush remove"
+    "hook-remove": "prepush remove",
+    "eslint": "eslint actions reducers test components containers utils"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
     "enzyme": "^2.8.2",
-    "eslint": "^3.19.0",
+    "eslint": "^4.3.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-loader": "^1.8.0",
     "eslint-plugin-import": "^2.2.0",

@@ -7,9 +7,9 @@ const Element = ({ onChange, selected, ident }) => (
         checked={selected} onChange={onChange}/>
       <span className="mdc-checkbox__background">
         <svg className="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-          <path className="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          <path className="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
         </svg>
-        <span className="mdc-checkbox__mixedmark"></span>
+        <span className="mdc-checkbox__mixedmark"/>
       </span>
     </span>
     <span className="mdc-list-item__text">

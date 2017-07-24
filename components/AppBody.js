@@ -6,7 +6,6 @@ import FilterSearch from '../containers/FilterSearch'
 // import * as Drawer from '@material/drawer';
 
 class AppBody extends Component {
-
   constructor(props) {
     super(props)
   }
@@ -37,16 +36,16 @@ class AppBody extends Component {
         <div className="mdc-toolbar__row romajs-toolbar2">
           <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
             <span className="mdl-chip mdl-chip--deletable romajs-itemtype-selected">
-                <span className="mdl-chip__text">Elements</span>
-                <button type="button" className="mdl-chip__action"><i className="material-icons">cancel</i></button>
+              <span className="mdl-chip__text">Elements</span>
+              <button type="button" className="mdl-chip__action"><i className="material-icons">cancel</i></button>
             </span>
             <span className="mdl-chip mdl-chip--deletable">
-                <span className="mdl-chip__text">Classes</span>
-                <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
+              <span className="mdl-chip__text">Classes</span>
+              <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
             </span>
             <span className="mdl-chip mdl-chip--deletable">
-                <span className="mdl-chip__text">Datatypes</span>
-                <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
+              <span className="mdl-chip__text">Datatypes</span>
+              <button type="button" className="mdl-chip__action"><i className="material-icons">add_circle</i></button>
             </span>
           </section>
           <section className="mdc-toolbar__section mdc-toolbar__section--align-end">
@@ -61,7 +60,6 @@ class AppBody extends Component {
       </div>
     </div>)
   }
-
 }
 
 AppBody.propTypes = {

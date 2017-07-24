@@ -19,7 +19,7 @@ const Item = ({ onChange, selected, ident, desc, module }) => (
       </span>
     </span>
     <span className="mdc-list-item__end-detail">
-     <SingleModule ident={module}/>
+      <SingleModule ident={module}/>
     </span>
   </li>
 )

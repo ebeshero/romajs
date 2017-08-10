@@ -499,8 +499,8 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altid = odd[nodeId].children[0]
-        const textnode = odd[altid].children[0]
+        const altId = odd[nodeId].children[0]
+        const textnode = odd[altId].children[0]
         expect(odd[textnode].t ).toEqual('para')
         break
       }
@@ -525,8 +525,8 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altid = odd[nodeId].children[0]
-        const textnode = odd[altid].children[0]
+        const altId = odd[nodeId].children[0]
+        const textnode = odd[altId].children[0]
         expect(odd[textnode].t ).toEqual('para')
         break
       }
@@ -534,7 +534,7 @@ describe('Element operation reducers', () => {
   })
 
   it('should handle UPDATE_ELEMENT_ALTIDENT (elementSpec/altIdent)', () => {
-    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"><altIdent>poo</altIdent></elementSpec></schemaSpec>`
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"><altIdent>para</altIdent></elementSpec></schemaSpec>`
     const json = flattenXML(data)
     const state = romajsApp({
       odd: {
@@ -551,9 +551,115 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altid = odd[nodeId].children[0]
-        const textnode = odd[altid].children[0]
+        const altId = odd[nodeId].children[0]
+        const textnode = odd[altId].children[0]
         expect(odd[textnode].t ).toEqual('para')
+        break
+      }
+    }
+  })
+
+  it('should handle UPDATE_ELEMENT_GLOSS', () => {
+    const data = `<schemaSpec><moduleRef key="core"/></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_GLOSS',
+      element: 'p',
+      gloss: 'a paragraph'
+    })
+
+    const odd = state.odd.customization.json
+
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const glossId = odd[nodeId].children[0]
+        const textnode = odd[glossId].children[0]
+        expect(odd[textnode].t ).toEqual('a paragraph')
+        break
+      }
+    }
+  })
+
+  it('should handle UPDATE_ELEMENT_GLOSS (elementSpec)', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"/></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_GLOSS',
+      element: 'p',
+      gloss: 'a paragraph'
+    })
+
+    const odd = state.odd.customization.json
+
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const glossId = odd[nodeId].children[0]
+        const textnode = odd[glossId].children[0]
+        expect(odd[textnode].t ).toEqual('a paragraph')
+        break
+      }
+    }
+  })
+
+  it('should handle UPDATE_ELEMENT_GLOSS (elementSpec/gloss)', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"><gloss>para</gloss></elementSpec></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_GLOSS',
+      element: 'p',
+      gloss: 'a paragraph'
+    })
+
+    const odd = state.odd.customization.json
+
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const glossId = odd[nodeId].children[0]
+        const textnode = odd[glossId].children[0]
+        expect(odd[textnode].t ).toEqual('a paragraph')
+        break
+      }
+    }
+  })
+
+  it('should handle UPDATE_ELEMENT_GLOSS (elementSpec/altIdent)', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"><altIdent>para</altIdent></elementSpec></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'UPDATE_ELEMENT_GLOSS',
+      element: 'p',
+      gloss: 'a paragraph'
+    })
+
+    const odd = state.odd.customization.json
+
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const altId = odd[nodeId].children[0]
+        const glossId = odd[nodeId].children[1]
+        const textnode = odd[glossId].children[0]
+        expect(odd[textnode].t).toEqual('a paragraph')
+        expect(odd[altId].name).toEqual('altIdent')
         break
       }
     }

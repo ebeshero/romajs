@@ -500,8 +500,12 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altId = odd[nodeId].children[0]
-        const textnode = odd[altId].children[0]
+        const altId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'altIdent'
+        })[0]
+        const textnode = odd[altId].children.filter((child)=>{
+          return odd[child].t !== undefined
+        })[0]
         expect(odd[altId].name).toEqual('altIdent')
         expect(odd[textnode].t).toEqual('para')
         break
@@ -528,8 +532,12 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altId = odd[nodeId].children[0]
-        const textnode = odd[altId].children[0]
+        const altId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'altIdent'
+        })[0]
+        const textnode = odd[altId].children.filter((child)=>{
+          return odd[child].t !== undefined
+        })[0]
         expect(odd[altId].name).toEqual('altIdent')
         expect(odd[textnode].t).toEqual('para')
         break
@@ -556,12 +564,106 @@ describe('Element operation reducers', () => {
 
     for (const nodeId of Object.keys(odd)) {
       if (odd[nodeId].name === 'elementSpec') {
-        const altId = odd[nodeId].children[0]
-        const glossId = odd[nodeId].children[1]
-        const textnode = odd[glossId].children[0]
+        const altId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'altIdent'
+        })[0]
+        const glossId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'gloss'
+        })[0]
+        const textnode = odd[glossId].children.filter((child)=>{
+          return odd[child].t !== undefined
+        })[0]
         expect(odd[altId].name).toEqual('altIdent')
         expect(odd[glossId].name).toEqual('gloss')
         expect(odd[textnode].t ).toEqual('a paragraph')
+        break
+      }
+    }
+  })
+
+  it('should handle ELEMENT_ADD_MEMBEROF', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p"></elementSpec></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'ELEMENT_ADD_MEMBEROF',
+      element: 'p',
+      className: 'model.pLike'
+    })
+    const odd = state.odd.customization.json
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const classesId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'classes'
+        })[0]
+        const memberOfId = odd[classesId].children.filter((child)=>{
+          return odd[child].name === 'memberOf'
+        })[0]
+        expect(odd[memberOfId]['@'].key).toEqual('model.pLike')
+        break
+      }
+    }
+  })
+
+  it('should handle ELEMENT_ADD_MEMBEROF with classes already selected', () => {
+    const data = `
+      <schemaSpec><moduleRef key="core"/>
+        <elementSpec ident="p"><classes><memberOf key="model.pLike"/></classes></elementSpec>
+      </schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'ELEMENT_ADD_MEMBEROF',
+      element: 'p',
+      className: 'newModel'
+    })
+    const odd = state.odd.customization.json
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const classesId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'classes'
+        })[0]
+        const memberOfId = odd[classesId].children.filter((child)=>{
+          return odd[child].name === 'memberOf'
+        })[1]
+        expect(odd[memberOfId]['@'].key).toEqual('newModel')
+        break
+      }
+    }
+  })
+
+  it('should handle ELEMENT_ADD_MEMBEROF on new elementSpec', () => {
+    const data = `
+      <schemaSpec><moduleRef key="core"/></schemaSpec>`
+    const json = flattenXML(data)
+    const state = romajsApp({
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      }, selectedOdd: ''
+    }, {
+      type: 'ELEMENT_ADD_MEMBEROF',
+      element: 'p',
+      className: 'model.pLike'
+    })
+    const odd = state.odd.customization.json
+    for (const nodeId of Object.keys(odd)) {
+      if (odd[nodeId].name === 'elementSpec') {
+        const classesId = odd[nodeId].children.filter((child)=>{
+          return odd[child].name === 'classes'
+        })[0]
+        const memberOfId = odd[classesId].children.filter((child)=>{
+          return odd[child].name === 'memberOf'
+        })[0]
+        expect(odd[memberOfId]['@'].key).toEqual('model.pLike')
         break
       }
     }

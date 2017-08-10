@@ -1,28 +1,29 @@
-export const UPDATE_ELEMENT_ALTIDENT = 'UPDATE_ELEMENT_ALTIDENT'
-export const UPDATE_ELEMENT_GLOSS = 'UPDATE_ELEMENT_GLOSS'
-export const UPDATE_ELEMENT_DESC = 'UPDATE_ELEMENT_DESC'
+export const UPDATE_ELEMENT_DOCS = 'UPDATE_ELEMENT_DOCS'
+export const ELEMENT_ADD_MEMBEROF = 'ELEMENT_ADD_MEMBEROF'
+export const ELEMENT_REMOVE_MEMBEROF = 'ELEMENT_REMOVE_MEMBEROF'
 // export const CREATE_ELEMENT = 'CREATE_ELEMENT'
 
-export function updateElementAltident(element, altIdent) {
+export function updateElementDocs(element, docsEl, content) {
   return {
-    type: UPDATE_ELEMENT_ALTIDENT,
+    type: UPDATE_ELEMENT_DOCS,
     element,
-    altIdent
+    docsEl,
+    content
   }
 }
 
-export function updateElementGloss(element, gloss) {
+export function elementAddMemberof(element, className) {
   return {
-    type: UPDATE_ELEMENT_GLOSS,
+    type: ELEMENT_ADD_MEMBEROF,
     element,
-    gloss
+    className
   }
 }
 
-export function updateElementDesc(element, desc) {
+export function elementRemoveMemberof(element, className) {
   return {
-    type: UPDATE_ELEMENT_DESC,
+    type: ELEMENT_REMOVE_MEMBEROF,
     element,
-    desc
+    className
   }
 }

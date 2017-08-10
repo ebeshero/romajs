@@ -1,6 +1,5 @@
 import {
-  UPDATE_ELEMENT_ALTIDENT, UPDATE_ELEMENT_GLOSS
-  // , UPDATE_ELEMENT_DESC
+  UPDATE_ELEMENT_DOCS
 } from '../../actions/elements'
 import {appendFragmentTo} from '../../utils/xmljson'
 import {customization, updateOdd} from '../oddOperations'
@@ -10,7 +9,7 @@ export default function oddElements(state, action) {
   let custom
   let schemaSpec
   switch (action.type) {
-    case UPDATE_ELEMENT_ALTIDENT:
+    case UPDATE_ELEMENT_DOCS:
       custom = state.customization.json
       let hasElementSpec = false
       for (const nodeId of Object.keys(custom)) {
@@ -19,7 +18,7 @@ export default function oddElements(state, action) {
         if (node.name === 'elementSpec' && node['@'].ident === action.element) {
           hasElementSpec = true
           node.children = node.children.reduce((acc, child) => {
-            if (custom[child].name === 'altIdent') {
+            if (custom[child].name === action.docsEl) {
               delete custom[child]
             } else {
               acc.push(child)
@@ -27,7 +26,7 @@ export default function oddElements(state, action) {
             return acc
           }, [])
           appendFragmentTo(custom, node.id,
-            flattenXML(`<altIdent>${action.altIdent}</altIdent>`))
+            flattenXML(`<${action.docsEl}>${action.content}</${action.docsEl}>`))
           break
         }
       }
@@ -43,45 +42,7 @@ export default function oddElements(state, action) {
           }
         }
         appendFragmentTo(custom, schemaSpec,
-          flattenXML(`<elementSpec ident="${action.element}"><altIdent>${action.altIdent}</altIdent></elementSpec>`))
-      }
-      return Object.assign({}, state,
-        updateOdd(state[customization], custom)
-      )
-    case UPDATE_ELEMENT_GLOSS:
-      custom = state.customization.json
-      hasElementSpec = false
-      for (const nodeId of Object.keys(custom)) {
-        const node = custom[nodeId]
-        // Update elementSpec
-        if (node.name === 'elementSpec' && node['@'].ident === action.element) {
-          hasElementSpec = true
-          node.children = node.children.reduce((acc, child) => {
-            if (custom[child].name === 'gloss') {
-              delete custom[child]
-            } else {
-              acc.push(child)
-            }
-            return acc
-          }, [])
-          appendFragmentTo(custom, node.id,
-            flattenXML(`<gloss>${action.gloss}</gloss>`))
-          break
-        }
-      }
-      // Create elementSpec
-      if (!hasElementSpec) {
-        schemaSpec = ''
-        // find (first) schemaSpec first, then loop on modules to include
-        for (const nodeId of Object.keys(custom)) {
-          const node = custom[nodeId]
-          if (node.name === 'schemaSpec' && !schemaSpec) {
-            schemaSpec = nodeId
-            break
-          }
-        }
-        appendFragmentTo(custom, schemaSpec,
-          flattenXML(`<elementSpec ident="${action.element}"><gloss>${action.gloss}</gloss></elementSpec>`))
+          flattenXML(`<elementSpec ident="${action.element}"><${action.docsEl}>${action.content}</${action.docsEl}></elementSpec>`))
       }
       return Object.assign({}, state,
         updateOdd(state[customization], custom)

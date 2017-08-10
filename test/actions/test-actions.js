@@ -152,14 +152,16 @@ describe('Module actions', () => {
 // }
 
 describe('Element actions', () => {
-  it('updateElementAltident should pass altIdent changes to an element', () =>{
-    expect(elementActions.updateElementAltident(
+  it('updateElementDocs should pass documentation element changes to an elementSpec', () =>{
+    expect(elementActions.updateElementDocs(
       'p',
+      'altIdent',
       'para'
     )).toEqual({
-      type: 'UPDATE_ELEMENT_ALTIDENT',
+      type: 'UPDATE_ELEMENT_DOCS',
       element: 'p',
-      altIdent: 'para'
+      docsEl: 'altIdent',
+      content: 'para'
     })
   })
 })

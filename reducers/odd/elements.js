@@ -91,6 +91,6 @@ export default function oddElements(state, action) {
         updateOdd(state[customization], custom)
       )
     default:
-      return state
+      return false
   }
 }

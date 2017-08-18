@@ -163,7 +163,10 @@ export default function oddModules(state, action) {
           }
         }
       }
+      return Object.assign({}, state,
+        updateOdd(state[customization], custom)
+      )
     default:
-      return state
+      return false
   }
 }

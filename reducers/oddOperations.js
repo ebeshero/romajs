@@ -102,8 +102,10 @@ export function processOdd(state = {}, action) {
         p5(state[action.odd], action)
       )
     default:
-      oddModules(state, action)
-      oddElements(state, action)
+      const modulesReducer = oddModules(state, action)
+      const elementsReducer = oddElements(state, action)
+      if (modulesReducer) return modulesReducer
+      if (elementsReducer) return elementsReducer
   }
   return state
 }

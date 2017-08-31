@@ -13571,6 +13571,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       var files = document.getElementById('files').files;
       var reader = new FileReader();
       reader.readAsText(files[0]);
+      console.log(window.location.protocol);
       reader.onload = function (e) {
         dispatch((0, _actions.postToOxGarage)(e.target.result, window.location.protocol + '//www.tei-c.org/ege-webservice//Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/oddjson%3Aapplication%3Ajson/'));
         dispatch((0, _actions.fetchLocalSource)('fakeData/p5subset.json'));
@@ -14532,4 +14533,4 @@ if(true) {
 /***/ })
 
 },["./src/index.js"]);
-//# sourceMappingURL=app-2791bff079100d9431a9.js.map
+//# sourceMappingURL=app-7850cb6e5fb1efd92e68.js.map

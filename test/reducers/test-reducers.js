@@ -4,7 +4,7 @@ import fs from 'fs'
 import romajsApp from '../../reducers'
 import P5 from '../P5'
 
-const initialState = { selectedOdd: '', odd: {}, ui: {} }
+const initialState = { selectedOdd: '', odd: {}, ui: {}, router: {location: null} }
 
 describe('Input ODD reducers', () => {
   it('should handle initial state', () => {
@@ -14,32 +14,23 @@ describe('Input ODD reducers', () => {
   })
 
   it('should handle SELECT_ODD', () => {
-    expect(
-      romajsApp({}, {
-        type: 'SELECT_ODD',
-        oddUrl: './static/fakeData/bare.odd'
-      })
-    ).toEqual({
-      ui: {},
-      selectedOdd: './static/fakeData/bare.odd',
-      odd: {}
+    const nextState = romajsApp({}, {
+      type: 'SELECT_ODD',
+      oddUrl: './static/fakeData/bare.odd'
     })
+    expect(nextState.selectedOdd).toEqual('./static/fakeData/bare.odd')
   })
 
   it('should handle REQUEST_ODD', () => {
     const state = Object.assign({}, initialState,
       {selectedOdd: './static/fakeData/bare.odd'}
     )
-    expect(
-      romajsApp(state, {
-        type: 'REQUEST_ODD',
-        odd: './static/fakeData/bare.odd'
-      })
-    ).toEqual({
-      ui: {},
-      odd: { customization: { isFetching: true } },
-      selectedOdd: './static/fakeData/bare.odd'
+    const nextState = romajsApp(state, {
+      type: 'REQUEST_ODD',
+      odd: './static/fakeData/bare.odd'
     })
+    expect(nextState.odd).toEqual({ customization: { isFetching: true } })
+    expect(nextState.selectedOdd).toEqual('./static/fakeData/bare.odd')
   })
 
   it('should handle RECEIVE_ODD', () => {
@@ -67,16 +58,11 @@ describe('Input ODD reducers', () => {
   })
 
   it('should handle REQUEST_P5', () => {
-    expect(
-      romajsApp(initialState, {
-        type: 'REQUEST_P5',
-        url: 'http://localhost:3000/static/fakeData/p5subset.json'
-      })
-    ).toEqual({
-      ui: {},
-      selectedOdd: '',
-      odd: { localsource: { isFetching: true } }
+    const nextState = romajsApp(initialState, {
+      type: 'REQUEST_P5',
+      url: 'http://localhost:3000/static/fakeData/p5subset.json'
     })
+    expect(nextState.odd).toEqual({ localsource: { isFetching: true } })
   })
 
   it('should handle RECEIVE_P5', () => {

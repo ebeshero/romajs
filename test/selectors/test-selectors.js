@@ -102,3 +102,34 @@ describe('Selector: getElementsForModule', () => {
     expect(deselected.length).toEqual(2)
   })
 })
+
+describe('Selector: getElementDataByIdent', () => {
+  it('should apply customization and overwrite desc', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="ab" mode="change"><desc>new desc</desc></elementSpec></schemaSpec>`
+    const json = flattenXML(data)
+    const state = {
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      },
+      selectedOdd: ''
+    }
+
+    expect(selectors.getElementDataByIdent(state.odd, 'ab').desc).toEqual('<desc>new desc</desc>')
+  })
+
+  it('should apply customization merge local desc with custom altIdent', () => {
+    const data = `<schemaSpec><moduleRef key="core"/><elementSpec ident="p" mode="change"><altIdent>para</altIdent></elementSpec></schemaSpec>`
+    const json = flattenXML(data)
+    const state = {
+      odd: {
+        customization: { json: json },
+        localsource: { json: P5 }
+      },
+      selectedOdd: ''
+    }
+    const element = selectors.getElementDataByIdent(state.odd, 'p')
+    expect(element.desc).toEqual('(paragraph) marks paragraphs in prose.')
+    expect(element.altIdent).toEqual('<altIdent>para</altIdent>')
+  })
+})

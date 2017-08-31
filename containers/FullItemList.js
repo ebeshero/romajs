@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { includeElements, excludeElements } from '../actions'
 import ItemList from '../components/ItemList'
-import getElementsForModule from '../selectors'
+import { getElementsForModule } from '../selectors/index'
 
 /*
 An Item is anything that has a @ident in ODD and belongs to a module. Namely:

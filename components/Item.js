@@ -1,5 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import SingleModule from '../containers/SingleModule'
+import { Link } from 'react-router-dom'
 
 const Item = ({ onChange, selected, ident, desc, module }) => (
   <li className="mdc-list-item mdc-elevation--z1">
@@ -14,7 +16,7 @@ const Item = ({ onChange, selected, ident, desc, module }) => (
       </span>
     </span>
     <span className="mdc-list-item__text">
-      {ident}
+      <Link to={'element/' + ident}>{ident}</Link>
       <span className="mdc-list-item__text__secondary">{desc}
       </span>
     </span>

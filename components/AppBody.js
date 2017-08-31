@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
 import { Component } from 'react'
+import { Route } from 'react-router-dom'
 import FullItemList from '../containers/FullItemList'
 import FilterSearch from '../containers/FilterSearch'
+import ElementPage from '../containers/ElementPage'
 
 // import * as Drawer from '@material/drawer';
 
@@ -55,7 +57,8 @@ class AppBody extends Component {
       </header>
       <div className="romajs-content">
         <main className="romajs-main">
-          <FullItemList/>
+          <Route exact path="/" component={FullItemList} />
+          <Route exact path="/element/:el" component={ElementPage} />
         </main>
       </div>
     </div>)

@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect'
+import { hydrateFragment } from '../utils/xmljson'
 
 const getCustomization = (state) => state.customization.json
 const getLocalSourceElements = (state) => state.localsource.json.members
+
+// Memoize all the things
 
 export const getElementsForModule = (state, params) => {
   const sel = createSelector([getCustomization, getLocalSourceElements], (customization, localSourceElements) => {
@@ -53,7 +56,36 @@ export const getElementsForModule = (state, params) => {
     }, [])
     return elements
   })
-  return sel(state)
+  return sel(state, params)
 }
 
-export default getElementsForModule
+export const getElementDataByIdent = (state, ident) => {
+  const elSel = createSelector([getCustomization, getLocalSourceElements], (customization, localSourceElements) => {
+    // Find element in localsource
+    const localEl = localSourceElements.filter(member => {
+      return member.type === 'elementSpec' && member.ident === ident
+    })[0]
+    // Find custom element
+    let customEl = null
+    for (const nodeId of Object.keys(customization)) {
+      const node = customization[nodeId]
+      if (node.name === 'elementSpec' && node['@'].ident === ident) {
+        customEl = node
+      }
+    }
+    const compiledEl = localEl
+    if (customEl) {
+      const desc = customEl.children.filter(child => {
+        return customization[child].name === 'desc'
+      })[0]
+      if (desc) { compiledEl.desc = hydrateFragment(customization, desc) }
+
+      const altIdent = customEl.children.filter(child => {
+        return customization[child].name === 'altIdent'
+      })[0]
+      if (altIdent) { compiledEl.altIdent = hydrateFragment(customization, altIdent) }
+    }
+    return compiledEl
+  })
+  return elSel(state, ident)
+}

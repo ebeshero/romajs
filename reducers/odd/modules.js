@@ -106,6 +106,9 @@ export default function oddModules(state, action) {
         // create new moduleref)
         prependFragmentTo(custom, schemaSpec,
           flattenXML(`<moduleRef key="${action.module}" include="${action.elements.join(' ')}"/>`))
+
+      schemaSpec.prepend(flattenXML(`<moduleRef key="${action.module}" include="${action.elements.join(' ')}"/>`))
+
       }
 
       // Update state

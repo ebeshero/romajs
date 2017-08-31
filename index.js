@@ -7,15 +7,19 @@ import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
+import { routerMiddleware, ConnectedRouter } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 // import { selectOdd, fetchOdd, fetchP5, parseOdd, includeModules } from './actions'
 import romajsApp from './reducers'
 import App from './containers/App'
 
 const loggerMiddleware = createLogger()
+const history = createHistory()
 
 const store = createStore(
   romajsApp,
   applyMiddleware(
+    routerMiddleware(history),
     thunkMiddleware, // lets us dispatch() functions
     loggerMiddleware // neat middleware that logs actions
   )
@@ -41,7 +45,9 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+      <App/>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('romajs')
 )

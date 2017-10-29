@@ -15,7 +15,11 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })
 
+<<<<<<< HEAD
 app.use('/static', express.static('static'));
+=======
+app.use('/fakeData', express.static('test/fakeData'));
+>>>>>>> 1da18abae81f520820f70d450b71d4ba73a70cab
 app.use('/src', express.static('src'));
 app.use('/node_modules', express.static('node_modules'));
 app.use('/lib', express.static('lib'));

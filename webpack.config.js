@@ -2,7 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
 
+<<<<<<< HEAD
 const DashboardPlugin = require('webpack-dashboard/plugin');
+=======
+>>>>>>> 1da18abae81f520820f70d450b71d4ba73a70cab
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const autoprefixer = require('autoprefixer');
@@ -86,10 +89,22 @@ const rules = [
     ]
   },
   {
+<<<<<<< HEAD
     test: /\.(png|gif|jpg|svg)$/,
     include: imgPath,
     use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
   },
+=======
+    test:  /\.(png|jpg|ttf|eot|gif)$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'url-loader',
+        options: {limit: 10000}
+      }
+    ]
+  }
+>>>>>>> 1da18abae81f520820f70d450b71d4ba73a70cab
 ];
 
 if (isProduction) {
@@ -149,8 +164,12 @@ if (isProduction) {
 } else {
   // Development plugins
   plugins.push(
+<<<<<<< HEAD
     new webpack.HotModuleReplacementPlugin(),
     new DashboardPlugin()
+=======
+    new webpack.HotModuleReplacementPlugin()
+>>>>>>> 1da18abae81f520820f70d450b71d4ba73a70cab
   );
 
   // Development rules
@@ -186,7 +205,11 @@ module.exports = {
   devtool: isProduction ? 'eval' : 'source-map',
   context: jsSourcePath,
   entry: {
+<<<<<<< HEAD
     js: './index.js',
+=======
+    js: './src/index.js',
+>>>>>>> 1da18abae81f520820f70d450b71d4ba73a70cab
     vendor: [
       'babel-polyfill',
       'es6-promise',
